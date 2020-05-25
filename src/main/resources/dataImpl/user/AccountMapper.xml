@@ -12,7 +12,7 @@
         select * from User where id=#{id}
     </select>
     <update id="updateAccount">
-        update User set password=#{password},username=#{userName},phonenumber=#{phoneNumber}
+        update User set password=#{password},username=#{userName},phonenumber=#{phoneNumber},birthday=#{birthday}
         where id=#{id}
     </update>
 
@@ -25,5 +25,6 @@
         <result column="phonenumber" property="phoneNumber"></result>
         <result column="credit" property="credit"></result>
         <result column="usertype" property="userType"></result>
+        <result column="birthday" property="birthday"></result>
     </resultMap>
 </mapper>

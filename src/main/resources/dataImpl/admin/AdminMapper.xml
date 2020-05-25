@@ -18,5 +18,6 @@
         <result column="phonenumber" property="phoneNumber"></result>
         <result column="credit" property="credit"></result>
         <result column="usertype" property="userType"></result>
+        <result column="birthday" property="birthday"></result>
     </resultMap>
 </mapper>
