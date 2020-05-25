@@ -34,13 +34,14 @@ public class HotelController {
     @PostMapping("/roomInfo")
     public ResponseVO addRoomInfo(@RequestBody HotelRoom hotelRoom) {
         roomService.insertRoomInfo(hotelRoom);
-        return ResponseVO.buildSuccess();
+        return ResponseVO.buildSuccess(true);
     }
 
     @GetMapping("/{hotelId}/detail")
     public ResponseVO retrieveHotelDetail(@PathVariable Integer hotelId) {
         return ResponseVO.buildSuccess(hotelService.retrieveHotelDetails(hotelId));
     }
+
     @PostMapping("/delHotel")
     public ResponseVO deleHotel(@RequestBody HotelVO hotelVO) throws ServiceException {
 
