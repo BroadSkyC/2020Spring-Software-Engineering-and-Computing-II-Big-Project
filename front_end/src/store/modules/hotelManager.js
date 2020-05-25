@@ -74,7 +74,7 @@ const hotelManager = {
             state.couponList = data
         },
         set_addCouponVisible: function(state, data) {
-            state.addCouponVisible =data
+            state.addCouponVisible = data
         }
     },
     actions: {
@@ -195,8 +195,10 @@ const hotelManager = {
         delHotel: async(dispatch ,data) => {
             const res = await delHotelAPI(data)
             if(res){
-                dispatch('getHotelList')
+                //dispatch('getHotelList')
                 message.success('删除成功')
+                window.location.reload();
+                dispatch('getHotelList')
             }else{
                 message.error('删除失败')
             }
