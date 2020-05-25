@@ -18,7 +18,7 @@ export function hotelTimeAPI(data) {
     })
 }
 
-export function hotelTargetRoomNumAPI() {
+export function hotelTargetRoomNumAPI(data) {
     return axios({
         url: `${api.couponPre}/hotelTargetRoomNum`,
         method: 'POST',
