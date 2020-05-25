@@ -33,6 +33,9 @@
             <a-form-item label="折扣" v-bind="formItemLayout" v-if="this.form.getFieldValue('type')==='4'">
                 <a-input placeholder="请填写折扣" v-decorator="['discount',{rules:[{required:true,message:'请填写折扣'}]}]"/>
             </a-form-item>
+            <a-form-item label="折扣" v-bind="formItemLayout" v-if="this.form.getFieldValue('type')==='1'">
+                <a-input placeholder="请填写折扣" v-decorator="['discount',{rules:[{required:true,message:'请填写折扣'}]}]"/>
+            </a-form-item>
 
             <a-form-item label="起始-失效时间" v-if="this.form.getFieldValue('type')==='4'">
                 <ARangePicker
@@ -108,7 +111,8 @@ export default {
             // addHotelCoupon：添加酒店策略接口
             'addHotelTargetMoneyCoupon',
             'addHotelTimeCoupon',
-            'addHotelTargetRoomNumCoupon'
+            'addHotelTargetRoomNumCoupon',
+            'addBirthdayCoupon'
         ]),
         cancel() {
             this.set_addCouponVisible(false)
@@ -164,6 +168,18 @@ export default {
                             status: 1
                         }
                         this.addHotelTimeCoupon(data)
+                        this.form.resetFields()
+                    }
+                    else{
+                        const data={
+                            name: this.form.getFieldValue('name'),
+                            description: this.form.getFieldValue('description'),
+                            type: Number(this.form.getFieldValue('type')),
+                            discount: Number(this.form.getFieldValue('discount')),
+                            hotelId: Number(this.activeHotelId),
+                            status: 1
+                        }
+                        this.addBirthdayCoupon(data)
                         this.form.resetFields()
                     }
                 }

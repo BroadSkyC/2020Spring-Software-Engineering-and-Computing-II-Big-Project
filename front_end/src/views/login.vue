@@ -3,7 +3,7 @@
       <div class="top">
         <div class="header">
           <div>
-            <!-- <img src="@/assets/logo.svg" class="logo" alt="logo"> -->
+            <img src="@/assets/logo.svg" class="logo" alt="logo">
             <span class="title">NJU酒店管理系统</span>
           </div>
         </div>

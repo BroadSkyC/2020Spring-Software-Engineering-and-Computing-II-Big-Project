@@ -9,7 +9,8 @@ import {
     hotelAllCouponsAPI,
     hotelTargetMoneyAPI,
     hotelTimeAPI,
-    hotelTargetRoomNumAPI
+    hotelTargetRoomNumAPI,
+    hotelBirthdayAPI
 } from '@/api/coupon'
 import { message } from 'ant-design-vue'
 
@@ -166,6 +167,19 @@ const hotelManager = {
         },
         addHotelTargetRoomNumCoupon: async({ commit, dispatch }, data) => {
             const res = await hotelTargetRoomNumAPI(data)
+            if(res){
+                // 添加成功后的操作（提示文案、modal框显示与关闭，调用优惠列表策略等）
+                dispatch('getHotelCoupon')
+                commit('set_addCouponVisible', false)
+                commit('set_couponVisible', false)
+                message.success("添加策略成功")
+            }else{
+                // 添加失败后的操作
+                message.error('添加失败')
+            }
+        },
+        addBirthdayCoupon: async({ commit, dispatch }, data) => {
+            const res = await hotelBirthdayAPI(data)
             if(res){
                 // 添加成功后的操作（提示文案、modal框显示与关闭，调用优惠列表策略等）
                 dispatch('getHotelCoupon')
