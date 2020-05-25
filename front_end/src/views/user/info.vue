@@ -33,6 +33,15 @@
                             v-decorator="['password', { rules: [{ required: true, message: '请输入新密码' }] }]"
                         />
                     </a-form-item>
+                    <a-form-item label="生日" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }" v-if="modify">
+                        <AWeekPicker  :format="format"
+                                      showTime
+                                      onChange={onChange}
+                                      v-decorator="['birthday',{rules: [{required:true,message: '请选择生日'}]}]"
+                                      v-if="modify"
+                                      />
+<!--                        后端添加<span v-else>{{ userInfo.phoneNumber}}</span>-->
+              </a-form-item>
                     <a-form-item :wrapper-col="{ span: 12, offset: 5 }" v-if="modify">
                         <a-button type="primary" @click="saveModify">
                             保存
@@ -136,6 +145,7 @@ const columns = [
 export default {
     name: 'info',
     data(){
+        const format="YYYY-MM-DD HH:mm:ss"
         return {
             modify: false,
             formLayout: 'horizontal',
@@ -143,6 +153,7 @@ export default {
             columns,
             data: [],
             form: this.$form.createForm(this, { name: 'coordinated' }),
+            format
         }
     },
     components: {
@@ -197,7 +208,6 @@ export default {
         cancelCancelOrder() {
 
         }
-        
     }
 }
 </script>
