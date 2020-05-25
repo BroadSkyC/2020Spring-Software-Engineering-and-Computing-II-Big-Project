@@ -176,7 +176,8 @@ export default {
         ...mapActions([
             'getHotelList',
             'getAllOrders',
-            'getHotelCoupon'
+            'getHotelCoupon',
+            'delHotel'
         ]),
         addHotel() {
             this.set_addHotelModalVisible(true)
@@ -190,8 +191,8 @@ export default {
             this.set_couponVisible(true)
             this.getHotelCoupon()
         },
-        deleteHotel(){
-
+        deleteHotel(record){
+            this.delHotel(record)
         },
         deleteOrder(){
 

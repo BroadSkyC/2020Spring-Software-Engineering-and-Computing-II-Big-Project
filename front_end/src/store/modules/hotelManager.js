@@ -1,6 +1,7 @@
 import {
     addRoomAPI,
     addHotelAPI,
+    delHotelAPI
 } from '@/api/hotelManager'
 import {
     getAllOrdersAPI,
@@ -190,7 +191,17 @@ const hotelManager = {
                 // 添加失败后的操作
                 message.error('添加失败')
             }
-        }
+        },
+        delHotel: async(dispatch ,data) => {
+            const res = await delHotelAPI(data)
+            if(res){
+                dispatch('getHotelList')
+                message.success('删除成功')
+            }else{
+                message.error('删除失败')
+            }
+        },
+
     }
 }
 export default hotelManager
