@@ -115,6 +115,12 @@ public class CouponServiceImpl implements CouponService {
     @Override
     public CouponVO addHotelBirthdayCoupon(HotelBirthdayCouponVO couponVO) {
         Coupon coupon = new Coupon();
+        coupon.setCouponName(couponVO.getName());
+        coupon.setDescription(couponVO.getDescription());
+        coupon.setCouponType(couponVO.getType());
+        coupon.setHotelId(couponVO.getHotelId());
+        coupon.setDiscount(couponVO.getDiscount());
+        coupon.setStatus(1);
         int result = couponMapper.insertCoupon(coupon);
         couponVO.setId(result);
         return couponVO;

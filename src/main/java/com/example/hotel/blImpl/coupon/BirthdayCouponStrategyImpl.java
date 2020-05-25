@@ -10,7 +10,7 @@ public class BirthdayCouponStrategyImpl implements CouponMatchStrategy {
     // TODO: 2020/5/25  
     @Override
     public boolean isMatch(OrderVO orderVO, Coupon coupon) {
-        //if (true)
+        //if (orderVO.)
         return false;
     }
 }
