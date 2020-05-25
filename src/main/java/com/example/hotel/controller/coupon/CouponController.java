@@ -32,6 +32,11 @@ public class CouponController {
         return ResponseVO.buildSuccess(couponVO);
     }
 
+    @PostMapping("/hotelBirthdayAPI")
+    public ResponseVO addHotelBirthdayCoupon(@RequestBody HotelBirthdayCouponVO hotelBirthdayCouponVO) {
+        CouponVO couponVO = couponService.addHotelBirthdayCoupon(hotelBirthdayCouponVO);
+        return ResponseVO.buildSuccess(couponVO);
+    }
 
     @GetMapping("/hotelAllCoupons")
     public ResponseVO getHotelAllCoupons(@RequestParam Integer hotelId) {

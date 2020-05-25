@@ -16,9 +16,10 @@ import java.util.List;
 public class CouponServiceImpl implements CouponService {
 
 
-    private final  TargetMoneyCouponStrategyImpl targetMoneyCouponStrategy;
-    private final  RoomNumCouponStrategyImpl roomNumCouponStrategy;
-    private final  TimeCouponStrategyImpl timeCouponStrategy;
+    private final TargetMoneyCouponStrategyImpl targetMoneyCouponStrategy;
+    private final RoomNumCouponStrategyImpl roomNumCouponStrategy;
+    private final TimeCouponStrategyImpl timeCouponStrategy;
+    private final BirthdayCouponStrategyImpl birthdayCouponStrategy;
     private final CouponMapper couponMapper;
 
     private static List<CouponMatchStrategy> strategyList = new ArrayList<>();
@@ -27,14 +28,16 @@ public class CouponServiceImpl implements CouponService {
     public CouponServiceImpl(TargetMoneyCouponStrategyImpl targetMoneyCouponStrategy,
                              TimeCouponStrategyImpl timeCouponStrategy,
                              RoomNumCouponStrategyImpl roomNumCouponStrategy,
-                             CouponMapper couponMapper) {
+                             BirthdayCouponStrategyImpl birthdayCouponStrategy, CouponMapper couponMapper) {
         this.couponMapper = couponMapper;
         this.targetMoneyCouponStrategy = targetMoneyCouponStrategy;
         this.timeCouponStrategy = timeCouponStrategy;
         this.roomNumCouponStrategy=roomNumCouponStrategy;
+        this.birthdayCouponStrategy = birthdayCouponStrategy;
         strategyList.add(roomNumCouponStrategy);
         strategyList.add(targetMoneyCouponStrategy);
         strategyList.add(timeCouponStrategy);
+        strategyList.add(birthdayCouponStrategy);
     }
 
 
@@ -103,6 +106,15 @@ public class CouponServiceImpl implements CouponService {
         coupon.setHotelId(couponVO.getHotelId());
         coupon.setDiscount(couponVO.getDiscount());
         coupon.setStatus(1);
+        int result = couponMapper.insertCoupon(coupon);
+        couponVO.setId(result);
+        return couponVO;
+    }
+
+    // TODO: 2020/5/25
+    @Override
+    public CouponVO addHotelBirthdayCoupon(HotelBirthdayCouponVO couponVO) {
+        Coupon coupon = new Coupon();
         int result = couponMapper.insertCoupon(coupon);
         couponVO.setId(result);
         return couponVO;

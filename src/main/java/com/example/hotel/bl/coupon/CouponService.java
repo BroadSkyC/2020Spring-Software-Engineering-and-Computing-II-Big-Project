@@ -28,4 +28,5 @@ public interface CouponService {
     CouponVO addHotelTargetMoneyCoupon(HotelTargetMoneyCouponVO couponVO);
     CouponVO addHotelTimeCoupon(TimeCouponVO couponVO);
     CouponVO addHotelTargetRoomNumCoupon(HotelTargetRoomNumCouponVO couponVO);
+    CouponVO addHotelBirthdayCoupon(HotelBirthdayCouponVO couponVO);
 }
