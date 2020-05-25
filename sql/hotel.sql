@@ -33,7 +33,7 @@ CREATE TABLE `Coupon` (
   `couponName` varchar(255) NOT NULL,
   `target_money` int(11) DEFAULT NULL,
   `discount` double DEFAULT NULL,
-  `status` int(11) DEFAULT NULL,
+  `status` bigint(11) DEFAULT NULL,
   `start_time` datetime DEFAULT NULL,
   `end_time` datetime DEFAULT NULL,
   `discount_money` int(11) DEFAULT NULL,
@@ -64,7 +64,7 @@ CREATE TABLE `Hotel` (
   `address` varchar(255) DEFAULT NULL,
   `bizRegion` varchar(255) DEFAULT NULL,
   `hotelStar` varchar(255) DEFAULT NULL,
-  `phoneNum` int(11) DEFAULT NULL,
+  `phoneNum` bigint(11) DEFAULT NULL,
   `rate` double DEFAULT NULL,
   `manager_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)

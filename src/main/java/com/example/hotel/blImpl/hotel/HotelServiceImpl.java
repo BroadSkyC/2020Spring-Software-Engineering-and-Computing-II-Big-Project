@@ -90,6 +90,22 @@ public class HotelServiceImpl implements HotelService {
 
         return hotelVO;
     }
-    
 
+    public void delHotel(HotelVO hotelVO) {
+        //User manager = accountService.getUserInfo(hotelVO.getManagerId());
+        //if(manager == null || !manager.getUserType().equals(UserType.HotelManager)){
+            //throw new ServiceException("管理员不存在或者无权限！删除酒店失败！");
+        //}
+        Hotel hotel = new Hotel();
+        hotel.setDescription(hotelVO.getDescription());
+        hotel.setAddress(hotelVO.getAddress());
+        hotel.setHotelName(hotelVO.getName());
+        hotel.setPhoneNum(hotelVO.getPhoneNum());
+        hotel.setManagerId(hotelVO.getManagerId());
+        hotel.setRate(hotelVO.getRate());
+        hotel.setBizRegion(BizRegion.valueOf(hotelVO.getBizRegion()));
+        hotel.setHotelStar(HotelStar.valueOf(hotelVO.getHotelStar()));
+        hotel.setId(hotelVO.getId());
+        hotelMapper.deleteHotel(hotel);
+    }
 }

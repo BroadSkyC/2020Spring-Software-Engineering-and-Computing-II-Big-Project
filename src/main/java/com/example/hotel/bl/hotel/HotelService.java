@@ -47,6 +47,6 @@ public interface HotelService {
      */
     int getRoomCurNum(Integer hotelId,String roomType);
 
-
+    void delHotel(HotelVO hotelVO);
 
 }

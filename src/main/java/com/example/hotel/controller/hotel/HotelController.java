@@ -41,6 +41,11 @@ public class HotelController {
     public ResponseVO retrieveHotelDetail(@PathVariable Integer hotelId) {
         return ResponseVO.buildSuccess(hotelService.retrieveHotelDetails(hotelId));
     }
+    @PostMapping("/delHotel")
+    public ResponseVO deleHotel(@RequestBody HotelVO hotelVO) throws ServiceException {
 
+        hotelService.delHotel(hotelVO);
+        return ResponseVO.buildSuccess(true);
+    }
 
 }
