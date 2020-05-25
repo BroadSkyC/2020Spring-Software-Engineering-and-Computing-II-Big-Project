@@ -145,7 +145,7 @@ const columns = [
 export default {
     name: 'info',
     data(){
-        const format="YYYY-MM-DD HH:mm:ss"
+        const format="YYYY-MM-DD "
         return {
             modify: false,
             formLayout: 'horizontal',
