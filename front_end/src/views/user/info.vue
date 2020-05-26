@@ -40,7 +40,7 @@
                                       v-decorator="['birthday',{rules: [{required:true,message: '请选择生日'}]}]"
                                       v-if="modify"
                                       />
-                        <span v-else>{{ userInfo.birthday}}</span>-->
+                        <span v-else>{{ userInfo.birthday}}</span>
               </a-form-item>
                     <a-form-item :wrapper-col="{ span: 12, offset: 5 }" v-if="modify">
                         <a-button type="primary" @click="saveModify">

@@ -41,7 +41,7 @@
                         <span v-if="text == 'Family'">家庭房</span>
                     </span>
                     <span slot="action" slot-scope="record">
-                        <a-button type="primary" size="small">订单详情</a-button>
+                        <a-button type="primary" size="small" @click="showOrder(record)">订单详情</a-button>
                         <a-divider type="vertical"></a-divider>
                         <a-popconfirm
                             title="确定想删除该订单吗？"
@@ -59,12 +59,14 @@
         <AddHotelModal></AddHotelModal>
         <AddRoomModal></AddRoomModal>
         <Coupon></Coupon>
+        <Order></Order>
     </div>
 </template>
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 import AddHotelModal from './components/addHotelModal'
 import AddRoomModal from './components/addRoomModal'
+import Order from './components/Order'
 import Coupon from './components/coupon'
 const moment = require('moment')
 const columns1 = [
@@ -151,6 +153,7 @@ export default {
         AddHotelModal,
         AddRoomModal,
         Coupon,
+        Order
     },
     computed: {
         ...mapGetters([
@@ -171,7 +174,9 @@ export default {
             'set_addHotelModalVisible',
             'set_addRoomModalVisible',
             'set_couponVisible',
+            'set_orderVisible',
             'set_activeHotelId',
+            'set_currentOrder'
         ]),
         ...mapActions([
             'getHotelList',
@@ -192,6 +197,10 @@ export default {
             this.set_activeHotelId(record.id)
             this.set_couponVisible(true)
             this.getHotelCoupon()
+        },
+        showOrder(record){
+            this.set_currentOrder(record)
+            this.set_orderVisible(true)
         },
         deleteHotel(record){
             this.delHotel(record)

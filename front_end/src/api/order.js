@@ -34,3 +34,10 @@ export function delOrderAPI(data) {
         data,
     })
 }
+export function updateOrderAPI(data) {
+    return axios({
+        url: `${api.orderPre}/updateOrder`,
+        method: 'POST',
+        data,
+    })
+}
