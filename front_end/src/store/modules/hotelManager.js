@@ -1,11 +1,11 @@
 import {
     addRoomAPI,
     addHotelAPI,
-    delHotelAPI,
-    delOrderAPI
+    delHotelAPI
 } from '@/api/hotelManager'
 import {
     getAllOrdersAPI,
+    delOrderAPI
 } from '@/api/order'
 import {
     hotelAllCouponsAPI,
@@ -210,7 +210,7 @@ const hotelManager = {
                 //dispatch('getHotelList')
                 message.success('删除成功')
                 window.location.reload();
-                dispatch('getHotelList')
+                dispatch('getAllOrders')
             }else{
                 message.error('删除失败')
             }
