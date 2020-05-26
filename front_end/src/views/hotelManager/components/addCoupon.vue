@@ -33,10 +33,6 @@
             <a-form-item label="折扣" v-bind="formItemLayout" v-if="this.form.getFieldValue('type')==='4'">
                 <a-input placeholder="请填写折扣" v-decorator="['discount',{rules:[{required:true,message:'请填写折扣'}]}]"/>
             </a-form-item>
-            <a-form-item label="折扣" v-bind="formItemLayout" v-if="this.form.getFieldValue('type')==='1'">
-                <a-input placeholder="请填写折扣" v-decorator="['discount',{rules:[{required:true,message:'请填写折扣'}]}]"/>
-            </a-form-item>
-
             <a-form-item label="起始-失效时间" v-if="this.form.getFieldValue('type')==='4'">
                 <ARangePicker
                         :format="format"
@@ -46,10 +42,17 @@
                 />
             </a-form-item>
 
+            <!--birthday-->
+            <a-form-item label="折扣" v-bind="formItemLayout" v-if="this.form.getFieldValue('type')==='1'">
+                <a-input placeholder="请填写折扣" v-decorator="['discount',{rules:[{required:true,message:'请填写折扣'}]}]"/>
+            </a-form-item>
 
             <!--targetRoomNum-->
-            <a-form-item label="折扣" v-bind="formItemLayout" v-if="this.form.getFieldValue('type')==='2'">
-                <a-input placeholder="请填写三间以上折扣" v-decorator="['discount',{rules:[{required:true,message:'请填写具体折扣'}]}]"/>
+            <a-form-item label="目标间数" v-bind="formItemLayout" v-if="this.form.getFieldValue('type')==='2'">
+                <a-input placeholder="请填写目标间数" v-decorator="['targetRoomNum',{rules:[{required:true,message:'请填写目标间数'}]}]"/>
+            </a-form-item>
+            <a-form-item label="每间优惠金额" v-bind="formItemLayout" v-if="this.form.getFieldValue('type')==='2'">
+                <a-input placeholder="请填写每间优惠金额" v-decorator="['discountMoney',{rules:[{required:true,message:'请填写每间优惠金额'}]}]"/>
             </a-form-item>
 
 
@@ -148,7 +151,8 @@ export default {
                             name: this.form.getFieldValue('name'),
                             description: this.form.getFieldValue('description'),
                             type: Number(this.form.getFieldValue('type')),
-                            discount: Number(this.form.getFieldValue('discount')),
+                            discountMoney: Number(this.form.getFieldValue('discountMoney')),
+                            targetRoomNum: Number(this.form.getFieldValue('targetRoomNum')),
                             hotelId: Number(this.activeHotelId),
                             status: 1
                         }

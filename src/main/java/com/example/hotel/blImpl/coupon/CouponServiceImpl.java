@@ -83,19 +83,19 @@ public class CouponServiceImpl implements CouponService {
     }
 
     @Override
-    public CouponVO addHotelTimeCoupon(TimeCouponVO timeCouponVO){
+    public CouponVO addHotelTimeCoupon(TimeCouponVO couponVO){
         Coupon coupon = new Coupon();
-        coupon.setCouponName(timeCouponVO.getName());
-        coupon.setDescription(timeCouponVO.getDescription());
-        coupon.setCouponType(timeCouponVO.getType());
-        coupon.setDiscount(timeCouponVO.getDiscount());
-        coupon.setStartTime(timeCouponVO.getStartTime());
-        coupon.setEndTime(timeCouponVO.getEndTime());
-        coupon.setHotelId(timeCouponVO.getHotelId());
+        coupon.setCouponName(couponVO.getName());
+        coupon.setDescription(couponVO.getDescription());
+        coupon.setCouponType(couponVO.getType());
+        coupon.setDiscount(couponVO.getDiscount());
+        coupon.setStartTime(couponVO.getStartTime());
+        coupon.setEndTime(couponVO.getEndTime());
+        coupon.setHotelId(couponVO.getHotelId());
         coupon.setStatus(1);
         int result=couponMapper.insertCoupon(coupon);
-        timeCouponVO.setId(result);
-        return timeCouponVO;
+        couponVO.setId(result);
+        return couponVO;
     }
 
     @Override
@@ -105,7 +105,9 @@ public class CouponServiceImpl implements CouponService {
         coupon.setDescription(couponVO.getDescription());
         coupon.setCouponType(couponVO.getType());
         coupon.setHotelId(couponVO.getHotelId());
-        coupon.setDiscount(couponVO.getDiscount());
+        coupon.setTargetRoomNum(couponVO.getTargetRoomNum());
+        coupon.setDiscountMoney(couponVO.getDiscountMoney());
+        coupon.setTargetMoney(-1);//只用于每间优惠判断标志
         coupon.setStatus(1);
         int result = couponMapper.insertCoupon(coupon);
         couponVO.setId(result);

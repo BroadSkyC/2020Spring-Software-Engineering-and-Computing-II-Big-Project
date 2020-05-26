@@ -2,7 +2,8 @@ package com.example.hotel.vo;
 
 public class HotelTargetRoomNumCouponVO extends CouponVO{
     private Integer hotelId;
-    private Double discount;
+    private Double discountMoney;
+    private Integer targetRoomNum;
 
     public Integer getHotelId() {
         return hotelId;
@@ -12,11 +13,17 @@ public class HotelTargetRoomNumCouponVO extends CouponVO{
         this.hotelId = hotelId;
     }
 
-    public Double getDiscount() {
-        return discount;
+    public Double getDiscountMoney() {
+        return discountMoney;
     }
 
-    public void setDiscount(Double discount) {
-        this.discount = discount;
+    public void setDiscountMoney(Double discountMoney) {
+        this.discountMoney = discountMoney;
+    }
+
+    public Integer getTargetRoomNum(){return targetRoomNum;}
+
+    public void setTargetRoomNum(int targetRoomNum){
+        this.targetRoomNum = targetRoomNum;
     }
 }
