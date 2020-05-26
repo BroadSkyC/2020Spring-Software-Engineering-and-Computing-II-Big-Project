@@ -87,4 +87,12 @@ public class OrderServiceImpl implements OrderService {
         List<Order> orders = orderService.getAllOrders();
         return orders.stream().filter(order -> order.getHotelId().equals(hotelId)).collect(Collectors.toList());
     }
+
+    @Override
+    public ResponseVO delOrder(OrderVO orderVO){
+        Order order=new Order();
+        order.setId(orderVO.getId());
+        orderMapper.deleteOrder(order);
+        return  ResponseVO.buildSuccess(true);
+    }
 }

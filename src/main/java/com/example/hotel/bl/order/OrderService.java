@@ -45,4 +45,6 @@ public interface OrderService {
      * @return
      */
     List<Order> getHotelOrders(Integer hotelId);
+
+    ResponseVO delOrder(OrderVO orderVO);
 }
