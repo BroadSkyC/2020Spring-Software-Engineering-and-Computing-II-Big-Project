@@ -47,3 +47,10 @@ export function orderMatchCouponsAPI(params) {
         params,
     })
 }
+export function delCouponAPI(data) {
+    return axios({
+        url:`${api.couponPre}/delCoupon`,
+        method:'POST',
+        data,
+    })
+}

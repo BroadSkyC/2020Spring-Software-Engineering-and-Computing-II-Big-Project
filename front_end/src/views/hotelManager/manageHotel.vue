@@ -178,7 +178,8 @@ export default {
             'getAllOrders',
             'getHotelCoupon',
             'delHotel',
-            'delOrder'
+            'delOrder',
+
         ]),
         addHotel() {
             this.set_addHotelModalVisible(true)
@@ -198,6 +199,7 @@ export default {
         deleteOrder(record){
             this.delOrder(record)
         },
+
     }
 }
 </script>

@@ -12,7 +12,8 @@ import {
     hotelTargetMoneyAPI,
     hotelTimeAPI,
     hotelTargetRoomNumAPI,
-    hotelBirthdayAPI
+    hotelBirthdayAPI,
+    delCouponAPI
 } from '@/api/coupon'
 import { message } from 'ant-design-vue'
 
@@ -215,7 +216,15 @@ const hotelManager = {
                 message.error('删除失败')
             }
         },
-
+        delCoupon: async(dispatch ,data) => {
+            const res = await delCouponAPI(data)
+            if(res){
+                message.success('删除成功')
+                dispatch('getHotelCoupon')
+            }else{
+                message.error('删除失败')
+            }
+        },
     }
 }
 export default hotelManager
