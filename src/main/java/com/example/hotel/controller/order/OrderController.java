@@ -44,7 +44,7 @@ public class OrderController {
         return ResponseVO.buildSuccess(orderService.getHotelOrders(hotelId));
     }
 
-    @GetMapping("/deleteOrder")
+    @PostMapping("/delOrder")
     public ResponseVO deleOrder(@RequestBody OrderVO orderVO){
         return orderService.delOrder(orderVO);
     }
