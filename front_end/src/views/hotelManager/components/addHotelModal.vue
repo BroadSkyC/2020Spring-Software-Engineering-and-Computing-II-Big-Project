@@ -38,6 +38,12 @@
                   <a-select-option value="Five">五星级</a-select-option>
                 </a-select>
             </a-form-item>
+            <a-form-item label="评分" v-bind="formItemLayout">
+                            <a-input
+                                    placeholder="请填写酒店评分"
+                                    v-decorator="['rate', { rules: [{ required: true, message: '请填写酒店评分' }] }]"
+                            />
+                        </a-form-item>
             <a-form-item label="手机号" v-bind="formItemLayout">
                 <a-input
                     placeholder="请填写手机号"
@@ -110,6 +116,7 @@ export default {
                         address: this.form.getFieldValue('address'),
                         phoneNum: this.form.getFieldValue('phoneNumber'),
                         hotelStar: this.form.getFieldValue('hotelStar'),
+                        rate: this.form.getFieldValue('rate'),
                         bizRegion:this.form.getFieldValue('bizRegion'),
                         managerId: Number(this.userId)
                     }
