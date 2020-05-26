@@ -1,7 +1,8 @@
 import {
     addRoomAPI,
     addHotelAPI,
-    delHotelAPI
+    delHotelAPI,
+    delOrderAPI
 } from '@/api/hotelManager'
 import {
     getAllOrdersAPI,
@@ -91,7 +92,7 @@ const hotelManager = {
                 commit('set_addHotelParams', {
                     name: '',
                     address: '',
-                    bizRegion:'XiDan',
+                    bizRegion:'',
                     hotelStar:'',
                     rate: 0,
                     description:'',
@@ -194,6 +195,17 @@ const hotelManager = {
         },
         delHotel: async(dispatch ,data) => {
             const res = await delHotelAPI(data)
+            if(res){
+                //dispatch('getHotelList')
+                message.success('删除成功')
+                window.location.reload();
+                dispatch('getHotelList')
+            }else{
+                message.error('删除失败')
+            }
+        },
+        delOrder: async(dispatch ,data) => {
+            const res = await delOrderAPI(data)
             if(res){
                 //dispatch('getHotelList')
                 message.success('删除成功')

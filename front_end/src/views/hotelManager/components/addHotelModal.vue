@@ -20,6 +20,12 @@
                     v-decorator="['address', { rules: [{ required: true, message: '请填写酒店地址' }] }]"
                 />
             </a-form-item>
+            <a-form-item label="所在商圈" v-bind="formItemLayout">
+                <a-input
+                        placeholder="请填写酒店所在商圈"
+                        v-decorator="['bizRegion', { rules: [{ required: true, message: '请填写酒店所在商圈' }] }]"
+                />
+            </a-form-item>
             <a-form-item label="酒店星级" v-bind="formItemLayout">
                 <a-select
                     v-decorator="[
@@ -104,6 +110,7 @@ export default {
                         address: this.form.getFieldValue('address'),
                         phoneNum: this.form.getFieldValue('phoneNumber'),
                         hotelStar: this.form.getFieldValue('hotelStar'),
+                        bizRegion:this.form.getFieldValue('bizRegion'),
                         managerId: Number(this.userId)
                     }
                     this.set_addHotelParams(data)
