@@ -37,6 +37,7 @@ CREATE TABLE `Coupon` (
   `start_time` datetime DEFAULT NULL,
   `end_time` datetime DEFAULT NULL,
   `discount_money` int(11) DEFAULT NULL,
+  `targetRoomNum` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -46,7 +47,7 @@ CREATE TABLE `Coupon` (
 --
 BEGIN;
 /*!40000 ALTER TABLE `Coupon` DISABLE KEYS */;
-INSERT INTO `Coupon` VALUES (2,'满500-100优惠',2,3,'满减优惠券',500,0,1,NULL,NULL,100);
+INSERT INTO `Coupon` VALUES (2,'满500-100优惠',2,3,'满减优惠券',500,0,1,NULL,NULL,100,NULL);
 /*!40000 ALTER TABLE `Coupon` ENABLE KEYS */;
 COMMIT;
 
@@ -169,7 +170,7 @@ CREATE TABLE `User` (
 
 BEGIN;
 /*!40000 ALTER TABLE `User` DISABLE KEYS */;
-INSERT INTO `User` VALUES (4,'1012681@qq.com','123456','测试一号','12345678919',100,'Client','2000-5-26'),(5,'123@qq.com','123456','测试二号','12345678911',100,'Client','2000-5-27'),(6,'333@qq.com','123456',NULL,NULL,NULL,'HotelManager','2000-5-28');
+INSERT INTO `User` VALUES (4,'1012681@qq.com','123456','测试一号','12345678919',100,'Client','2000-05-26'),(5,'123@qq.com','123456','测试二号','12345678911',100,'Client','2000-05-27'),(6,'333@qq.com','123456',NULL,NULL,NULL,'HotelManager','2000-05-28');
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
 COMMIT;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

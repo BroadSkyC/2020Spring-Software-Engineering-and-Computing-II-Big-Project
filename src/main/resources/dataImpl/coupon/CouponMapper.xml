@@ -4,8 +4,8 @@
 
     <insert id="insertCoupon" parameterType="com.example.hotel.po.Coupon"
             useGeneratedKeys="true" keyProperty="id">
-        insert into Coupon(description,couponName,target_money,discount_money,start_time,end_time,hotelId,couponType,discount,status)
-        values(#{description},#{couponName},#{targetMoney},#{discountMoney},#{startTime},#{endTime},#{hotelId},#{couponType},#{discount},#{status})
+        insert into Coupon(description,couponName,target_money,discount_money,start_time,end_time,hotelId,couponType,discount,status,targetRoomNum)
+        values(#{description},#{couponName},#{targetMoney},#{discountMoney},#{startTime},#{endTime},#{hotelId},#{couponType},#{discount},#{status},#{targetRoomNum})
     </insert>
 
     <select id="selectByHotelId" resultMap="Coupon">
