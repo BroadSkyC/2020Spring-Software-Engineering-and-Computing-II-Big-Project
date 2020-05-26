@@ -23,10 +23,3 @@ export function delHotelAPI(data) {
         data,
     })
 }
-export function delOrderAPI(data) {
-    return axios({
-        url:`${api.hotelPre}/delOrder`,
-        method:'POST',
-        data,
-    })
-}

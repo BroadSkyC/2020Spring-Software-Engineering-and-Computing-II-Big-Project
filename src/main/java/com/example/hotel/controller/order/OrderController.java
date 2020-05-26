@@ -46,6 +46,7 @@ public class OrderController {
 
     @PostMapping("/delOrder")
     public ResponseVO deleOrder(@RequestBody OrderVO orderVO){
-        return orderService.delOrder(orderVO);
+        orderService.delOrder(orderVO);
+        return ResponseVO.buildSuccess(true);
     }
 }
