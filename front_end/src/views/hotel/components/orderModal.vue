@@ -220,11 +220,14 @@ export default {
                     if (item.discount!==0)
                     {
                         this.finalPrice = this.finalPrice*item.discount;
+                        this.finalPrice = this.finalPrice.toFixed(2)
                     } else{
                         if (item.targetMoney===-1){
                             this.finalPrice = this.finalPrice - item.discountMoney*this.form.getFieldValue('roomNum')
+                            this.finalPrice = this.finalPrice.toFixed(2)
                         }else{
                             this.finalPrice = this.finalPrice - item.discountMoney
+                            this.finalPrice = this.finalPrice.toFixed(2)
                         }
                     }
                 })
