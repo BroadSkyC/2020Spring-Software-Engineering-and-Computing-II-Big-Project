@@ -214,9 +214,21 @@ export default {
             this.totalPrice = Number(v) * Number(this.currentOrderRoom.price) * moment(this.form.getFieldValue('date')[1]).diff(moment(this.form.getFieldValue('date')[0]),'day')
         },
         onchange() {
-            this.finalPrice = this.totalPrice
+            this.finalPrice = this.totalPrice;
             if(this.checkedList.length>0){
-                this.orderMatchCouponList.filter(item => this.checkedList.indexOf(item.id)!=-1).forEach(item => this.finalPrice= this.finalPrice-item.discountMoney)
+                this.orderMatchCouponList.filter(item => this.checkedList.indexOf(item.id)!=-1).forEach(item=>{
+                    if (item.discount!==0)
+                    {
+                        this.finalPrice = this.finalPrice*item.discount;
+                    } else{
+                        if (item.targetMoney===-1){
+                            this.finalPrice = this.finalPrice - item.discountMoney*this.form.getFieldValue('roomNum')
+                        }else{
+                            this.finalPrice = this.finalPrice - item.discountMoney
+                        }
+                    }
+                })
+                    //item => this.finalPrice= this.finalPrice-item.discountMoney)
             }else{
                 
             }

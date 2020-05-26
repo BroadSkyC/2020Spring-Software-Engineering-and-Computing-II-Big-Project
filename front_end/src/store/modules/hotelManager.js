@@ -23,7 +23,7 @@ const hotelManager = {
         addHotelParams: {
             name: '',
             address: '',
-            bizRegion:'XiDan',
+            bizRegion:'',
             hotelStar:'',
             rate: '',
             description:'',
@@ -220,6 +220,7 @@ const hotelManager = {
             const res = await delCouponAPI(data)
             if(res){
                 message.success('删除成功')
+                window.location.reload();
                 dispatch('getHotelCoupon')
             }else{
                 message.error('删除失败')
