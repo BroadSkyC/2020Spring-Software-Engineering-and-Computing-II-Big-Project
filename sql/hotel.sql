@@ -51,6 +51,7 @@ INSERT INTO `Coupon` VALUES (2,'满500-100优惠',2,3,'满减优惠券',500,0,1,
 /*!40000 ALTER TABLE `Coupon` ENABLE KEYS */;
 COMMIT;
 
+
 --
 -- Table structure for table `Hotel`
 --
