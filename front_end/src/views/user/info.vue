@@ -40,7 +40,7 @@
                                       v-decorator="['birthday',{rules: [{required:true,message: '请选择生日'}]}]"
                                       v-if="modify"
                                       />
-<!--                        后端添加<span v-else>{{ userInfo.phoneNumber}}</span>-->
+                        <span v-else>{{ userInfo.birthday}}</span>-->
               </a-form-item>
                     <a-form-item :wrapper-col="{ span: 12, offset: 5 }" v-if="modify">
                         <a-button type="primary" @click="saveModify">
@@ -182,7 +182,8 @@ export default {
                     const data = {
                         userName: this.form.getFieldValue('userName'),
                         phoneNumber: this.form.getFieldValue('phoneNumber'),
-                        password: this.form.getFieldValue('password')
+                        password: this.form.getFieldValue('password'),
+                        birthday: this.form.getFieldValue('birthday')
                     }
                     this.updateUserInfo(data).then(()=>{
                         this.modify = false

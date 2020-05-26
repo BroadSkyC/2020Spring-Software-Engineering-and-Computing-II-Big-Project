@@ -8,7 +8,7 @@ public class UserInfoVO {
     private String password;
     private String userName;
     private String phoneNumber;
-
+    private String birthday;
 
     public String getPassword() {
         return password;
@@ -33,4 +33,8 @@ public class UserInfoVO {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+    public String getBirthday(){return birthday;};
+
+    public void setBirthday(String birthday){this.birthday = birthday;};
 }
