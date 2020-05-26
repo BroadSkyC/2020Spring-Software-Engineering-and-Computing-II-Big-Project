@@ -59,6 +59,9 @@ public class CouponController {
         requestOrderVO.setCheckOutDate(checkOut);
         return ResponseVO.buildSuccess(couponService.getMatchOrderCoupon(requestOrderVO));
     }
-
-
+    @PostMapping("/delCoupon")
+    public ResponseVO deleCoupon(@RequestBody CouponVO couponVO){
+        couponService.delCoupon(couponVO);
+        return ResponseVO.buildSuccess(true);
+    }
 }

@@ -12,6 +12,9 @@
         select * from Coupon where hotelId=#{hotelId}
     </select>
 
+    <delete id="deleteCoupon" parameterType="com.example.hotel.po.Coupon">
+        delete from Coupon where id=#{id}
+    </delete>
 
     <resultMap id="Coupon" type="com.example.hotel.po.Coupon">
         <result column="description" property="description"></result>

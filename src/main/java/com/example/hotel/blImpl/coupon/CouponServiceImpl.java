@@ -4,6 +4,7 @@ import com.example.hotel.bl.coupon.CouponService;
 import com.example.hotel.bl.coupon.CouponMatchStrategy;
 import com.example.hotel.data.coupon.CouponMapper;
 import com.example.hotel.po.Coupon;
+import com.example.hotel.po.Order;
 import com.example.hotel.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -124,5 +125,11 @@ public class CouponServiceImpl implements CouponService {
         int result = couponMapper.insertCoupon(coupon);
         couponVO.setId(result);
         return couponVO;
+    }
+    public ResponseVO delCoupon(CouponVO couponVO){
+        Coupon coupon=new Coupon();
+        coupon.setId(couponVO.getId());
+        couponMapper.deleteCoupon(coupon);
+        return  ResponseVO.buildSuccess(true);
     }
 }
