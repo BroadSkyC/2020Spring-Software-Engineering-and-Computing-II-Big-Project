@@ -74,7 +74,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ResponseVO annulOrder(int orderid) {
         //取消订单逻辑的具体实现（注意可能有和别的业务类之间的交互）
-
+        orderMapper.annulOrder(orderid);
         return ResponseVO.buildSuccess(true);
     }
 
