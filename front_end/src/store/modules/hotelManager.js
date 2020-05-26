@@ -5,6 +5,7 @@ import {
 } from '@/api/hotelManager'
 import {
     getAllOrdersAPI,
+    updateOrderAPI,
     delOrderAPI
 } from '@/api/order'
 import {
@@ -30,6 +31,9 @@ const hotelManager = {
             phoneNum:'',
             managerId:'',
         },
+        currentOrder:{
+
+        },
         addHotelModalVisible: false,
         addRoomParams: {
             roomType: '',
@@ -41,6 +45,7 @@ const hotelManager = {
         addRoomModalVisible: false,
         couponVisible: false,
         addCouponVisible: false,
+        orderVisible:false,
         activeHotelId: 0,
         couponList: [],
     },
@@ -68,6 +73,12 @@ const hotelManager = {
         },
         set_couponVisible: function(state, data) {
             state.couponVisible = data
+        },
+        set_orderVisible: function(state, data) {
+            state.orderVisible = data
+        },
+        set_currentOrder:function(state,data){
+            state.currentOrder=data
         },
         set_activeHotelId: function(state, data) {
             state.activeHotelId = data
@@ -225,6 +236,18 @@ const hotelManager = {
                 message.error('删除失败')
             }
         },
-    }
+        updateOrderInfo: async({ state, dispatch }, data) => {
+            const params = {
+                id: state.id,
+                ...data,
+            }
+            const res = await updateOrderAPI(params)
+            if(res){
+                message.success('修改成功')
+                dispatch('getUserInfo')
+            }
+        },
+    },
+
 }
 export default hotelManager

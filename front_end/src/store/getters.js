@@ -17,11 +17,14 @@ const getters = {
   addManagerParams: state => state.admin.addManagerParams,
   //hotelManager
   orderList: state => state.hotelManager.orderList,
+  currentOrder:state=> state.hotelManager.currentOrder,
+  orderVisible:state=> state.hotelManager.orderVisible,
   addHotelModalVisible: state => state.hotelManager.addHotelModalVisible,
   addRoomModalVisible: state => state.hotelManager.addRoomModalVisible,
   couponVisible: state => state.hotelManager.couponVisible,
   addCouponVisible: state => state.hotelManager.addCouponVisible,
   activeHotelId: state => state.hotelManager.activeHotelId,
+
   couponList: state => state.hotelManager.couponList,
   }
   
