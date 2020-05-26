@@ -10,7 +10,7 @@ public class Hotel {
     /**
      * 商圈
      */
-    private BizRegion bizRegion;
+    private String bizRegion;
     private HotelStar hotelStar;
     private Double rate;
     private String description;
@@ -44,11 +44,11 @@ public class Hotel {
         this.address = address;
     }
 
-    public BizRegion getBizRegion() {
+    public String getBizRegion() {
         return bizRegion;
     }
 
-    public void setBizRegion(BizRegion bizRegion) {
+    public void setBizRegion(String bizRegion) {
         this.bizRegion = bizRegion;
     }
 

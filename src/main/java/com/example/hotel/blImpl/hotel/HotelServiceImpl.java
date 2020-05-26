@@ -34,9 +34,6 @@ public class HotelServiceImpl implements HotelService {
     private AccountService accountService;
 
     @Autowired
-    private OrderService orderService;
-
-    @Autowired
     private RoomService roomService;
 
     @Override
@@ -52,7 +49,8 @@ public class HotelServiceImpl implements HotelService {
         hotel.setPhoneNum(hotelVO.getPhoneNum());
         hotel.setManagerId(hotelVO.getManagerId());
         hotel.setRate(hotelVO.getRate());
-        hotel.setBizRegion(BizRegion.valueOf(hotelVO.getBizRegion()));
+        hotel.setBizRegion(hotelVO.getBizRegion());
+        //hotel.setBizRegion(BizRegion.valueOf(hotelVO.getBizRegion()));
         hotel.setHotelStar(HotelStar.valueOf(hotelVO.getHotelStar()));
         hotelMapper.insertHotel(hotel);
     }
