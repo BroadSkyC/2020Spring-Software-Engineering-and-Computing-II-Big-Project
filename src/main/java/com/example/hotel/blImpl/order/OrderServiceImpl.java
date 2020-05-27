@@ -95,4 +95,14 @@ public class OrderServiceImpl implements OrderService {
         orderMapper.deleteOrder(order);
         return  ResponseVO.buildSuccess(true);
     }
+
+    @Override
+    public ResponseVO updateOrder(OrderVO orderVO){
+        Order order=new Order();
+        BeanUtils.copyProperties(orderVO,order);
+        order.setCheckInDate(order.getCheckInDate().substring(0,10));
+        order.setCheckOutDate(order.getCheckOutDate().substring(0,10));
+        orderMapper.updateOrder(order);
+        return ResponseVO.buildSuccess(true);
+    }
 }

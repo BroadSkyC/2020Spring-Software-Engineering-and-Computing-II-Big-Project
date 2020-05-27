@@ -75,7 +75,7 @@
     export default {
         name: "order",
         data() {
-            const format = "YYYY-MM-DD "
+            const format = "YYYY-MM-DD"
             return {
                 modify: false,
                 formItemLayout: {
@@ -120,22 +120,23 @@
                     if (!err) {
                         const data = {
                             checkInDate: this.form.getFieldValue('checkInDate'),
-                            checkOutDate: this.form.getFieldValue('phoneNumber'),
+                            checkOutDate: this.form.getFieldValue('checkOutDate'),
                             peopleNum: Number(this.form.getFieldValue('peopleNum')),
-                            price: Number(this.form.getFieldValue('price'))
+                            price: Number(this.form.getFieldValue('price')),
+                            id: this.currentOrder.id,
+                            hotelName: this.currentOrder.hotelName,
+                            roomType: this.currentOrder.roomType
                         }
                         this.updateOrderInfo(data).then(()=>{
                             this.modify = false
                         })
+                        location.reload()
                     }
                 });
             },
             modifyInfo() {
                 setTimeout(() => {
                     this.form.setFieldsValue({
-                        'id': this.currentOrder.id,
-                        'hotelName': this.currentOrder.hotelName,
-                        'roomType':this.currentOrder.roomType
                     })
                 }, 0)
                 this.modify = true

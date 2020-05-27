@@ -49,4 +49,10 @@ public class OrderController {
         orderService.delOrder(orderVO);
         return ResponseVO.buildSuccess(true);
     }
+
+    @PostMapping("/updateOrder")
+    public ResponseVO updateOrder(@RequestBody OrderVO orderVO){
+        orderService.updateOrder(orderVO);
+        return ResponseVO.buildSuccess(true);
+    }
 }

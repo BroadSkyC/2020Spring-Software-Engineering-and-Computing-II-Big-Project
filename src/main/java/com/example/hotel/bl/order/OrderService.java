@@ -47,4 +47,11 @@ public interface OrderService {
     List<Order> getHotelOrders(Integer hotelId);
 
     ResponseVO delOrder(OrderVO orderVO);
+
+    /**
+     *修改订单信息
+     * @param  orderVO
+     * @return
+     */
+    ResponseVO updateOrder(OrderVO orderVO);
 }

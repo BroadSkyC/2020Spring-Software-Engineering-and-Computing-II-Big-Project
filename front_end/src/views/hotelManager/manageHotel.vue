@@ -184,7 +184,6 @@ export default {
             'getHotelCoupon',
             'delHotel',
             'delOrder',
-
         ]),
         addHotel() {
             this.set_addHotelModalVisible(true)
