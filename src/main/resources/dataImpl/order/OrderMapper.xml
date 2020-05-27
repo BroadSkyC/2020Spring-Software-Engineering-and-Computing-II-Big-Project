@@ -17,7 +17,7 @@
     </select>
    <!--取消订单的数据库操作-->
     <update id="annulOrder">
-        update Orderlist set orderState='已取消' where id=#{id}
+        update Orderlist set orderState='已取消' where id=#{orderid}
     </update>
 
     <delete id="deleteOrder" parameterType="com.example.hotel.po.Order">
