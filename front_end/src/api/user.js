@@ -30,3 +30,18 @@ export function updateUserInfoAPI(data) {
         data
     })
 }
+export function addCommonVipAPI(data) {
+    return axios({
+        url: `${api.couponPre}/addCommonVipAPI`,
+        method: 'POST',
+        data,
+    })
+}
+export function addCompanyVipAPI(data) {
+    return axios({
+        url: `${api.couponPre}/addCompanyVipAPI`,
+        method: 'POST',
+        data,
+    })
+}
+

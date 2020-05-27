@@ -9,6 +9,7 @@ const getters = {
   currentHotelInfo: state => state.hotel.currentHotelInfo,
   currentHotelId: state => state.hotel.currentHotelId,
   orderModalVisible: state => state.hotel.orderModalVisible,
+  registerVipVisible: state=> state.user.registerVipVisible,
   currentOrderRoom: state => state.hotel.currentOrderRoom,
   orderMatchCouponList: state => state.hotel.orderMatchCouponList,
   //admin

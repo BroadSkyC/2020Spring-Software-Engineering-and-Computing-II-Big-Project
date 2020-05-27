@@ -8,6 +8,8 @@ import {
     registerAPI,
     getUserInfoAPI,
     updateUserInfoAPI,
+    addCommonVipAPI,
+    addCompanyVipAPI
 } from '@/api/user'
 
 import {
@@ -23,7 +25,8 @@ const getDefaultState = () => {
         },
         userOrderList: [
 
-        ]
+        ],
+        registerVipVisible:false
     }
 }
 
@@ -56,7 +59,10 @@ const user = {
         },
         set_userOrderList: (state, data) => {
             state.userOrderList = data
-        }
+        },
+        set_RegisterVipVisible: function(state, data) {
+            state.registerVipVisible = data
+        },
     },
 
     actions: {
@@ -99,6 +105,28 @@ const user = {
             if(res){
                 message.success('修改成功')
                 dispatch('getUserInfo')
+            }
+        },
+        addCommonVip: async({ commit, dispatch }, data) => {
+            const res = await addCommonVipAPI(data)
+            if(res){
+                // 添加成功后的操作（提示文案、modal框显示与关闭，调用优惠列表策略等）
+                commit('set_RegisterVipVisible', false)
+                message.success("您已成功成为普通会员")
+            }else{
+                // 添加失败后的操作
+                message.error('注册会员失败')
+            }
+        },
+        addCompanyVip: async({ commit, dispatch }, data) => {
+            const res = await addCompanyVipAPI(data)
+            if(res){
+                // 添加成功后的操作（提示文案、modal框显示与关闭，调用优惠列表策略等）
+                commit('set_RegisterVipVisible', false)
+                message.success("您已成功成为企业会员")
+            }else{
+                // 添加失败后的操作
+                message.error('注册会员失败')
             }
         },
         getUserOrders: async({ state, commit }) => {

@@ -33,7 +33,7 @@
                             v-decorator="['password', { rules: [{ required: true, message: '请输入新密码' }] }]"
                         />
                     </a-form-item>
-                    <a-form-item label="生日" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }" v-if="modify">
+                    <a-form-item label="生日" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }" >
                         <AWeekPicker  :format="format"
                                       showTime
                                       onChange={onChange}
@@ -50,10 +50,13 @@
                             取消
                         </a-button>
                     </a-form-item>
-                     <a-form-item :wrapper-col="{ span: 8, offset: 4 }" v-else>
+                     <a-form-item :wrapper-col="{ span: 12, offset: 5 }" v-else>
                         <a-button type="primary" @click="modifyInfo">
                             修改信息
                         </a-button>
+                         <a-button type="primary" style="margin-left: 30px" @click="showRegisterVip">
+                             注册会员
+                         </a-button>
                     </a-form-item>
                 </a-form>
             </a-tab-pane>
@@ -92,10 +95,12 @@
                 </a-table>
             </a-tab-pane>
         </a-tabs>
+        <RegisterVip></RegisterVip>
     </div>
 </template>
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex'
+import RegisterVip from './components/RegisterVip'
 const columns = [
     {  
         title: '订单号',
@@ -157,6 +162,7 @@ export default {
         }
     },
     components: {
+        RegisterVip
     },
     computed: {
         ...mapGetters([
@@ -170,6 +176,9 @@ export default {
         await this.getUserOrders()
     },
     methods: {
+        ...mapMutations([
+            'set_RegisterVipVisible'
+        ]),
         ...mapActions([
             'getUserInfo',
             'getUserOrders',
@@ -199,6 +208,14 @@ export default {
                 })
             }, 0)
             this.modify = true
+        },
+        showRegisterVip(){
+            if(this.userInfo.credit>=100) {
+                this.set_RegisterVipVisible(true)
+            }
+            else{
+                this.$message.error('必须信用值高于100才能注册成为会员')
+            }
         },
         cancelModify() {
             this.modify = false
