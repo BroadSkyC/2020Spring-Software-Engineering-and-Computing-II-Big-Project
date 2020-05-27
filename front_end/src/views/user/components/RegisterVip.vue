@@ -9,8 +9,11 @@
             @ok="handleSubmit"
     >
         <a-form :form="form" style="margin-top: 30px" v-bind="formItemLayout">
-            <a-form-item label="绑定邮箱" v-bind="formItemLayout" >
-                <a-input placeholder="请绑定会员邮箱" v-decorator="['email',{rules:[{required:true,message:'请绑定会员邮箱'}]}]"/>
+            <a-form-item label="用户名" v-bind="formItemLayout" >
+                <span>{{userInfo.userName}}</span>
+            </a-form-item>
+            <a-form-item label="邮箱" v-bind="formItemLayout" >
+                <span>{{userInfo.email}}</span>
             </a-form-item>
             <a-form-item label="会员类型" v-bind="formItemLayout">
                 <a-select v-decorator="['type',{rules: [{required:true,message: '请选择注册会员的类型'}]}]"  @change="changeType">
@@ -50,6 +53,7 @@
         computed: {
             ...mapGetters([
                 'registerVipVisible',
+                'userInfo'
             ])
         },
         methods:{
@@ -78,14 +82,15 @@
                         if (this.form.getFieldValue('type')==='1'){
                             const data = {
                                 // 这里添加接口参数
-                                email:this.form.getFieldValue('email'),
+                                email:this.userInfo.email,
                             }
                             this.addCommonVip(data)
                             this.form.resetFields()
                         }
                         else{
                             const data={
-                                email:this.form.getFieldValue('email'),
+                                // email:this.form.getFieldValue('email'),
+                                email:this.userInfo.email,
                                 comName:this.form.getFieldValue('comName')
                             }
                             this.addCompanyVip(data)
