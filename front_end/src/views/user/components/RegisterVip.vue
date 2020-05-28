@@ -24,6 +24,13 @@
                 <a-form-item label="企业名称" v-bind="formItemLayout" v-if="this.form.getFieldValue('type')==='2'">
                     <a-input placeholder="请填写企业名称" v-decorator="['company',{rules:[{required:true,message:'请填写企业名称'}]}]"/>
                 </a-form-item>
+            <a-form-item label="生日" v-bind="formItemLayout"  v-if="this.form.getFieldValue('type')==='1'">
+                <AWeekPicker  :format="format"
+                              showTime
+                              onChange={onChange}
+                              v-decorator="['birthday',{rules: [{required:true,message: '请选择生日'}]}]"
+                />
+            </a-form-item>
         </a-form>
         </a-modal>
 </template>
@@ -69,9 +76,9 @@
             },
             changeType(v){
                 if( v == '2') {
-
+                    this.$message.info('请填写企业名')
                 }else{
-                    this.$message.info('请完善我的信息中的生日信息，否则无法享受生日特惠')
+                    this.$message.info('请完善生日信息，否则无法享受生日特惠')
                 }
             },
             handleSubmit(e){
@@ -82,7 +89,8 @@
                         if (this.form.getFieldValue('type')==='1'){
                             const data = {
                                 // 这里添加接口参数
-                                id:this.userInfo.id
+                                id:this.userInfo.id,
+                                birthday:this.form.getFieldValue('birthday')
                             }
                             this.addCommonVip(data)
                             this.form.resetFields()

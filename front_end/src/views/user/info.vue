@@ -34,13 +34,13 @@
                         />
                     </a-form-item>
                     <a-form-item label="生日" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }" >
-                        <AWeekPicker  :format="format"
-                                      showTime
-                                      onChange={onChange}
-                                      v-decorator="['birthday',{rules: [{required:true,message: '请选择生日'}]}]"
-                                      v-if="modify"
-                                      />
-                        <span v-else>{{
+<!--                        <AWeekPicker  :format="format"-->
+<!--                                      showTime-->
+<!--                                      onChange={onChange}-->
+<!--                                      v-decorator="['birthday',{rules: [{required:true,message: '请选择生日'}]}]"-->
+<!--                                      v-if="modify"-->
+<!--                                      />-->
+                        <span>{{
                             userInfo.birthday==null? '': userInfo.birthday.substring(0,10)}}</span>
               </a-form-item>
                     <a-form-item label="会员类型" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }" v-if="userInfo.vipType=='Common'">
@@ -207,7 +207,7 @@ export default {
                         userName: this.form.getFieldValue('userName'),
                         phoneNumber: this.form.getFieldValue('phoneNumber'),
                         password: this.form.getFieldValue('password'),
-                        birthday: this.form.getFieldValue('birthday')
+                        // birthday: this.form.getFieldValue('birthday')
                     }
                     this.updateUserInfo(data).then(()=>{
                         this.modify = false
