@@ -43,14 +43,7 @@
                     <span slot="action" slot-scope="record">
                         <a-button type="primary" size="small" @click="showOrder(record)">订单详情</a-button>
                         <a-divider type="vertical"></a-divider>
-                        <a-popconfirm
-                            title="确定想删除该订单吗？"
-                            @confirm="deleteOrder(record)"
-                            okText="确定"
-                            cancelText="取消"
-                        >
-                            <a-button type="danger" size="small">删除订单</a-button>
-                        </a-popconfirm>
+                        <a-button type="primary" size="small" @click="showchangeState(record)">更改状态</a-button>
                     </span>
                 </a-table>
             </a-tab-pane>
@@ -60,6 +53,7 @@
         <AddRoomModal></AddRoomModal>
         <Coupon></Coupon>
         <Order></Order>
+        <ChangeState></ChangeState>>
     </div>
 </template>
 <script>
@@ -68,6 +62,7 @@ import AddHotelModal from './components/addHotelModal'
 import AddRoomModal from './components/addRoomModal'
 import Order from './components/Order'
 import Coupon from './components/coupon'
+import ChangeState from './components/changeState'
 const moment = require('moment')
 const columns1 = [
     {  
@@ -133,6 +128,13 @@ const columns2 = [
         dataIndex: 'price',
     },
     {
+        title: '状态',
+        filters: [{ text: '已预订', value: '已预订' }, { text: '已撤销', value: '已撤销' }, { text: '已入住', value: '已入住' },{ text: '已完成', value: '已完成' }],
+        onFilter: (value, record) => record.orderState.includes(value),
+        dataIndex: 'orderState',
+        scopedSlots: { customRender: 'orderState' }
+    },
+    {
       title: '操作',
       key: 'action',
       scopedSlots: { customRender: 'action' },
@@ -153,7 +155,8 @@ export default {
         AddHotelModal,
         AddRoomModal,
         Coupon,
-        Order
+        Order,
+        ChangeState,
     },
     computed: {
         ...mapGetters([
@@ -176,7 +179,8 @@ export default {
             'set_couponVisible',
             'set_orderVisible',
             'set_activeHotelId',
-            'set_currentOrder'
+            'set_currentOrder',
+            'set_updateOrderStateVisible',
         ]),
         ...mapActions([
             'getHotelList',
@@ -207,7 +211,10 @@ export default {
         deleteOrder(record){
             this.delOrder(record)
         },
-
+        showchangeState(record){
+            this.set_currentOrder(record)
+            this.set_updateOrderStateVisible(true)
+        },
     }
 }
 </script>

@@ -41,3 +41,10 @@ export function updateOrderAPI(data) {
         data,
     })
 }
+export function updateOrderStateAPI(data) {
+    return axios({
+        url: `${api.orderPre}/updateOrderState`,
+        method: 'POST',
+        data,
+    })
+}

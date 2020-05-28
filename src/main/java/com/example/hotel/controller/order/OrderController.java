@@ -55,4 +55,10 @@ public class OrderController {
         orderService.updateOrder(orderVO);
         return ResponseVO.buildSuccess(true);
     }
+
+    @PostMapping("/updateOrderState")
+    public ResponseVO updateOrderState(@RequestBody OrderVO orderVO){
+        orderService.updateOrderState(orderVO);
+        return ResponseVO.buildSuccess(true);
+    }
 }

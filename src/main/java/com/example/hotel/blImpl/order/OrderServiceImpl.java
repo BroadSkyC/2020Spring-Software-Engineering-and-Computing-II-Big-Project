@@ -105,4 +105,12 @@ public class OrderServiceImpl implements OrderService {
         orderMapper.updateOrder(order);
         return ResponseVO.buildSuccess(true);
     }
+
+    @Override
+    public ResponseVO updateOrderState(OrderVO orderVO){
+        Order order=new Order();
+        BeanUtils.copyProperties(orderVO,order);
+        orderMapper.updateOrderState(order);
+        return ResponseVO.buildSuccess(true);
+    }
 }

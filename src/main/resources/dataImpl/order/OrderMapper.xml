@@ -28,6 +28,10 @@
         update Orderlist set checkInDate=#{checkInDate},checkOutDate=#{checkOutDate},peopleNum=#{peopleNum},price=#{price} where id=#{id}
     </update>
 
+    <update id="updateOrderState" parameterType="com.example.hotel.po.Order">
+        update Orderlist set orderState=#{orderState} where id=#{id}
+    </update>
+
     <resultMap id="Order" type="com.example.hotel.po.Order">
     </resultMap>
 </mapper>

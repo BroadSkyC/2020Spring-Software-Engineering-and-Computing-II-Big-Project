@@ -6,6 +6,7 @@ import {
 import {
     getAllOrdersAPI,
     updateOrderAPI,
+    updateOrderStateAPI,
     delOrderAPI
 } from '@/api/order'
 import {
@@ -46,6 +47,7 @@ const hotelManager = {
         couponVisible: false,
         addCouponVisible: false,
         orderVisible:false,
+        updateOrderStateVisible:false,
         activeHotelId: 0,
         couponList: [],
     },
@@ -76,6 +78,9 @@ const hotelManager = {
         },
         set_orderVisible: function(state, data) {
             state.orderVisible = data
+        },
+        set_updateOrderStateVisible: function(state, data) {
+            state.updateOrderStateVisible = data
         },
         set_currentOrder:function(state,data){
             state.currentOrder=data
@@ -248,6 +253,19 @@ const hotelManager = {
                 dispatch('getUserInfo')
             }
         },
+         updateOrderState: async ({state,dispatch},data)=>{
+            const params={
+                id:state.id,
+                ...data,
+            }
+            const res=await updateOrderStateAPI(params)
+            if(res){
+                message.success('修改成功')
+                dispatch('getAllOrders')
+            }else{
+                message.error('修改失败')
+            }
+         },
     },
 
 }
