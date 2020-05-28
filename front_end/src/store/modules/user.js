@@ -26,7 +26,8 @@ const getDefaultState = () => {
         userOrderList: [
 
         ],
-        registerVipVisible:false
+        registerVipVisible:false,
+        viewOrderVisible:false
     }
 }
 
@@ -63,6 +64,9 @@ const user = {
         set_RegisterVipVisible: function(state, data) {
             state.registerVipVisible = data
         },
+        set_viewOrderVisible: function (state,data) {
+            state.viewOrderVisible=data
+        }
     },
 
     actions: {

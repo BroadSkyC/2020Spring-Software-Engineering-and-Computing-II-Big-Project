@@ -78,7 +78,7 @@
                         {{ text }}
                     </a-tag>
                     <span slot="action" slot-scope="record">
-                        <a-button type="primary" size="small">查看</a-button>
+                        <a-button type="primary" size="small" @click="showViewOrder(record)">查看</a-button>
                         <a-divider type="vertical" v-if="record.orderState == '已预订'"></a-divider>
                         <a-popconfirm
                             title="你确定撤销该笔订单吗？"
@@ -96,11 +96,13 @@
             </a-tab-pane>
         </a-tabs>
         <RegisterVip></RegisterVip>
+        <ViewOrder></ViewOrder>
     </div>
 </template>
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 import RegisterVip from './components/RegisterVip'
+import ViewOrder from "./components/viewOrder";
 const columns = [
     {  
         title: '订单号',
@@ -162,6 +164,7 @@ export default {
         }
     },
     components: {
+        ViewOrder,
         RegisterVip
     },
     computed: {
@@ -177,7 +180,9 @@ export default {
     },
     methods: {
         ...mapMutations([
-            'set_RegisterVipVisible'
+            'set_RegisterVipVisible',
+            'set_viewOrderVisible',
+            'set_currentOrder'
         ]),
         ...mapActions([
             'getUserInfo',
@@ -216,6 +221,10 @@ export default {
             else{
                 this.$message.error('必须信用值高于100才能注册成为会员')
             }
+        },
+        showViewOrder(record){
+            this.set_currentOrder(record)
+            this.set_viewOrderVisible(true)
         },
         cancelModify() {
             this.modify = false
