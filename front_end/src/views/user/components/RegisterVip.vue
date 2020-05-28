@@ -86,6 +86,7 @@
                             }
                             this.addCommonVip(data)
                             this.form.resetFields()
+                            this.window.location.reload()
                         }
                         else{
                             const data={
@@ -94,6 +95,7 @@
                             }
                             this.addCompanyVip(data)
                             this.form.resetFields()
+                            this.window.location.reload()
                         }
                     }
                 });
