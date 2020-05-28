@@ -5,7 +5,7 @@ const api = {
 export function getHotelsAPI() {
     return axios({
         url: `${api.hotelPre}/all`,
-        method: 'get',
+        method: 'GET',
     })
 }
 export function getHotelByIdAPI(param) {

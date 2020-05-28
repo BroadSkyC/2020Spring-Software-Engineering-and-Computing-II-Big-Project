@@ -72,16 +72,16 @@ export default {
             'managerList'
         ])
     },
-    mounted() {
-      this.getManagerList()
+    async mounted() {
+        await this.getManagerList()
     },
     methods: {
+        ...mapMutations([
+            'set_addManagerModalVisible'
+        ]),
         ...mapActions([
             'getManagerList',
             'delManager'
-        ]),
-        ...mapMutations([
-            'set_addManagerModalVisible'
         ]),
         addManager(){
             this.set_addManagerModalVisible(true)
