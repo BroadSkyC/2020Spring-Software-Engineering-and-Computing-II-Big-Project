@@ -39,5 +39,6 @@ public interface AccountService {
      * @return
      */
     ResponseVO updateUserInfo(int id, String password,String username,String phonenumber, String birthday);
-
+    ResponseVO addcommonVip(UserVO userVO);
+    ResponseVO addcompanyVip(UserVO userVO);
 }

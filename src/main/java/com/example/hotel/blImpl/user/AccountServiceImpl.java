@@ -60,4 +60,20 @@ public class AccountServiceImpl implements AccountService {
         return ResponseVO.buildSuccess(true);
     }
 
+    @Override
+    public ResponseVO addcommonVip(UserVO userVO){
+        User user=new User();
+        user.setId(userVO.getId());
+        accountMapper.addCommonVip(user);
+        return  ResponseVO.buildSuccess(true);
+    }
+
+    @Override
+    public ResponseVO addcompanyVip(UserVO userVO){
+        User user=new User();
+        user.setId(userVO.getId());
+        user.setCompany(userVO.getCompany());
+        accountMapper.addCompanyVip(user);
+        return  ResponseVO.buildSuccess(true);
+    }
 }

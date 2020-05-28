@@ -2,6 +2,7 @@ package com.example.hotel.po;
 
 
 import com.example.hotel.enums.UserType;
+import com.example.hotel.enums.VipType;
 
 public class User {
     private Integer id;
@@ -12,6 +13,8 @@ public class User {
     private double credit;
     private UserType userType;
     private String birthday;
+    private VipType vipType;
+    private String company;
 
     public Integer getId() {
         return id;
@@ -72,4 +75,12 @@ public class User {
     public String getBirthday(){return birthday;};
 
     public void setBirthday(String birthday){this.birthday = birthday;};
+
+    public VipType getVipType(){return  vipType;}
+
+    public void setVipType(VipType vipType){this.vipType=vipType;}
+
+    public  String getCompany(){return company;}
+
+    public void setCompany(String company){this.company=company;}
 }

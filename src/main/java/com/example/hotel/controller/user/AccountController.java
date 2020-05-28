@@ -49,4 +49,14 @@ public class AccountController {
 
     }
 
+    @PostMapping("/addCommonVip")
+    public ResponseVO addCommvip(@RequestBody UserVO userVO ){
+        return accountService.addcommonVip(userVO);
+    }
+
+    @PostMapping("/addCompanyVip")
+    public ResponseVO addCompvip(@RequestBody UserVO userVO ){
+        return accountService.addcompanyVip(userVO);
+    }
+
 }
