@@ -9,11 +9,11 @@
             @ok="handleSubmit"
     >
         <a-form :form="form" style="margin-top: 30px" v-bind="formItemLayout">
+            <a-form-item label="用户ID" v-bind="formItemLayout" >
+            <span>{{userInfo.id}}</span>
+            </a-form-item>
             <a-form-item label="用户名" v-bind="formItemLayout" >
                 <span>{{userInfo.userName}}</span>
-            </a-form-item>
-            <a-form-item label="邮箱" v-bind="formItemLayout" >
-                <span>{{userInfo.email}}</span>
             </a-form-item>
             <a-form-item label="会员类型" v-bind="formItemLayout">
                 <a-select v-decorator="['type',{rules: [{required:true,message: '请选择注册会员的类型'}]}]"  @change="changeType">
@@ -22,7 +22,7 @@
                 </a-select>
             </a-form-item>
                 <a-form-item label="企业名称" v-bind="formItemLayout" v-if="this.form.getFieldValue('type')==='2'">
-                    <a-input placeholder="请填写企业名称" v-decorator="['comName',{rules:[{required:true,message:'请填写企业名称'}]}]"/>
+                    <a-input placeholder="请填写企业名称" v-decorator="['company',{rules:[{required:true,message:'请填写企业名称'}]}]"/>
                 </a-form-item>
         </a-form>
         </a-modal>
@@ -82,16 +82,15 @@
                         if (this.form.getFieldValue('type')==='1'){
                             const data = {
                                 // 这里添加接口参数
-                                email:this.userInfo.email,
+                                id:this.userInfo.id
                             }
                             this.addCommonVip(data)
                             this.form.resetFields()
                         }
                         else{
                             const data={
-                                // email:this.form.getFieldValue('email'),
-                                email:this.userInfo.email,
-                                comName:this.form.getFieldValue('comName')
+                                id:this.userInfo.id,
+                                company:this.form.getFieldValue('company')
                             }
                             this.addCompanyVip(data)
                             this.form.resetFields()

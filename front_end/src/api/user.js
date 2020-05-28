@@ -32,14 +32,14 @@ export function updateUserInfoAPI(data) {
 }
 export function addCommonVipAPI(data) {
     return axios({
-        url: `${api.couponPre}/addCommonVipAPI`,
+        url: `${api.userPre}/addCommonVip`,
         method: 'POST',
         data,
     })
 }
 export function addCompanyVipAPI(data) {
     return axios({
-        url: `${api.couponPre}/addCompanyVipAPI`,
+        url: `${api.userPre}/addCompanyVip`,
         method: 'POST',
         data,
     })
