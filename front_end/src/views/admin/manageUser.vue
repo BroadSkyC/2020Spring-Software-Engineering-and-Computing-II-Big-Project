@@ -13,8 +13,8 @@
                     <span slot="price" slot-scope="text">
                         <span>￥{{ text }}</span>
                     </span>
-                    <span slot="action" slot-scope="text, record">
-                        <a-button type="danger" @click="order(record)">删除用户</a-button>
+                    <span slot="action" slot-scope="record">
+                        <a-button type="danger" @click="delManager(record)">删除用户</a-button>
                     </span>
                 </a-table>
             </a-tab-pane>
@@ -77,13 +77,17 @@ export default {
     },
     methods: {
         ...mapActions([
-            'getManagerList'
+            'getManagerList',
+            'delManager'
         ]),
         ...mapMutations([
             'set_addManagerModalVisible'
         ]),
         addManager(){
             this.set_addManagerModalVisible(true)
+        },
+        delManager(record){
+            this.delManager(record)
         }
     }
 }

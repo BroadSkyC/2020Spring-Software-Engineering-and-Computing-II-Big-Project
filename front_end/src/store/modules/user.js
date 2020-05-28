@@ -117,6 +117,7 @@ const user = {
                 // 添加成功后的操作（提示文案、modal框显示与关闭，调用优惠列表策略等）
                 commit('set_RegisterVipVisible', false)
                 message.success("您已成功成为普通会员")
+                window.location.reload();
             }else{
                 // 添加失败后的操作
                 message.error('注册会员失败')
@@ -128,6 +129,7 @@ const user = {
                 // 添加成功后的操作（提示文案、modal框显示与关闭，调用优惠列表策略等）
                 commit('set_RegisterVipVisible', false)
                 message.success("您已成功成为企业会员")
+                window.location.reload();
             }else{
                 // 添加失败后的操作
                 message.error('注册会员失败')
