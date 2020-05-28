@@ -36,5 +36,7 @@
         <result column="credit" property="credit"></result>
         <result column="usertype" property="userType"></result>
         <result column="birthday" property="birthday"></result>
+        <result column="viptype" property="viptype"></result>
+        <result column="company" property="company"></result>
     </resultMap>
 </mapper>
