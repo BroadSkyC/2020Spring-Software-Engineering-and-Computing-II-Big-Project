@@ -40,7 +40,8 @@
                                       v-decorator="['birthday',{rules: [{required:true,message: '请选择生日'}]}]"
                                       v-if="modify"
                                       />
-                        <span v-else>{{ userInfo.birthday.substring(0,10)}}</span>
+                        <span v-else>{{
+                            userInfo.birthday==null? '': userInfo.birthday.substring(0,10)}}</span>
               </a-form-item>
                     <a-form-item label="会员类型" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }" v-if="userInfo.vipType=='Common'">
                         <span>普通会员</span>
