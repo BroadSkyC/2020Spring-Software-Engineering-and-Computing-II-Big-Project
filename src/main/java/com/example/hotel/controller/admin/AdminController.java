@@ -23,7 +23,7 @@ public class AdminController {
         return adminService.addManager(userForm);
     }
 
-    @GetMapping("/getAllManagers")
+    @GetMapping("/getManagerList")
     public ResponseVO getAllManagers(){
         return ResponseVO.buildSuccess(adminService.getManagerList());
     }
