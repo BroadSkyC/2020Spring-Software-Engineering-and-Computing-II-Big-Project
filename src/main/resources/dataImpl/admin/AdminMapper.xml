@@ -10,7 +10,7 @@
     </select>
 
     <delete id="delManager" parameterType="com.example.hotel.po.User">
-        delete from User where id=#{id}
+        delete from User where email=#{email}
     </delete>
 
     <resultMap id="User" type="com.example.hotel.po.User">
