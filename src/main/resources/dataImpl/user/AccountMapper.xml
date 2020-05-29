@@ -17,7 +17,7 @@
     </update>
 
     <update id="addCommonVip" parameterType="com.example.hotel.po.User">
-        update User set viptype='Common'
+        update User set viptype='Common',birthday=#{birthday}
         where id=#{id}
     </update>
 
@@ -34,9 +34,9 @@
         <result column="username" property="userName"></result>
         <result column="phonenumber" property="phoneNumber"></result>
         <result column="credit" property="credit"></result>
-        <result column="usertype" property="userType"></result>
+        <result column="userType" property="userType"></result>
         <result column="birthday" property="birthday"></result>
-        <result column="viptype" property="viptype"></result>
+        <result column="viptype" property="vipType"></result>
         <result column="company" property="company"></result>
     </resultMap>
 </mapper>

@@ -33,7 +33,7 @@
                             v-decorator="['password', { rules: [{ required: true, message: '请输入新密码' }] }]"
                         />
                     </a-form-item>
-                    <a-form-item label="生日" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }" >
+                    <a-form-item label="生日" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }"  v-if="userInfo.vipType=='Common'">
 <!--                        <AWeekPicker  :format="format"-->
 <!--                                      showTime-->
 <!--                                      onChange={onChange}-->
@@ -64,7 +64,7 @@
                         <a-button type="primary" @click="modifyInfo">
                             修改信息
                         </a-button>
-                         <a-button type="primary" style="margin-left: 30px" @click="showRegisterVip" v-if="userInfo.vipType==null">
+                         <a-button type="primary" style="margin-left: 30px" @click="showRegisterVip" v-if="userInfo.userType=='Client'">
                              注册会员
                          </a-button>
                     </a-form-item>
