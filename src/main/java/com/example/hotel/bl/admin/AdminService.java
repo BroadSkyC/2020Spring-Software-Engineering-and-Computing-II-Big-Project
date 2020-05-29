@@ -23,7 +23,12 @@ public interface AdminService {
      * 获得所有酒店管理人员信息
      * @return
      */
-    List<User> getAllManagers();
+    List<User> getManagerList();
 
-
+    /**
+     * 删除酒店管理人员账号
+     * @param userForm
+     * @return
+     */
+    ResponseVO delManager(UserForm userForm);
 }

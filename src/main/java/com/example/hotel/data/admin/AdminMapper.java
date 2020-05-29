@@ -17,4 +17,6 @@ public interface AdminMapper {
     int addManager(User user);
 
     List<User> getAllManagers();
+
+    int delManager(User user);
 }

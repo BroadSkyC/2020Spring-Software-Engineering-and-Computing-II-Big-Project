@@ -5,10 +5,7 @@ import com.example.hotel.blImpl.admin.AdminServiceImpl;
 import com.example.hotel.vo.ResponseVO;
 import com.example.hotel.vo.UserForm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Author: chenyizong
@@ -26,10 +23,13 @@ public class AdminController {
         return adminService.addManager(userForm);
     }
 
-    @PostMapping("/getAllManagers")
+    @GetMapping("/getAllManagers")
     public ResponseVO getAllManagers(){
-        return ResponseVO.buildSuccess(adminService.getAllManagers());
+        return ResponseVO.buildSuccess(adminService.getManagerList());
     }
 
-
+    @PostMapping("/delManager")
+    public ResponseVO delManager(@RequestBody UserForm userForm){
+        return adminService.delManager(userForm);
+    }
 }
