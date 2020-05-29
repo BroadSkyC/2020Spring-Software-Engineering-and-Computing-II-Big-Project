@@ -64,7 +64,7 @@
                         <a-button type="primary" @click="modifyInfo">
                             修改信息
                         </a-button>
-                         <a-button type="primary" style="margin-left: 30px" @click="showRegisterVip" v-if="userInfo.userType=='Client'">
+                         <a-button type="primary" style="margin-left: 30px" @click="showRegisterVip" v-if="userInfo.userType=='Client' && userInfo.vipType==null">
                              注册会员
                          </a-button>
                     </a-form-item>

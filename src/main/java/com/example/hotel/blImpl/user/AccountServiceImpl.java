@@ -63,7 +63,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public ResponseVO addcommonVip(UserVO userVO){
         User user=new User();
-        user.setId(userVO.getId());
+        BeanUtils.copyProperties(userVO,user);
         accountMapper.addCommonVip(user);
         return  ResponseVO.buildSuccess(true);
     }
