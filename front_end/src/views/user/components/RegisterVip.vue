@@ -93,7 +93,7 @@
                                 birthday:this.form.getFieldValue('birthday')
                             }
                             this.addCommonVip(data)
-                            this.form.resetFields()
+                             this.form.resetFields()
                         }
                         else{
                             const data={
@@ -101,7 +101,7 @@
                                 company:this.form.getFieldValue('company')
                             }
                             this.addCompanyVip(data)
-                            this.form.resetFields()
+                             this.form.resetFields()
                         }
                     }
                 });

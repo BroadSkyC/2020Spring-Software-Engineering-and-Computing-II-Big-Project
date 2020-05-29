@@ -14,7 +14,7 @@
                         <span>￥{{ text }}</span>
                     </span>
                     <span slot="action" slot-scope="record">
-                        <a-button type="danger" @click="delManager(record)">删除用户</a-button>
+                        <a-button type="danger" @click="deleteManager(record)">删除用户</a-button>
                     </span>
                 </a-table>
             </a-tab-pane>
@@ -86,7 +86,7 @@ export default {
         addManager(){
             this.set_addManagerModalVisible(true)
         },
-        delManager(record){
+        deleteManager(record){
             this.delManager(record)
         }
     }
