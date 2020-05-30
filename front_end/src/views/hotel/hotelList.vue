@@ -2,6 +2,17 @@
   <div class="hotelList">
     <a-layout>
         <a-layout-content style="min-width: 800px">
+            <div class="search-bar">
+                <div class="search-cont"
+                    >
+                    <a-input style="margin-left: 30px" placeholder="搜索酒店名或商圈" v-model="searchStr"/>
+                </div>
+                <div class="search-cont">
+                    <a-button
+                            type="primary" style="margin-left: 10px"
+                            @click="handleSearch">查询</a-button>
+                </div>
+            </div>
           <a-spin :spinning="hotelListLoading">
             <div class="card-wrapper">
                 <HotelCard :hotel="item" v-for="item in hotelList" :key="item.index" @click.native="jumpToDetails(item.id)"></HotelCard>
@@ -21,11 +32,27 @@ import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
   name: 'home',
   components: {
-    HotelCard
+    HotelCard,
   },
   data(){
     return{
-      emptyBox: [{ name: 'box1' }, { name: 'box2'}, {name: 'box3'}]
+        searchStr: '',
+        searchData: '',
+      emptyBox: [{ name: 'box1' }, { name: 'box2'}, {name: 'box3'}],
+        inputs: [
+            {
+                title: "酒店名",
+                model: 'input1',
+            },
+            {
+                title: "商圈名",
+                model: 'input1',
+                width: 100
+            },
+        ],
+        selects: [
+
+        ],
     }
   },
   async mounted() {
@@ -40,7 +67,8 @@ export default {
   methods: {
     ...mapMutations([
       'set_hotelListParams',
-      'set_hotelListLoading'
+      'set_hotelListLoading',
+        'set_hotelList'
     ]),
     ...mapActions([
       'getHotelList'
@@ -54,6 +82,16 @@ export default {
       this.set_hotelListLoading(true)
       this.getHotelList()
     },
+      handleSearch: function(){
+        console.log("进入")
+         var  search=this.searchStr;
+        console.log(search)
+          console.log(this.hotelList)
+         if(search){
+             this.searchData=this.hotelList.filter(value=> value.name.indexOf(search)!==-1 )
+         }
+         this.set_hotelList(this.searchData)
+      },
     jumpToDetails(id){
       this.$router.push({ name: 'hotelDetail', params: { hotelId: id }})
     }
@@ -80,5 +118,14 @@ export default {
       position: relative;
       height: 188px;
     }
+      .search-bar{
+          display: flex;
+          flex-wrap: wrap;
+      }
+      .search-cont{
+          display: flex;
+          align-items: center;
+          margin: 0px 0px 0px 0px;
+      }
   }
 </style>
