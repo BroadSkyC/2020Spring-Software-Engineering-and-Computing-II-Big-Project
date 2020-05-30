@@ -207,7 +207,7 @@ export default {
                 this.totalPrice = this.form.getFieldValue('roomNum') * moment(v[1]).diff(moment(v[0]), 'day') * Number(this.currentOrderRoom.price)
                 this.finalPrice = this.totalPrice;
                 this.finalPrice = this.finalPrice.toFixed(2)
-                //this.onchange();
+                this.onchange();
             }
         },
         changePeopleNum(v){
@@ -217,7 +217,20 @@ export default {
             this.totalPrice = Number(v) * Number(this.currentOrderRoom.price) * moment(this.form.getFieldValue('date')[1]).diff(moment(this.form.getFieldValue('date')[0]),'day')
             this.finalPrice = this.totalPrice;
             this.finalPrice = this.finalPrice.toFixed(2)
+            this.roomNum =  v
+            if(this.checkedList.length>0) {
+                this.orderMatchCouponList.filter(item => this.checkedList.indexOf(item.id) != -1).forEach(item => {
+                    if (item.targetRoomNum != null) {
+                        if (v >= item.targetRoomNum) {
+                            this.onchange()
+                        }
+                    } else {
+                    }
+                })
+            }
+
             //this.onchange();
+
         },
         onchange() {
             this.finalPrice = this.totalPrice;
@@ -230,7 +243,7 @@ export default {
                         this.finalPrice = this.finalPrice.toFixed(2)
                     } else{
                         if (item.targetMoney===-1){
-                            this.finalPrice = this.finalPrice - item.discountMoney*this.form.getFieldValue('roomNum')
+                            this.finalPrice = this.finalPrice - item.discountMoney*this.roomNum;
                             this.finalPrice = this.finalPrice.toFixed(2)
 
                         }else{
