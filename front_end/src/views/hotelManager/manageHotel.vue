@@ -106,6 +106,8 @@ const columns2 = [
     },
     {
         title: '房型',
+        filters: [{ text: '大床房', value: 'BigBed' }, { text: '双床房', value: 'DoubleBed' }, { text: '家庭房', value: 'Family' }],
+        onFilter: (value, record) => record.roomType.includes(value),
         dataIndex: 'roomType',
         scopedSlots: { customRender: 'roomType' }
     },

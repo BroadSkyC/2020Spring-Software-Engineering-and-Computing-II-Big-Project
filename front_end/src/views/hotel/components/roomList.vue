@@ -8,10 +8,11 @@
                 :columns="columns"
                 :dataSource="rooms"
             >
+
                 <span slot="price" slot-scope="text">
                     <span>￥{{ text }}</span>
                 </span>
-                <span slot="action" slot-scope="text, record">
+                <span slot="action" slot-scope="record">
                     <a-button type="primary" @click="order(record)">预定</a-button>
                 </span>
             </a-table>
@@ -25,6 +26,8 @@ import OrderModal from './orderModal'
 const columns = [
     {  
       title: '房型',
+        filters: [{ text: '大床房', value: '大床房' }, { text: '双床房', value: '双床房' }, { text: '家庭房', value: '家庭房' }],
+        onFilter: (value, record) => record.roomType.includes(value),
       dataIndex: 'roomType',
       key: 'roomType',
     },
@@ -34,23 +37,13 @@ const columns = [
       key: 'bedType',
     },
     {
-      title: '早餐',
-      dataIndex: 'breakfast',
-      key: 'breakfast',
-    },
-    {
-      title: '入住人数',
-      key: 'peopleNum',
-      dataIndex: 'peopleNum',
-    },
-    {
       title: '房价',
       key: 'price',
       dataIndex: 'price',
       scopedSlots: { customRender: 'price'}
     },
     {
-      title: 'Action',
+      title: '操作',
       key: 'action',
       scopedSlots: { customRender: 'action' },
     },
