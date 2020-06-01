@@ -4,7 +4,7 @@ const api = {
 }
 export function getManagerListAPI(){
     return axios({
-        url: `${api.adminPre}/getAllManagers`,
+        url: `${api.adminPre}/getManagerList`,
         method: 'GET'
     })
 }
