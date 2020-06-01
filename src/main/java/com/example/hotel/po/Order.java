@@ -22,6 +22,7 @@ public class Order {
     private String clientName;
     private String phoneNumber;
     private String orderState;
+    private Double roomPrice;
 
     public Integer getId() {
         return id;
@@ -142,4 +143,8 @@ public class Order {
     public void setOrderState(String orderState) {
         this.orderState = orderState;
     }
+
+    public Double getRoomPrice(){return roomPrice;}
+
+    public void setRoomPrice(Double rp){this.roomPrice=rp;}
 }

@@ -39,15 +39,7 @@ public class OrderServiceImpl implements OrderService {
     public ResponseVO addOrder(OrderVO orderVO) {
         int reserveRoomNum = orderVO.getRoomNum();
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(sdf.parse(orderVO.getCheckInDate()));
-            long time1 = cal.getTimeInMillis();
-            cal.setTime(sdf.parse(orderVO.getCheckOutDate()));
-            long time2 = cal.getTimeInMillis();
-            long between_days = (time2 - time1) / (1000 * 3600 * 24);
-            double p=orderVO.getPrice()/(orderVO.getRoomNum()*between_days);
-            int curNum = hotelService.getRoomCurNum(orderVO.getHotelId(),orderVO.getRoomType(),p);
+            int curNum = hotelService.getRoomCurNum(orderVO.getHotelId(),orderVO.getRoomType(),orderVO.getRoomPrice());
             if(reserveRoomNum>curNum){
                 return ResponseVO.buildFailure(ROOMNUM_LACK);
             }

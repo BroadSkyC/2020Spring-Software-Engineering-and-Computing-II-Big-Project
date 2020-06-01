@@ -272,7 +272,8 @@ export default {
                         peopleNum: this.form.getFieldValue('peopleNum'),
                         haveChild: this.form.getFieldValue('haveChild'),
                         createDate: '',
-                        price: this.checkedList.length > 0 ? this.finalPrice: this.totalPrice
+                        price: this.checkedList.length > 0 ? this.finalPrice: this.totalPrice,
+                        roomPrice:this.currentOrderRoom.price
                     }
                     this.addOrder(data)
                 }
