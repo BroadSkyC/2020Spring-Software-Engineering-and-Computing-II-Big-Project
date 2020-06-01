@@ -53,7 +53,7 @@
         <AddRoomModal></AddRoomModal>
         <Coupon></Coupon>
         <Order></Order>
-        <ChangeState></ChangeState>>
+        <ChangeState></ChangeState>
     </div>
 </template>
 <script>

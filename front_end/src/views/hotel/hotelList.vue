@@ -8,9 +8,14 @@
                     <a-input style="margin-left: 30px" placeholder="输入酒店名或商圈关键字" v-model="searchStr" />
                 </div>
                 <div class="search-cont">
+                <a-button
+                        type="primary" style="margin-left: 10px"
+                        @click="handleSearch">查询</a-button>
+            </div>
+                <div class="search-cont">
                     <a-button
                             type="primary" style="margin-left: 10px"
-                            @click="handleSearch">查询</a-button>
+                            @click="getFilters">进阶筛选</a-button>
                 </div>
             </div>
           <a-spin :spinning="hotelListLoading">
@@ -22,17 +27,20 @@
             </div>
           </a-spin>
       </a-layout-content>
+        <Filters></Filters>
     </a-layout>
   </div>
 </template>
 <script>
 import HotelCard from './components/hotelCard'
+import Filters from './components/filter'
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 
 export default {
   name: 'home',
   components: {
     HotelCard,
+      Filters
   },
   data(){
     return{
@@ -63,14 +71,16 @@ export default {
   computed: {
     ...mapGetters([
       'hotelList',
-      'hotelListLoading'
+      'hotelListLoading',
+        'filterVisible'
     ])
   },
   methods: {
     ...mapMutations([
       'set_hotelListParams',
       'set_hotelListLoading',
-        'set_hotelList'
+        'set_hotelList',
+        'set_filterVisible',
     ]),
     ...mapActions([
       'getHotelList'
@@ -101,6 +111,9 @@ export default {
         }
         this.set_hotelList(this.searchData);
         this.count++;
+      },
+      getFilters:function(){
+        this.set_filterVisible(true)
       },
     jumpToDetails(id){
       this.$router.push({ name: 'hotelDetail', params: { hotelId: id }})

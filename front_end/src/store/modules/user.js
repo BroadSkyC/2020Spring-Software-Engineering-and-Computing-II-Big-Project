@@ -27,7 +27,8 @@ const getDefaultState = () => {
 
         ],
         registerVipVisible:false,
-        viewOrderVisible:false
+        viewOrderVisible:false,
+        filterVisible:false
     }
 }
 
@@ -66,7 +67,10 @@ const user = {
         },
         set_viewOrderVisible: function (state,data) {
             state.viewOrderVisible=data
-        }
+        },
+        set_filterVisible: function (state,data) {
+            state.filterVisible=data
+        },
     },
 
     actions: {
