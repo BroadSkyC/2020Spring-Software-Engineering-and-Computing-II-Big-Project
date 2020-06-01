@@ -30,8 +30,8 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public int getRoomCurNum(Integer hotelId, String roomType) {
-        return roomMapper.getRoomCurNum(hotelId,roomType);
+    public int getRoomCurNum(Integer hotelId, String roomType,Double price) {
+        return roomMapper.getRoomCurNum(hotelId,roomType,price);
     }
 
 

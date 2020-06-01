@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,28 +38,41 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ResponseVO addOrder(OrderVO orderVO) {
         int reserveRoomNum = orderVO.getRoomNum();
-        int curNum = hotelService.getRoomCurNum(orderVO.getHotelId(),orderVO.getRoomType());
-        if(reserveRoomNum>curNum){
-            return ResponseVO.buildFailure(ROOMNUM_LACK);
-        }
         try {
-            SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = new Date(System.currentTimeMillis());
-            String curdate = sf.format(date);
-            orderVO.setCreateDate(curdate);
-            orderVO.setOrderState("已预订");
-            User user = accountService.getUserInfo(orderVO.getUserId());
-            orderVO.setClientName(user.getUserName());
-            orderVO.setPhoneNumber(user.getPhoneNumber());
-            Order order = new Order();
-            BeanUtils.copyProperties(orderVO,order);
-            orderMapper.addOrder(order);
-            hotelService.updateRoomInfo(orderVO.getHotelId(),orderVO.getRoomType(),orderVO.getRoomNum());
-        } catch (Exception e) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(sdf.parse(orderVO.getCheckInDate()));
+            long time1 = cal.getTimeInMillis();
+            cal.setTime(sdf.parse(orderVO.getCheckOutDate()));
+            long time2 = cal.getTimeInMillis();
+            long between_days = (time2 - time1) / (1000 * 3600 * 24);
+            double p=orderVO.getPrice()/(orderVO.getRoomNum()*between_days);
+            int curNum = hotelService.getRoomCurNum(orderVO.getHotelId(),orderVO.getRoomType(),p);
+            if(reserveRoomNum>curNum){
+                return ResponseVO.buildFailure(ROOMNUM_LACK);
+            }
+            try {
+                SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = new Date(System.currentTimeMillis());
+                String curdate = sf.format(date);
+                orderVO.setCreateDate(curdate);
+                orderVO.setOrderState("已预订");
+                User user = accountService.getUserInfo(orderVO.getUserId());
+                orderVO.setClientName(user.getUserName());
+                orderVO.setPhoneNumber(user.getPhoneNumber());
+                Order order = new Order();
+                BeanUtils.copyProperties(orderVO,order);
+                orderMapper.addOrder(order);
+                hotelService.updateRoomInfo(orderVO.getHotelId(),orderVO.getRoomType(),orderVO.getRoomNum());
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                return ResponseVO.buildFailure(RESERVE_ERROR);
+            }
+        }catch(Exception e){
             System.out.println(e.getMessage());
-            return ResponseVO.buildFailure(RESERVE_ERROR);
+            return  ResponseVO.buildFailure(RESERVE_ERROR);
         }
-       return ResponseVO.buildSuccess(true);
+        return ResponseVO.buildSuccess(true);
     }
 
     @Override

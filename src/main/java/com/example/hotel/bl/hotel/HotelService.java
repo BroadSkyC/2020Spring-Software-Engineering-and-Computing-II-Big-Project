@@ -45,7 +45,7 @@ public interface HotelService {
      * @param roomType
      * @return
      */
-    int getRoomCurNum(Integer hotelId,String roomType);
+    int getRoomCurNum(Integer hotelId,String roomType,Double price);
 
     void delHotel(HotelVO hotelVO);
 
