@@ -5,7 +5,7 @@
             <div class="search-bar">
                 <div class="search-cont"
                     >
-                    <a-input style="margin-left: 30px" placeholder="输入酒店名或商圈关键字" v-model="searchStr"/>
+                    <a-input style="margin-left: 30px" placeholder="输入酒店名或商圈关键字" v-model="searchStr" />
                 </div>
                 <div class="search-cont">
                     <a-button
@@ -38,6 +38,8 @@ export default {
     return{
         searchStr: '',
         searchData: '',
+        originHotelList:'',
+        count:0,
       emptyBox: [{ name: 'box1' }, { name: 'box2'}, {name: 'box3'}],
         inputs: [
             {
@@ -85,12 +87,20 @@ export default {
       handleSearch: function(){
         console.log("进入")
         this.searchData=[];
+        console.log(this.count)
+        if(this.count<1){
+            this.originHotelList=this.hotelList
+            console.log(this.originHotelList)
+        }
+        this.set_hotelList(this.originHotelList)
+          console.log(this.hotelList)
         for(let i=0;i<this.hotelList.length;i++){
             if(this.hotelList[i].name.indexOf(this.searchStr)>=0 || this.hotelList[i].bizRegion.indexOf(this.searchStr)>=0){
                 this.searchData.push(this.hotelList[i]);
             }
         }
         this.set_hotelList(this.searchData);
+        this.count++;
       },
     jumpToDetails(id){
       this.$router.push({ name: 'hotelDetail', params: { hotelId: id }})
