@@ -98,10 +98,12 @@ const columns1 = [
 const columns2 = [
     {  
         title: '订单号',
+        sorter:(a,b)=>a.id-b.id,
         dataIndex: 'id',
     },
     {  
         title: '酒店名',
+        sorter:(a,b)=>{return a.hotelName.localeCompare(b.hotelName)},
         dataIndex: 'hotelName',
     },
     {
@@ -113,20 +115,24 @@ const columns2 = [
     },
     {
         title: '入住时间',
+        sorter:(a,b)=>{return a.checkInDate.localeCompare(b.checkInDate)},
         dataIndex: 'checkInDate',
         scopedSlots: { customRender: 'checkInDate' }
     },
     {
         title: '离店时间',
+        sorter:(a,b)=>{return a.checkOutDate.localeCompare(b.checkOutDate)},
         dataIndex: 'checkOutDate',
         scopedSlots: { customRender: 'checkOutDate' }
     },
     {
         title: '入住人数',
+        sorter:(a,b)=>a.peopleNum-b.peopleNum,
         dataIndex: 'peopleNum',
     },
     {
         title: '房价',
+        sorter:(a,b)=>a.price-b.price,
         dataIndex: 'price',
     },
     {

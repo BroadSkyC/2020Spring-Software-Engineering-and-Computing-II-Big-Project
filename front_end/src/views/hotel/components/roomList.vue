@@ -28,6 +28,7 @@ const columns = [
       title: '房型',
         filters: [{ text: '大床房', value: '大床房' }, { text: '双床房', value: '双床房' }, { text: '家庭房', value: '家庭房' }],
         onFilter: (value, record) => record.roomType.includes(value),
+        sorter:(a,b)=>{return a.roomType.localeCompare(b.roomType)},
       dataIndex: 'roomType',
       key: 'roomType',
     },
@@ -38,6 +39,7 @@ const columns = [
     },
     {
       title: '房价',
+        sorter:(a,b)=>a.price-b.price,
       key: 'price',
       dataIndex: 'price',
       scopedSlots: { customRender: 'price'}

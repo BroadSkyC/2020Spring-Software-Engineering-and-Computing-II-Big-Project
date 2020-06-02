@@ -116,33 +116,41 @@ import ViewOrder from "./components/viewOrder";
 const columns = [
     {  
         title: '订单号',
+        sorter:(a,b)=>a.id-b.id,
         dataIndex: 'id',
     },
     {  
         title: '酒店名',
+        sorter:(a,b)=>{return a.hotelName.localeCompare(b.hotelName)},
         dataIndex: 'hotelName',
     },
     {
         title: '房型',
+        filters: [{ text: '大床房', value: 'BigBed' }, { text: '双床房', value: 'DoubleBed' }, { text: '家庭房', value: 'Family' }],
+        onFilter: (value, record) => record.roomType.includes(value),
         dataIndex: 'roomType',
         scopedSlots: { customRender: 'roomType' }
     },
     {
         title: '入住时间',
+        sorter:(a,b)=>{return a.checkInDate.localeCompare(b.checkInDate)},
         dataIndex: 'checkInDate',
         scopedSlots: { customRender: 'checkInDate' }
     },
     {
         title: '离店时间',
+        sorter:(a,b)=>{return a.checkOutDate.localeCompare(b.checkOutDate)},
         dataIndex: 'checkOutDate',
         scopedSlots: { customRender: 'checkOutDate' }
     },
     {
         title: '入住人数',
+        sorter:(a,b)=>a.peopleNum-b.peopleNum,
         dataIndex: 'peopleNum',
     },
     {
         title: '房价',
+        sorter:(a,b)=>a.price-b.price,
         dataIndex: 'price',
     },
     {
