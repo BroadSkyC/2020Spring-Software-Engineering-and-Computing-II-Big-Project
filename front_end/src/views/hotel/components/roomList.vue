@@ -45,6 +45,11 @@ const columns = [
       scopedSlots: { customRender: 'price'}
     },
     {
+       title: '剩余数量',
+       key: 'curNum',
+       dataIndex: 'curNum',
+    },
+    {
       title: '操作',
       key: 'action',
       scopedSlots: { customRender: 'action' },
