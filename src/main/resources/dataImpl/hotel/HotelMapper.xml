@@ -18,6 +18,9 @@
         delete from Hotel where id=#{id}
     </delete>
 
+    <update id="changeHotelInfo" parameterType="com.example.hotel.po.Hotel">
+        update Hotel set hotelDescription=#{description} where id=#{id}
+    </update>
 
     <resultMap id="Hotel" type="com.example.hotel.vo.HotelVO">
         <id column="id" property="id"></id>

@@ -1,7 +1,8 @@
 import {
     addRoomAPI,
     addHotelAPI,
-    delHotelAPI
+    delHotelAPI,
+    changeHotelInfoAPI,
 } from '@/api/hotelManager'
 import {
     getAllOrdersAPI,
@@ -48,6 +49,7 @@ const hotelManager = {
         addCouponVisible: false,
         orderVisible:false,
         updateOrderStateVisible:false,
+        changeHotelInfoVisible:false,
         activeHotelId: 0,
         couponList: [],
     },
@@ -81,6 +83,9 @@ const hotelManager = {
         },
         set_updateOrderStateVisible: function(state, data) {
             state.updateOrderStateVisible = data
+        },
+        set_changeHotelInfoVisible:function(state,data){
+            state.changeHotelInfoVisible=data
         },
         set_currentOrder:function(state,data){
             state.currentOrder=data
@@ -266,6 +271,19 @@ const hotelManager = {
                 message.error('修改失败')
             }
          },
+        changeHotelInfo: async ({state,dispatch},data)=>{
+            const params={
+                id:state.id,
+                ...data,
+            }
+            const res=await changeHotelInfoAPI(params)
+            if(res){
+                message.success('修改成功')
+                dispatch('getHotelList')
+            }else{
+                message.error('修改失败')
+            }
+        },
     },
 
 }

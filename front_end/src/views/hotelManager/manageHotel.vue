@@ -15,6 +15,8 @@
                         <a-divider type="vertical"></a-divider>
                         <a-button type="info" size="small" @click="showCoupon(record)">优惠策略</a-button>
                         <a-divider type="vertical"></a-divider>
+                        <a-button type="primary" size="small" @click="changeHotelInfor(record)">修改酒店详情</a-button>
+                        <a-divider type="vertical"></a-divider>
                         <a-popconfirm
                             title="确定想删除该酒店吗？"
                             @confirm="deleteHotel(record)"
@@ -54,6 +56,7 @@
         <Coupon></Coupon>
         <Order></Order>
         <ChangeState></ChangeState>
+        <ChangeHotelInfo></ChangeHotelInfo>
     </div>
 </template>
 <script>
@@ -63,6 +66,7 @@ import AddRoomModal from './components/addRoomModal'
 import Order from './components/Order'
 import Coupon from './components/coupon'
 import ChangeState from './components/changeState'
+import ChangeHotelInfo from './components/changeHotelInfo'
 const moment = require('moment')
 const columns1 = [
     {  
@@ -165,6 +169,7 @@ export default {
         Coupon,
         Order,
         ChangeState,
+        ChangeHotelInfo,
     },
     computed: {
         ...mapGetters([
@@ -189,6 +194,7 @@ export default {
             'set_activeHotelId',
             'set_currentOrder',
             'set_updateOrderStateVisible',
+            'set_changeHotelInfoVisible',
         ]),
         ...mapActions([
             'getHotelList',
@@ -222,6 +228,9 @@ export default {
         showchangeState(record){
             this.set_currentOrder(record)
             this.set_updateOrderStateVisible(true)
+        },
+        changeHotelInfor(record){
+            this.set_changeHotelInfoVisible(true)
         },
     }
 }

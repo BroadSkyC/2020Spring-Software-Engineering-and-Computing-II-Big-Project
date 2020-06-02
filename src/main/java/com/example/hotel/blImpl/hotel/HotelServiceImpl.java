@@ -18,6 +18,7 @@ import com.example.hotel.util.ServiceException;
 import com.example.hotel.vo.CouponVO;
 import com.example.hotel.vo.HotelVO;
 import com.example.hotel.vo.RoomVO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -93,5 +94,12 @@ public class HotelServiceImpl implements HotelService {
         Hotel hotel = new Hotel();
         hotel.setId(hotelVO.getId());
         hotelMapper.deleteHotel(hotel);
+    }
+
+    @Override
+    public void changeHotelInfo(HotelVO hotelVO){
+        Hotel hotel=new Hotel();
+        BeanUtils.copyProperties(hotelVO,hotel);
+        hotelMapper.changeHotelInfo(hotel);
     }
 }

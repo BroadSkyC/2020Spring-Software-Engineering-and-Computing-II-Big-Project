@@ -49,4 +49,9 @@ public class HotelController {
         return ResponseVO.buildSuccess(true);
     }
 
+    @PostMapping("/changeHotelInfo")
+    public ResponseVO changeHotelInfo(@RequestBody HotelVO hotelVO) throws  ServiceException{
+        hotelService.changeHotelInfo(hotelVO);
+        return ResponseVO.buildSuccess(true);
+    }
 }

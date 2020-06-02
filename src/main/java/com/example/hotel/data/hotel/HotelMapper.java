@@ -19,4 +19,6 @@ public interface HotelMapper {
     HotelVO selectById(@Param("id") Integer id);
 
     int deleteHotel(Hotel hotel);
+
+    int changeHotelInfo(Hotel hotel);
 }

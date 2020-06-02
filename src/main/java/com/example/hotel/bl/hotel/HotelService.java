@@ -49,4 +49,5 @@ public interface HotelService {
 
     void delHotel(HotelVO hotelVO);
 
+    void changeHotelInfo(HotelVO hotelVO);
 }
