@@ -1,25 +1,26 @@
 <template>
   <div class="hotelList">
-    <a-tabs>
-        <a-tab-pane tab="图标" key="1">
+      <div class="search-bar">
+          <div class="search-cont"
+          >
+              <a-input style="margin-left: 30px" placeholder="输入酒店名或商圈关键字" v-model="searchStr" />
+          </div>
+          <div class="search-cont">
+              <a-button
+                      type="primary" style="margin-left: 10px"
+                      @click="handleSearch">查询</a-button>
+          </div>
+          <div class="search-cont">
+              <a-button
+                      type="primary" style="margin-left: 10px"
+                      @click="getFilters">进阶筛选</a-button>
+          </div>
+      </div>
+      <a-tabs>
+        <a-tab-pane tab="卡片" key="1">
             <a-layout>
                 <a-layout-content style="min-width: 800px">
-                    <div class="search-bar">
-                        <div class="search-cont"
-                        >
-                            <a-input style="margin-left: 30px" placeholder="输入酒店名或商圈关键字" v-model="searchStr" />
-                        </div>
-                        <div class="search-cont">
-                            <a-button
-                                    type="primary" style="margin-left: 10px"
-                                    @click="handleSearch">查询</a-button>
-                        </div>
-                        <div class="search-cont">
-                            <a-button
-                                    type="primary" style="margin-left: 10px"
-                                    @click="getFilters">进阶筛选</a-button>
-                        </div>
-                    </div>
+
                     <a-spin :spinning="hotelListLoading">
                         <div class="card-wrapper">
                             <HotelCard :hotel="item" v-for="item in hotelList" :key="item.index" @click.native="jumpToDetails(item.id)"></HotelCard>
@@ -38,6 +39,14 @@
                     :dataSource="hotelList"
                     bordered
             >
+                <span slot="hotelStar" slot-scope="text">
+                        <span v-if="text == 'Three'">三星级</span>
+                        <span v-if="text == 'Four'">四星级</span>
+                        <span v-if="text == 'Five'">五星级</span>
+                    </span>
+                <span slot="action" slot-scope="record">
+                        <a-button type="primary" size="small" @click="jumpToDetails(record.id)">预定</a-button>
+                    </span>
             </a-table>
         </a-tab-pane>
     </a-tabs>
@@ -63,11 +72,24 @@ const columns1 = [
     },
     {
         title: '酒店星级',
+        filters: [{ text: '三星级', value: 'Three' }, { text: '四星级', value: 'Four' }, { text: '五星级', value: 'Five' }],
+        onFilter: (value, record) => record.hotelStar.includes(value),
         dataIndex: 'hotelStar'
     },
     {
         title: '评分',
+        sorter:(a,b)=>a.rate-b.rate,
         dataIndex: 'rate',
+    },
+    {
+        title:'最低价格',
+        sorter:(a,b)=>a.minPrice-b.minPrice,
+        dataIndex:'minPrice'
+    },
+    {
+        title:'最高价格',
+        sorter:(a,b)=>a.maxPrice-b.maxPrice,
+        dataIndex:'maxPrice'
     },
     {
         title: '简介',
@@ -88,6 +110,7 @@ export default {
   },
   data(){
     return{
+        columns1,
         searchStr: '',
         searchData: '',
         originHotelList:'',
