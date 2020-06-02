@@ -39,7 +39,7 @@
                     :dataSource="hotelList"
                     bordered
             >
-                <span slot="hotelStar" slot-scope="text">
+             <span slot="hotelStar" slot-scope="text">
                         <span v-if="text == 'Three'">三星级</span>
                         <span v-if="text == 'Four'">四星级</span>
                         <span v-if="text == 'Five'">五星级</span>
@@ -74,7 +74,8 @@ const columns1 = [
         title: '酒店星级',
         filters: [{ text: '三星级', value: 'Three' }, { text: '四星级', value: 'Four' }, { text: '五星级', value: 'Five' }],
         onFilter: (value, record) => record.hotelStar.includes(value),
-        dataIndex: 'hotelStar'
+        dataIndex: 'hotelStar',
+        scopedSlots: { customRender: 'hotelStar' }
     },
     {
         title: '评分',
@@ -92,8 +93,8 @@ const columns1 = [
         dataIndex:'maxPrice'
     },
     {
-        title: '简介',
-        dataIndex: 'description',
+        title: '联系电话',
+        dataIndex: 'phoneNum',
     },
     {
         title: '操作',
