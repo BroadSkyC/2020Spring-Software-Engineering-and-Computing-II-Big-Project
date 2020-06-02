@@ -1,40 +1,84 @@
 <template>
   <div class="hotelList">
-    <a-layout>
-        <a-layout-content style="min-width: 800px">
-            <div class="search-bar">
-                <div class="search-cont"
-                    >
-                    <a-input style="margin-left: 30px" placeholder="输入酒店名或商圈关键字" v-model="searchStr" />
-                </div>
-                <div class="search-cont">
-                <a-button
-                        type="primary" style="margin-left: 10px"
-                        @click="handleSearch">查询</a-button>
-            </div>
-                <div class="search-cont">
-                    <a-button
-                            type="primary" style="margin-left: 10px"
-                            @click="getFilters">进阶筛选</a-button>
-                </div>
-            </div>
-          <a-spin :spinning="hotelListLoading">
-            <div class="card-wrapper">
-                <HotelCard :hotel="item" v-for="item in hotelList" :key="item.index" @click.native="jumpToDetails(item.id)"></HotelCard>
-                <div v-for="item in emptyBox" :key="item.name" class="emptyBox ant-col-xs-7 ant-col-lg-5 ant-col-xxl-3">
-                </div>
-                <a-pagination showQuickJumper :total="hotelList.totalElements" :defaultCurrent="1" @change="pageChange"></a-pagination>
-            </div>
-          </a-spin>
-      </a-layout-content>
-        <Filters></Filters>
-    </a-layout>
+    <a-tabs>
+        <a-tab-pane tab="图标" key="1">
+            <a-layout>
+                <a-layout-content style="min-width: 800px">
+                    <div class="search-bar">
+                        <div class="search-cont"
+                        >
+                            <a-input style="margin-left: 30px" placeholder="输入酒店名或商圈关键字" v-model="searchStr" />
+                        </div>
+                        <div class="search-cont">
+                            <a-button
+                                    type="primary" style="margin-left: 10px"
+                                    @click="handleSearch">查询</a-button>
+                        </div>
+                        <div class="search-cont">
+                            <a-button
+                                    type="primary" style="margin-left: 10px"
+                                    @click="getFilters">进阶筛选</a-button>
+                        </div>
+                    </div>
+                    <a-spin :spinning="hotelListLoading">
+                        <div class="card-wrapper">
+                            <HotelCard :hotel="item" v-for="item in hotelList" :key="item.index" @click.native="jumpToDetails(item.id)"></HotelCard>
+                            <div v-for="item in emptyBox" :key="item.name" class="emptyBox ant-col-xs-7 ant-col-lg-5 ant-col-xxl-3">
+                            </div>
+                            <a-pagination showQuickJumper :total="hotelList.totalElements" :defaultCurrent="1" @change="pageChange"></a-pagination>
+                        </div>
+                    </a-spin>
+                </a-layout-content>
+                <Filters></Filters>
+            </a-layout>
+        </a-tab-pane>
+        <a-tab-pane tab="列表" key="2">
+            <a-table
+                    :columns="columns1"
+                    :dataSource="hotelList"
+                    bordered
+            >
+            </a-table>
+        </a-tab-pane>
+    </a-tabs>
+
   </div>
 </template>
 <script>
 import HotelCard from './components/hotelCard'
 import Filters from './components/filter'
 import { mapGetters, mapActions, mapMutations } from 'vuex'
+const columns1 = [
+    {
+        title: '酒店名',
+        dataIndex: 'name',
+    },
+    {
+        title: '商圈',
+        dataIndex: 'bizRegion',
+    },
+    {
+        title: '地址',
+        dataIndex: 'address',
+    },
+    {
+        title: '酒店星级',
+        dataIndex: 'hotelStar'
+    },
+    {
+        title: '评分',
+        dataIndex: 'rate',
+    },
+    {
+        title: '简介',
+        dataIndex: 'description',
+    },
+    {
+        title: '操作',
+        key: 'action',
+        scopedSlots: { customRender: 'action' },
+    },
+];
 
 export default {
   name: 'home',
