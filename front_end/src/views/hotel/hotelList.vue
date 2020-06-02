@@ -172,6 +172,7 @@ export default {
         }
         this.set_hotelList(this.originHotelList)
           console.log(this.hotelList)
+          console.log(this.hotelList.rooms)
         for(let i=0;i<this.hotelList.length;i++){
             if(this.hotelList[i].name.indexOf(this.searchStr)>=0 || this.hotelList[i].bizRegion.indexOf(this.searchStr)>=0){
                 this.searchData.push(this.hotelList[i]);

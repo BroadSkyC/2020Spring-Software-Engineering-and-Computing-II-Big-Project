@@ -271,7 +271,7 @@ const hotelManager = {
                 message.error('修改失败')
             }
          },
-        changeHotelInfo: async ({state,dispatch},data)=>{
+        changeHotelInfo: async ({ state, dispatch},data)=>{
             const params={
                 id:state.id,
                 ...data,

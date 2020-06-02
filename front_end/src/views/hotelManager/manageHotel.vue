@@ -179,6 +179,7 @@ export default {
             'addRoomModalVisible',
             'activeHotelId',
             'couponVisible',
+            'changeHotelInfoVisible'
         ]),
     },
     async mounted() {

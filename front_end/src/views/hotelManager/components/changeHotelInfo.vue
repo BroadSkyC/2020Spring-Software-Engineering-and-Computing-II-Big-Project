@@ -69,6 +69,7 @@
                             id:this.currentHotelId,
                         }
                       this.changeHotelInfo(data)
+                        this.set_changeHotelInfoVisible(false)
                     }
                 });
             },
