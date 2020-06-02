@@ -23,12 +23,15 @@
                             <span class="label">地址</span>
                             <span class="value">{{ currentHotelInfo.address }}</span>
                         </div>
-                        <div class="items" v-if="currentHotelInfo.rate">
-                            <span class="label">评分:</span> 
-                            <span class="value">{{ currentHotelInfo.rate }}</span>
-                        </div>
                         <div class="items" v-if="currentHotelInfo.hotelStar">
-                            <span class="label">星级:</span> 
+                            <span class="label">星级:</span>
+                            <span class="value" v-if="currentHotelInfo.hotelStar=='Five'">五星级</span>
+                            <span class="value" v-if="currentHotelInfo.hotelStar=='Four'">四星级</span>
+                            <span class="value" v-if="currentHotelInfo.hotelStar=='Three'">三星级</span>
+                        </div>
+                        <div class="items" v-if="currentHotelInfo.rate">
+                            <span class="label">评分:</span>
+                            <span class="value">{{ currentHotelInfo.rate }}</span>
                             <a-rate style="font-size: 15px" :value="currentHotelInfo.rate" disabled allowHalf/>
                         </div>
                         <div class="items" v-if="currentHotelInfo.description">
@@ -43,7 +46,10 @@
                         <RoomList :rooms="currentHotelInfo.rooms"></RoomList>
                     </a-tab-pane>
                     <a-tab-pane tab="酒店详情" key="2">
-
+                        <div class="items" v-if="currentHotelInfo.description">
+                            <span class="label">酒店简介:</span>
+                            <span class="value">{{ currentHotelInfo.description }}</span>
+                        </div>
                     </a-tab-pane>
                 </a-tabs>
             </div>
