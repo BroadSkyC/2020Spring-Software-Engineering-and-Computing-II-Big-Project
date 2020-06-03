@@ -30,6 +30,9 @@ public class RoomServiceImpl implements RoomService {
         int hotel_id = hotelRoom.getHotelId();
         double minPrice = hotelMapper.getMinPrice(hotel_id);
         double maxPrice = hotelMapper.getMaxPrice(hotel_id);
+        if (minPrice==0){
+            minPrice=hotelRoom.getPrice();
+        }
         if (hotelRoom.getPrice()<=minPrice){
             minPrice = hotelRoom.getPrice();
         }
