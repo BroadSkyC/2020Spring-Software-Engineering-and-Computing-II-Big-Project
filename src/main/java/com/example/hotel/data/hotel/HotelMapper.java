@@ -20,5 +20,13 @@ public interface HotelMapper {
 
     int deleteHotel(Hotel hotel);
 
-    int changeHotelInfo(Hotel hotel);
+    void updateMinPrice(@Param("id") Integer id, @Param("minPrice") Double minPrice);
+
+    void updateMaxPrice(@Param("id") Integer id, @Param("maxPrice") Double maxPrice);
+
+    double getMinPrice(@Param("id") Integer id);
+
+    double getMaxPrice(@Param("id") Integer id);
+
+
 }
