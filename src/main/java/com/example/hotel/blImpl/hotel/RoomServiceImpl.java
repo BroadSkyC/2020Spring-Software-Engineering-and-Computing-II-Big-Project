@@ -28,20 +28,22 @@ public class RoomServiceImpl implements RoomService {
     public void insertRoomInfo(HotelRoom hotelRoom) {
         List<HotelRoom> hotelRooms = retrieveHotelRoomInfo(hotelRoom.getHotelId());
         int hotel_id = hotelRoom.getHotelId();
-        double minPrice = 0;
-        double maxPrice = 0;
-        if (hotelRooms.size()==0 || minPrice==0 || maxPrice==0){
-            minPrice=hotelRoom.getPrice();
-            maxPrice=hotelRoom.getPrice();
+        double minPrice = hotelMapper.getMinPrice(hotel_id);
+        double maxPrice = hotelMapper.getMaxPrice(hotel_id);
+        if (hotelRoom.getPrice()<=minPrice){
+            minPrice = hotelRoom.getPrice();
         }
-        for (HotelRoom room: hotelRooms){
+        if (hotelRoom.getPrice()>=maxPrice){
+            maxPrice = hotelRoom.getPrice();
+        }
+/*        for (HotelRoom room: hotelRooms){
             if (room.getPrice()<=minPrice){
                 minPrice = room.getPrice();
             }
             if (room.getPrice()>=maxPrice){
                 maxPrice = room.getPrice();
             }
-        }
+        }*/
         hotelMapper.updateMinPrice(hotel_id, minPrice);
         hotelMapper.updateMaxPrice(hotel_id, maxPrice);
         roomMapper.insertRoom(hotelRoom);

@@ -26,6 +26,13 @@
         update Hotel set maxPrice=#{maxPrice} where id=#{id}
     </update>
 
+    <select id="getMinPrice" resultType="double">
+        select minPrice from hotel where id=#{id}
+    </select>
+
+    <select id="getMaxPrice" resultType="double">
+        select maxPrice from hotel where id=#{id}
+    </select>
 
     <resultMap id="Hotel" type="com.example.hotel.vo.HotelVO">
         <id column="id" property="id"></id>
