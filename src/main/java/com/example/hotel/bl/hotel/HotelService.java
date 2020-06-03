@@ -48,6 +48,4 @@ public interface HotelService {
     int getRoomCurNum(Integer hotelId,String roomType,Double price);
 
     void delHotel(HotelVO hotelVO);
-
-    void changeHotelInfo(HotelVO hotelVO);
 }
