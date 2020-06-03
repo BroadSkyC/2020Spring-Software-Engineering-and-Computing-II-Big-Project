@@ -9,6 +9,18 @@
             @ok="handleSubmit"
     >
         <a-form :form="form" style="margin-top: 30px" v-bind="formItemLayout">
+            <a-form-item label="最低价格" v-bind="formItemLayout">
+                <a-input
+                        placeholder="请填写您预期房间的最低价格"
+                        v-decorator="['exp_min', { rules: [{ required: true, message: '请填写您预期房间的最低价格' }] }]"
+                />
+            </a-form-item>
+            <a-form-item label="最高价格" v-bind="formItemLayout">
+                <a-input
+                        placeholder="请填写您预期房间的最高价格"
+                        v-decorator="['exp_max', { rules: [{ required: true, message: '请填写您预期房间的最高价格' }] }]"
+                />
+            </a-form-item>
             <a-form-item label="排列依据" v-bind="formItemLayout">
                 <a-select
                         v-decorator="[
@@ -41,7 +53,12 @@
                         sm: { span: 16 },
                     },
                 },
-                sortType: ''
+                sortType: '',
+                expMin: 0,
+                expMax: 0,
+                count:0,
+                searchData:'',
+                originHotelList:'',
             }
         },
         beforeCreate() {
@@ -58,7 +75,8 @@
         },
         methods: {
             ...mapMutations([
-                'set_filterVisible'
+                'set_filterVisible',
+                'set_hotelList',
             ]),
             ...mapActions([
                 'getHotelList'
@@ -68,11 +86,12 @@
             },
             handleSubmit(e){
                 console.log(this.hotelList)
-                console.log(this.hotelList.hotelStar)
                 e.preventDefault();
                 this.form.validateFieldsAndScroll((err, values) => {
                     if (!err) {
                         const data = {
+                            exp_min:Number(this.form.getFieldValue('exp_min')),
+                            exp_max:Number(this.form.getFieldValue('exp_max')),
                             sortType: this.form.getFieldValue('sortType'),
                         }
                         this.sortHotel(data)
@@ -83,6 +102,21 @@
             },
             sortHotel(data){
                 this.sortType=data.sortType
+                this.expMax=data.exp_max
+                this.expMin=data.exp_min
+                this.searchData=[]
+                if(this.count<1){
+                    this.originHotelList=this.hotelList
+                    console.log(this.originHotelList)
+                }
+                this.set_hotelList(this.originHotelList)
+                for(let i=0;i<this.hotelList.length;i++){
+                    if(this.hotelList[i].minPrice<=this.expMax && this.hotelList[i].maxPrice>=this.expMin){
+                        this.searchData.push(this.hotelList[i]);
+                    }
+                }
+                this.set_hotelList(this.searchData)
+                this.count++
                 switch(this.sortType){
                     case 'star_descent':
                         this.hotelList.sort(this.compareDscStar('hotelStar'))
