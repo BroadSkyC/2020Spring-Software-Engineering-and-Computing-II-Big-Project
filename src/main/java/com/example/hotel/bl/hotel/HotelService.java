@@ -49,4 +49,8 @@ public interface HotelService {
 
     void delHotel(HotelVO hotelVO);
 
+    //void updateMinPrice(Integer hotelId, Double minPrice);
+
+    //void updateMaxPrice(Integer hotelId, Double maxPrice);
+
 }

@@ -19,4 +19,10 @@ public interface HotelMapper {
     HotelVO selectById(@Param("id") Integer id);
 
     int deleteHotel(Hotel hotel);
+
+    void updateMinPrice(@Param("id") Integer id, @Param("minPrice") Double minPrice);
+
+    void updateMaxPrice(@Param("id") Integer id, @Param("maxPrice") Double maxPrice);
+
+
 }

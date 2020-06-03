@@ -1,6 +1,8 @@
 package com.example.hotel.blImpl.hotel;
 
+import com.example.hotel.bl.hotel.HotelService;
 import com.example.hotel.bl.hotel.RoomService;
+import com.example.hotel.data.hotel.HotelMapper;
 import com.example.hotel.data.hotel.RoomMapper;
 import com.example.hotel.po.HotelRoom;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,9 @@ public class RoomServiceImpl implements RoomService {
     @Autowired
     private RoomMapper roomMapper;
 
+    @Autowired
+    private HotelMapper hotelMapper;
+
     @Override
     public List<HotelRoom> retrieveHotelRoomInfo(Integer hotelId) {
         return roomMapper.selectRoomsByHotelId(hotelId);
@@ -21,7 +26,26 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public void insertRoomInfo(HotelRoom hotelRoom) {
+        List<HotelRoom> hotelRooms = retrieveHotelRoomInfo(hotelRoom.getHotelId());
+        int hotel_id = hotelRoom.getHotelId();
+        double minPrice = 0;
+        double maxPrice = 0;
+        if (hotelRooms.size()==0 || minPrice==0 || maxPrice==0){
+            minPrice=hotelRoom.getPrice();
+            maxPrice=hotelRoom.getPrice();
+        }
+        for (HotelRoom room: hotelRooms){
+            if (room.getPrice()<=minPrice){
+                minPrice = room.getPrice();
+            }
+            if (room.getPrice()>=maxPrice){
+                maxPrice = room.getPrice();
+            }
+        }
+        hotelMapper.updateMinPrice(hotel_id, minPrice);
+        hotelMapper.updateMaxPrice(hotel_id, maxPrice);
         roomMapper.insertRoom(hotelRoom);
+
     }
 
     @Override

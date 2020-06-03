@@ -89,9 +89,23 @@ public class HotelServiceImpl implements HotelService {
         return hotelVO;
     }
 
+    @Override
     public void delHotel(HotelVO hotelVO) {
         Hotel hotel = new Hotel();
         hotel.setId(hotelVO.getId());
         hotelMapper.deleteHotel(hotel);
     }
+
+    /*
+    @Override
+    public void updateMinPrice(Integer hotelId, Double minPrice) {
+        hotelMapper.updateMimPrice(hotelId,minPrice);
+    }
+
+    @Override
+    public void updateMaxPrice(Integer hotelId, Double maxPrice) {
+        hotelMapper.updateMaxPrice(hotelId,maxPrice);
+    }
+
+    */
 }
