@@ -18,9 +18,21 @@
         delete from Hotel where id=#{id}
     </delete>
 
-    <update id="changeHotelInfo" parameterType="com.example.hotel.po.Hotel">
-        update Hotel set hotelDescription=#{description} where id=#{id}
+    <update id="updateMinPrice">
+        update Hotel set minPrice=#{minPrice} where id=#{id}
     </update>
+
+    <update id="updateMaxPrice">
+        update Hotel set maxPrice=#{maxPrice} where id=#{id}
+    </update>
+
+    <select id="getMinPrice" resultType="double">
+        select minPrice from hotel where id=#{id}
+    </select>
+
+    <select id="getMaxPrice" resultType="double">
+        select maxPrice from hotel where id=#{id}
+    </select>
 
     <resultMap id="Hotel" type="com.example.hotel.vo.HotelVO">
         <id column="id" property="id"></id>
@@ -31,6 +43,8 @@
         <result column="hotelName" property="name"></result>
         <result column="phoneNum" property="phoneNum"></result>
         <result column="rate" property="rate"></result>
+        <result column="minPrice" property="minPrice"></result>
+        <result column="maxPrice" property="maxPrice"></result>
         <result column="manager_id" property="managerId"></result>
 
     </resultMap>
