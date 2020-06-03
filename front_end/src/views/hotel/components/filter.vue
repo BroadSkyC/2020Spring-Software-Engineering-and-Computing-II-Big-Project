@@ -105,11 +105,6 @@
                 this.expMax=data.exp_max
                 this.expMin=data.exp_min
                 this.searchData=[]
-                if(this.count<1){
-                    this.originHotelList=this.hotelList
-                    console.log(this.originHotelList)
-                }
-                this.set_hotelList(this.originHotelList)
                 for(let i=0;i<this.hotelList.length;i++){
                     if(this.hotelList[i].minPrice<=this.expMax && this.hotelList[i].maxPrice>=this.expMin){
                         this.searchData.push(this.hotelList[i]);
