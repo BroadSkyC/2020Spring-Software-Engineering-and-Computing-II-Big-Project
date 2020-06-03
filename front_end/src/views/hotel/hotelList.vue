@@ -15,6 +15,11 @@
                       type="primary" style="margin-left: 10px"
                       @click="getFilters">进阶筛选</a-button>
           </div>
+          <div class="search-cont">
+              <a-button
+                      type="primary" style="margin-left: 10px"
+                      @click="turnBack">一键复原</a-button>
+          </div>
       </div>
       <a-tabs>
         <a-tab-pane tab="卡片" key="1">
@@ -56,6 +61,7 @@
 <script>
 import HotelCard from './components/hotelCard'
 import Filters from './components/filter'
+import { message } from 'ant-design-vue'
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 const columns1 = [
     {
@@ -116,6 +122,7 @@ export default {
         searchData: '',
         originHotelList:'',
         count:0,
+        count_filter:0,
       emptyBox: [{ name: 'box1' }, { name: 'box2'}, {name: 'box3'}],
         inputs: [
             {
@@ -182,7 +189,19 @@ export default {
         this.count++;
       },
       getFilters:function(){
-        this.set_filterVisible(true)
+          if(this.count_filter<1) {
+              this.originHotelList = this.hotelList
+          }
+          this.count_filter++
+          this.set_filterVisible(true)
+      },
+      turnBack:function(){
+        if(this.count<1 && this.count_filter<1){
+            message.error('您未进行任何搜索或者筛选')
+        }
+        else{
+            this.set_hotelList(this.originHotelList)
+        }
       },
     jumpToDetails(id){
       this.$router.push({ name: 'hotelDetail', params: { hotelId: id }})
