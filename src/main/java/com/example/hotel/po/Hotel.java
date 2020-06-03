@@ -19,6 +19,9 @@ public class Hotel {
      * 酒店管理员id
      */
     private Integer managerId;
+    private double minPrice;
+    private double maxPrice;
+
 
     public Integer getId() {
         return id;
@@ -90,6 +93,22 @@ public class Hotel {
 
     public void setManagerId(Integer managerId) {
         this.managerId = managerId;
+    }
+
+    public double getMinPrice() {
+        return minPrice;
+    }
+
+    public double getMaxPrice() {
+        return maxPrice;
+    }
+
+    public void setMinPrice(Integer minPrice) {
+        this.minPrice = minPrice;
+    }
+
+    public void setMaxPrice(Integer maxPrice) {
+        this.maxPrice = maxPrice;
     }
 }
 
