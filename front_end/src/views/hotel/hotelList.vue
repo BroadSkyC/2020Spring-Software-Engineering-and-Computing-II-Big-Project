@@ -18,7 +18,7 @@
           <div class="search-cont">
               <a-button
                       type="primary" style="margin-left: 10px"
-                      @click="turnBack">一键复原</a-button>
+                      @click="turnBack">显示所有酒店</a-button>
           </div>
       </div>
       <a-tabs>
