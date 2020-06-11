@@ -31,10 +31,3 @@ export function delHotelAPI(data) {
         data,
     })
 }
-export function changeHotelInfoAPI(data) {
-    return axios({
-        url:`${api.hotelPre}/changeHotelInfo`,
-        method:'POST',
-        data,
-    })
-}
