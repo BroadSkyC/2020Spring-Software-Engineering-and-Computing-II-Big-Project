@@ -1,5 +1,6 @@
 import {
     addRoomAPI,
+    modifyRoomAPI,
     addHotelAPI,
     delHotelAPI,
     changeHotelInfoAPI,
@@ -44,8 +45,16 @@ const hotelManager = {
             total: 0,
             curNum: 0,
         },
+        updateRoomParams:{
+            roomType: '',
+            hotelId: '',
+            price: '',
+            total: 0,
+            curNum: 0,
+        },
         addRoomModalVisible: false,
         couponVisible: false,
+        modifyRoomVisible:false,
         addCouponVisible: false,
         orderVisible:false,
         updateOrderStateVisible:false,
@@ -75,6 +84,12 @@ const hotelManager = {
                 ...data,
             }
         },
+        set_updateRoomParams:function(state, data) {
+            state.updateRoomParams = {
+                ...state.updateRoomParams,
+                ...data,
+            }
+        },
         set_couponVisible: function(state, data) {
             state.couponVisible = data
         },
@@ -86,6 +101,9 @@ const hotelManager = {
         },
         set_changeHotelInfoVisible:function(state,data){
             state.changeHotelInfoVisible=data
+        },
+        set_modifyRoomVisible:function(state,data){
+            state.modifyRoomVisible=data
         },
         set_currentOrder:function(state,data){
             state.currentOrder=data
@@ -141,6 +159,22 @@ const hotelManager = {
                 message.success('添加成功')
             }else{
                 message.error('添加失败')
+            }
+        },
+        updateRoomInfo: async({ state, dispatch, commit }) => {
+            const res = await modifyRoomAPI(state.updateRoomParams)
+            if(res){
+                commit('set_modifyRoomVisible', false)
+                commit('set_updateRoomParams', {
+                    roomType: '',
+                    hotelId: '',
+                    price: '',
+                    total: 0,
+                    curNum: 0,
+                })
+                message.success('修改成功')
+            }else{
+                message.error('修改失败')
             }
         },
         getHotelCoupon: async({ state, commit }) => {

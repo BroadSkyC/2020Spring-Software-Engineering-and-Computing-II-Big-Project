@@ -13,16 +13,19 @@
                     <span>￥{{ text }}</span>
                 </span>
                 <span slot="action" slot-scope="record">
-                    <a-button type="primary" @click="order(record)">预定</a-button>
+                    <a-button type="primary" @click="order(record)" v-if="userInfo.userType=='Client'">预定</a-button>
+                    <a-button type="primary" @click="showModify(record)" v-if="userInfo.userType=='HotelManager'">修改房间信息</a-button>
                 </span>
             </a-table>
         </div>
         <OrderModal></OrderModal>
+        <ModifyRoom></ModifyRoom>
     </div>
 </template>
 <script>
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 import OrderModal from './orderModal'
+import ModifyRoom from "./modifyRoom";
 const columns = [
     {  
       title: '房型',
@@ -68,11 +71,14 @@ export default {
         }
     },
     components: {
+        ModifyRoom,
         OrderModal
     },
     computed: {
         ...mapGetters([
-            'orderModalVisible'
+            'orderModalVisible',
+            'modifyRoomVisible',
+            'userInfo'
         ])
     },
     monuted() {
@@ -81,7 +87,8 @@ export default {
     methods: {
         ...mapMutations([
             'set_orderModalVisible',
-            'set_currentOrderRoom'
+            'set_currentOrderRoom',
+            'set_modifyRoomVisible'
         ]),
         ...mapActions([
 
@@ -89,6 +96,9 @@ export default {
         order(record) {
             this.set_currentOrderRoom(record)
             this.set_orderModalVisible(true)
+        },
+        showModify(record){
+            this.set_modifyRoomVisible(true)
         }
     }
 }
