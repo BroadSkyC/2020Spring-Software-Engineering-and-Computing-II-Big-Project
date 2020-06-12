@@ -15,6 +15,7 @@ public class User {
     private String birthday;
     private VipType vipType;
     private String company;
+    private Integer hotelId;
 
     public Integer getId() {
         return id;
@@ -83,4 +84,8 @@ public class User {
     public  String getCompany(){return company;}
 
     public void setCompany(String company){this.company=company;}
+
+    public Integer getHotelId(){return hotelId;}
+
+    public void setHotelId(Integer hotelId){this.hotelId=hotelId;}
 }

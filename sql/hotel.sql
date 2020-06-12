@@ -165,6 +165,7 @@ CREATE TABLE `User` (
   `birthday` varchar(255) DEFAULT NULL,
   `viptype` varchar(255) DEFAULT NULL,
   `company` varchar(255) DEFAULT NULL,
+  `hotelId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -175,7 +176,7 @@ CREATE TABLE `User` (
 
 BEGIN;
 /*!40000 ALTER TABLE `User` DISABLE KEYS */;
-INSERT INTO `User` VALUES (4,'1012681@qq.com','123456','测试一号','12345678919',100,'Client','2000-05-26',NULL,NULL),(5,'123@qq.com','123456','测试二号','12345678911',100,'Client','2000-05-27',NULL,NULL),(6,'333@qq.com','123456',NULL,NULL,NULL,'HotelManager','2000-05-28',NULL,NULL);
+INSERT INTO `User` VALUES (4,'1012681@qq.com','123456','测试一号','12345678919',100,'Client','2000-05-26',NULL,NULL,NULL),(5,'123@qq.com','123456','测试二号','12345678911',100,'Client','2000-05-27',NULL,NULL,NULL),(6,'333@qq.com','123456',NULL,NULL,NULL,'HotelManager','2000-05-28',NULL,NULL,NULL),(7,'789@qq.com','123456',NULL,NULL,NULL,'HotelReceptionist','2000-05-28',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
 COMMIT;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
