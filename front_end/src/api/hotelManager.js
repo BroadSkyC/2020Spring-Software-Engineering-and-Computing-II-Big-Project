@@ -9,6 +9,14 @@ export function addRoomAPI(data) {
         data,
     })
 }
+export function modifyRoomAPI(data) {
+    return axios({
+        url: `${api.hotelPre}/modifyRoom`,
+        method: 'POST',
+        data,
+    })
+}
+
 export function addHotelAPI(data) {
     return axios({
         url: `${api.hotelPre}/addHotel`,
