@@ -24,6 +24,11 @@
                      <a-icon type="user" />账户管理
                 </router-link>
             </a-menu-item>
+            <a-menu-item key="5" @click="selectMenu" v-if="userInfo.userType=='HotelReceptionist'">
+                <router-link :to="{ name: 'manageCheck'}">
+                    <a-icon type="switcher" />入住管理
+                </router-link>
+            </a-menu-item>
         </a-menu>
         <div class="logout">
             <a-dropdown placement="bottomCenter">

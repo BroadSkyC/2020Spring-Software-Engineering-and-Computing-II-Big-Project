@@ -62,7 +62,7 @@ import AddHotelModal from './components/addHotelModal'
 import AddRoomModal from './components/addRoomModal'
 import Order from './components/Order'
 import Coupon from './components/coupon'
-import ChangeState from './components/changeState'
+import ChangeState from '../hotelReceptionist/components/changeState'
 const moment = require('moment')
 const columns1 = [
     {  
