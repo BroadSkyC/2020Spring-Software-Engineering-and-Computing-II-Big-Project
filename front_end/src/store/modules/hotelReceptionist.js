@@ -6,6 +6,7 @@ import { message } from 'ant-design-vue'
 const hotelReceptionist = {
     state: {
         receptionistOrderList: [],
+        managingHotel:'',
     },
     mutations: {
         set_receptionistOrderList: function (state, data) {
@@ -19,15 +20,15 @@ const hotelReceptionist = {
         },
     },
     actions: {
-        getHotelOrders: async({ state, commit }) => {
-            const data = {
-                hotelId: Number(state.managingHotel)
-            }
-            const res = await getHotelOrdersAPI(data)
+        getHotelOrders: async({ state, commit },hotelId) => {
+            const res = await getHotelOrdersAPI(hotelId)
             if(res){
                 commit('set_receptionistOrderList', res)
                 console.log(state.receptionistOrderList)
             }
+        },
+        set_managingHotel: (state, data) => {
+            state.managingHotel= data
         },
         updateOrderState: async ({state,dispatch},data)=>{
             const params={

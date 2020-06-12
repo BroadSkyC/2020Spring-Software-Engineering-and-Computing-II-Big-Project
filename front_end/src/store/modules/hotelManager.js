@@ -3,7 +3,6 @@ import {
     modifyRoomAPI,
     addHotelAPI,
     delHotelAPI,
-    changeHotelInfoAPI,
 } from '@/api/hotelManager'
 import {
     getAllOrdersAPI,
@@ -119,35 +118,35 @@ const hotelManager = {
         }
     },
     actions: {
-        getAllOrders: async({ state, commit }) => {
+        getAllOrders: async ({state, commit}) => {
             const res = await getAllOrdersAPI()
-            if(res){
+            if (res) {
                 commit('set_orderList', res)
             }
         },
-        addHotel: async({ state, dispatch, commit }) => {
+        addHotel: async ({state, dispatch, commit}) => {
             const res = await addHotelAPI(state.addHotelParams)
-            if(res){
+            if (res) {
                 dispatch('getHotelList')
                 commit('set_addHotelParams', {
                     name: '',
                     address: '',
-                    bizRegion:'',
-                    hotelStar:'',
+                    bizRegion: '',
+                    hotelStar: '',
                     rate: '',
-                    description:'',
-                    phoneNum:'',
-                    managerId:'',
+                    description: '',
+                    phoneNum: '',
+                    managerId: '',
                 })
                 commit('set_addHotelModalVisible', false)
                 message.success('添加成功')
-            }else{
+            } else {
                 message.error('添加失败')
             }
         },
-        addRoom: async({ state, dispatch, commit }) => {
+        addRoom: async ({state, dispatch, commit}) => {
             const res = await addRoomAPI(state.addRoomParams)
-            if(res){
+            if (res) {
                 commit('set_addRoomModalVisible', false)
                 commit('set_addRoomParams', {
                     roomType: '',
@@ -157,13 +156,13 @@ const hotelManager = {
                     curNum: 0,
                 })
                 message.success('添加成功')
-            }else{
+            } else {
                 message.error('添加失败')
             }
         },
-        updateRoomInfo: async({ state, dispatch, commit }) => {
+        updateRoomInfo: async ({state, dispatch, commit}) => {
             const res = await modifyRoomAPI(state.updateRoomParams)
-            if(res){
+            if (res) {
                 commit('set_modifyRoomVisible', false)
                 commit('set_updateRoomParams', {
                     roomType: '',
@@ -173,152 +172,138 @@ const hotelManager = {
                     curNum: 0,
                 })
                 message.success('修改成功')
-            }else{
+            } else {
                 message.error('修改失败')
             }
         },
-        getHotelCoupon: async({ state, commit }) => {
+        getHotelCoupon: async ({state, commit}) => {
             const res = await hotelAllCouponsAPI(state.activeHotelId)
-            if(res) {
+            if (res) {
                 // 获取到酒店策略之后的操作（将获取到的数组赋值给couponList）
                 commit('set_couponList', res)
             }
         },
-        addHotelCoupon: async({ commit, dispatch }, data) => {
+        addHotelCoupon: async ({commit, dispatch}, data) => {
             const res = await hotelTargetMoneyAPI(data)
-            if(res){
+            if (res) {
                 // 添加成功后的操作（提示文案、modal框显示与关闭，调用优惠列表策略等）
                 dispatch('getHotelCoupon')
                 commit('set_addCouponVisible', false)
                 commit('set_couponVisible', false)
                 message.success("添加策略成功")
-            }else{
+            } else {
                 // 添加失败后的操作
                 message.error('添加失败')
             }
         },
-        addHotelTargetMoneyCoupon: async({ commit, dispatch }, data) => {
+        addHotelTargetMoneyCoupon: async ({commit, dispatch}, data) => {
             const res = await hotelTargetMoneyAPI(data)
-            if(res){
+            if (res) {
                 // 添加成功后的操作（提示文案、modal框显示与关闭，调用优惠列表策略等）
                 dispatch('getHotelCoupon')
                 commit('set_addCouponVisible', false)
                 commit('set_couponVisible', false)
                 message.success("添加策略成功")
-            }else{
+            } else {
                 // 添加失败后的操作
                 message.error('添加失败')
             }
         },
-        addHotelTimeCoupon: async({ commit, dispatch }, data) => {
+        addHotelTimeCoupon: async ({commit, dispatch}, data) => {
             const res = await hotelTimeAPI(data)
-            if(res){
+            if (res) {
                 // 添加成功后的操作（提示文案、modal框显示与关闭，调用优惠列表策略等）
                 dispatch('getHotelCoupon')
                 commit('set_addCouponVisible', false)
                 commit('set_couponVisible', false)
                 message.success("添加策略成功")
-            }else{
+            } else {
                 // 添加失败后的操作
                 message.error('添加失败')
             }
         },
-        addHotelTargetRoomNumCoupon: async({ commit, dispatch }, data) => {
+        addHotelTargetRoomNumCoupon: async ({commit, dispatch}, data) => {
             const res = await hotelTargetRoomNumAPI(data)
-            if(res){
+            if (res) {
                 // 添加成功后的操作（提示文案、modal框显示与关闭，调用优惠列表策略等）
                 dispatch('getHotelCoupon')
                 commit('set_addCouponVisible', false)
                 commit('set_couponVisible', false)
                 message.success("添加策略成功")
-            }else{
+            } else {
                 // 添加失败后的操作
                 message.error('添加失败')
             }
         },
-        addBirthdayCoupon: async({ commit, dispatch }, data) => {
+        addBirthdayCoupon: async ({commit, dispatch}, data) => {
             const res = await hotelBirthdayAPI(data)
-            if(res){
+            if (res) {
                 // 添加成功后的操作（提示文案、modal框显示与关闭，调用优惠列表策略等）
                 dispatch('getHotelCoupon')
                 commit('set_addCouponVisible', false)
                 commit('set_couponVisible', false)
                 message.success("添加策略成功")
-            }else{
+            } else {
                 // 添加失败后的操作
                 message.error('添加失败')
             }
         },
-        delHotel: async(dispatch ,data) => {
+        delHotel: async (dispatch, data) => {
             const res = await delHotelAPI(data)
-            if(res){
+            if (res) {
                 //dispatch('getHotelList')
                 message.success('删除成功')
                 window.location.reload();
                 dispatch('getHotelList')
-            }else{
+            } else {
                 message.error('删除失败')
             }
         },
-        delOrder: async(dispatch ,data) => {
+        delOrder: async (dispatch, data) => {
             const res = await delOrderAPI(data)
-            if(res){
+            if (res) {
                 //dispatch('getHotelList')
                 message.success('删除成功')
                 window.location.reload();
                 dispatch('getAllOrders')
-            }else{
+            } else {
                 message.error('删除失败')
             }
         },
-        delCoupon: async(dispatch ,data) => {
+        delCoupon: async (dispatch, data) => {
             const res = await delCouponAPI(data)
-            if(res){
+            if (res) {
                 message.success('删除成功')
                 window.location.reload();
                 dispatch('getHotelCoupon')
-            }else{
+            } else {
                 message.error('删除失败')
             }
         },
-        updateOrderInfo: async({ state, dispatch }, data) => {
+        updateOrderInfo: async ({state, dispatch}, data) => {
             const params = {
                 id: state.id,
                 ...data,
             }
             const res = await updateOrderAPI(params)
-            if(res){
+            if (res) {
                 message.success('修改成功')
                 dispatch('getUserInfo')
             }
         },
-         updateOrderState: async ({state,dispatch},data)=>{
-            const params={
-                id:state.id,
+        updateOrderState: async ({state, dispatch}, data) => {
+            const params = {
+                id: state.id,
                 ...data,
             }
-            const res=await updateOrderStateAPI(params)
-            if(res){
+            const res = await updateOrderStateAPI(params)
+            if (res) {
                 message.success('修改成功')
                 dispatch('getAllOrders')
-            }else{
-                message.error('修改失败')
-            }
-         },
-        changeHotelInfo: async ({ state, dispatch},data)=>{
-            const params={
-                id:state.id,
-                ...data,
-            }
-            const res=await changeHotelInfoAPI(params)
-            if(res){
-                message.success('修改成功')
-                dispatch('getHotelList')
-            }else{
+            } else {
                 message.error('修改失败')
             }
         },
-    },
-
+    }
 }
 export default hotelManager

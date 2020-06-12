@@ -33,7 +33,7 @@
                             v-decorator="['password', { rules: [{ required: true, message: '请输入新密码' }] }]"
                         />
                     </a-form-item>
-                    <a-form-item label="生日" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }"  v-if="userInfo.vipType=='Common'">
+                    <a-form-item label="生日" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }"  v-if="userInfo.vipType==='Common'">
 <!--                        <AWeekPicker  :format="format"-->
 <!--                                      showTime-->
 <!--                                      onChange={onChange}-->
@@ -43,13 +43,13 @@
                         <span>{{
                             userInfo.birthday==null? '': userInfo.birthday.substring(0,10)}}</span>
               </a-form-item>
-                    <a-form-item label="会员类型" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }" v-if="userInfo.vipType=='Common'">
+                    <a-form-item label="会员类型" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }" v-if="userInfo.vipType==='Common'">
                         <span>普通会员</span>
                     </a-form-item>
-                    <a-form-item label="会员类型" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }" v-if="userInfo.vipType=='Company'">
+                    <a-form-item label="会员类型" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }" v-if="userInfo.vipType==='Company'">
                         <span>企业会员</span>
                     </a-form-item>
-                    <a-form-item label="企业名称" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }" v-if="userInfo.vipType=='Company'">
+                    <a-form-item label="企业名称" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }" v-if="userInfo.vipType==='Company'">
                         <span>{{ userInfo.company }}</span>
                     </a-form-item>
                     <a-form-item :wrapper-col="{ span: 12, offset: 5 }" v-if="modify">
@@ -64,7 +64,7 @@
                         <a-button type="primary" @click="modifyInfo">
                             修改信息
                         </a-button>
-                         <a-button type="primary" style="margin-left: 30px" @click="showRegisterVip" v-if="userInfo.userType=='Client' && userInfo.vipType==null">
+                         <a-button type="primary" style="margin-left: 30px" @click="showRegisterVip" v-if="userInfo.userType==='Client' && userInfo.vipType==null">
                              注册会员
                          </a-button>
                     </a-form-item>

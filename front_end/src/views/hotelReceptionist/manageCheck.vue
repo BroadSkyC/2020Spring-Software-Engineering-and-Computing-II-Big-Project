@@ -100,11 +100,13 @@
             ]),
         },
         async mounted() {
-            await this.getHotelOrders()
+           console.log(this.userInfo.hotelId)
+            await this.getHotelOrders(this.userInfo.hotelId)
         },
         methods: {
             ...mapMutations([
                 'set_currentOrder',
+                'set_managingHotel',
                 'set_updateOrderStateVisible'
             ]),
             ...mapActions([

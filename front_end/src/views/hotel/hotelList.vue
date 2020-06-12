@@ -147,7 +147,8 @@ export default {
     ...mapGetters([
       'hotelList',
       'hotelListLoading',
-        'filterVisible'
+        'filterVisible',
+        'userInfo'
     ])
   },
   methods: {

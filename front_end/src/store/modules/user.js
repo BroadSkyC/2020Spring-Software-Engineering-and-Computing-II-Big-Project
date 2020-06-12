@@ -23,7 +23,6 @@ const getDefaultState = () => {
         userInfo: {
 
         },
-        managingHotel:'',
         userOrderList: [
 
         ],
@@ -54,9 +53,6 @@ const user = {
         set_userId: (state, data) => {
             state.userId = data
         },
-        set_managingHotel: (state, data) => {
-            state.managingHotel= data
-        },
         set_userInfo: (state, data) => {
             state.userInfo = {
                 ...state.userInfo,
@@ -83,7 +79,6 @@ const user = {
             if(res){
                 setToken(res.id)
                 commit('set_userId', res.id)
-                commit('set_managingHotel', res.hotelId)
                 dispatch('getUserInfo')
                 router.push('/hotel/hotelList')
             }
