@@ -44,6 +44,11 @@ const routes = [
         name: 'manageUser',
         component: () => import('@/views/admin/manageUser')
       },
+      {
+        path: '/hotelReceptionist/manageCheck',
+        name: 'manageCheck',
+        component: () => import('@/views/hotelReceptionist/manageCheck')
+      },
     ]
   },
 ]

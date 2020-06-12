@@ -48,3 +48,9 @@ export function updateOrderStateAPI(data) {
         data,
     })
 }
+export function getHotelOrdersAPI(data) {
+    return axios({
+        url: `${api.orderPre}/${data.hotelId}/getHotelOrders`,
+        method: 'GET',
+    })
+}
