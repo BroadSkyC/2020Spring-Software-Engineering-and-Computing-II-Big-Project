@@ -91,7 +91,9 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> getHotelOrders(Integer hotelId) {
         List<Order> orders = orderService.getAllOrders();
-        return orders.stream().filter(order -> order.getHotelId().equals(hotelId)).collect(Collectors.toList());
+        orders=orders.stream().filter(order -> order.getHotelId().equals(hotelId)).collect(Collectors.toList());
+        //orders=orders.stream().filter(order -> !order.getOrderState().equals("已撤销")).collect(Collectors.toList());
+        return orders;
     }
 
     @Override
