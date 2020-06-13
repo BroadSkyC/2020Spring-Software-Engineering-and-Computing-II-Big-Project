@@ -2,7 +2,6 @@ const getters = {
   //user
   token: state => state.user.token,
   userId: state => state.user.userId,
-  managingHotel:state=>state.user.managingHotel,
   userInfo: state => state.user.userInfo,
   userOrderList: state => state.user.userOrderList,
   hotelListLoading: state => state.hotel.hotelListLoading,
@@ -32,7 +31,9 @@ const getters = {
   updateOrderStateVisible: state=> state.hotelManager.updateOrderStateVisible,
   couponList: state => state.hotelManager.couponList,
   //receptionist
-  receptionistOrderList: state=>state.hotelReceptionist.receptionistOrderList
+  receptionistOrderList: state=>state.hotelReceptionist.receptionistOrderList,
+  currentOrrder:state=> state.hotelReceptionist.currentOrrder,
+  updateOrderStatteVisible: state=> state.hotelReceptionist.updateOrderStatteVisible,
 }
   
   export default getters

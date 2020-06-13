@@ -14,16 +14,16 @@
                         <span v-if="text == 'Family'">家庭房</span>
                     </span>
             <span slot="action" slot-scope="record">
-                        <a-button type="primary" size="small" @click="showchangeState(record)">更改状态</a-button>
+                        <a-button type="primary" size="small" @click="showchangeStatte(record)">更改状态</a-button>
                     </span>
         </a-table>
-        <ChangeState></ChangeState>
+        <ChangeStatte></ChangeStatte>
     </div>
 </template>
 
 <script>
     import { mapGetters, mapMutations, mapActions } from 'vuex'
-    import ChangeState from './components/changeState'
+    import ChangeStatte from './components/changeStatte'
     const moment = require('moment')
     const columns2 = [
         {
@@ -90,7 +90,7 @@
             }
         },
         components: {
-            ChangeState,
+            ChangeStatte,
         },
         computed: {
             ...mapGetters([
@@ -105,16 +105,15 @@
         },
         methods: {
             ...mapMutations([
-                'set_currentOrder',
-                'set_managingHotel',
-                'set_updateOrderStateVisible'
+                'set_currentOrrder',
+                'set_updateOrderStatteVisible'
             ]),
             ...mapActions([
                 'getHotelOrders',
             ]),
-            showchangeState(record){
-                this.set_currentOrder(record)
-                this.set_updateOrderStateVisible(true)
+            showchangeStatte(record){
+                this.set_currentOrrder(record)
+                this.set_updateOrderStatteVisible(true)
             },
          }
     }

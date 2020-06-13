@@ -291,7 +291,7 @@ const hotelManager = {
                 dispatch('getUserInfo')
             }
         },
-        updateOrderState: async ({state, dispatch}, data) => {
+        updateOrderState: async ({state, dispatch,commit}, data) => {
             const params = {
                 id: state.id,
                 ...data,
@@ -299,6 +299,7 @@ const hotelManager = {
             const res = await updateOrderStateAPI(params)
             if (res) {
                 message.success('修改成功')
+                commit("set_updateOrderStateVisible",false)
                 dispatch('getAllOrders')
             } else {
                 message.error('修改失败')

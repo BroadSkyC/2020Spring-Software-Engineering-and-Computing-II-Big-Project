@@ -1,15 +1,15 @@
 <template >
     <a-modal
-            :visible="updateOrderStateVisible"
+            :visible="updateOrderStatteVisible"
             title="更改订单状态"
             width="900px"
             @cancel="cancel"
             :footer="null"
     >
-        <div class="changeOrderState">
+        <div class="changeOrderStatte">
             <a-form :form="form" >
                 <a-form-item  label="当前状态"  v-bind="formItemLayout" >
-                    <span >{{currentOrder.orderState}}</span>
+                    <span >{{currentOrrder.orderState}}</span>
                 </a-form-item>
                 <a-form-item label="更改状态" v-bind="formItemLayout">
                     <a-select
@@ -18,8 +18,8 @@
                     { rules: [{ required: true, message: '请选择状态' }] }]"
                     >
                         <a-select-option value="已撤销">撤销</a-select-option>
-                        <a-select-option value="已入住">入住</a-select-option>
-                        <a-select-option value="已完成">完成</a-select-option>
+                        <a-select-option value="已入住" v-if="currentOrrder.orderState==='已预订'">入住</a-select-option>
+                        <a-select-option value="已完成" v-if="currentOrrder.orderState==='已入住'">完成</a-select-option>
                     </a-select>
                 </a-form-item>
                 <a-form-item :wrapper-col="{ span: 8, offset: 4 }" >
@@ -37,7 +37,7 @@
 <script>
     import { mapGetters, mapMutations, mapActions } from 'vuex'
     export default {
-        name: "changeState",
+        name: "changeStatte",
         data() {
             return {
                 modify: false,
@@ -54,12 +54,12 @@
             }
         },
         beforeCreate() {
-            this.form = this.$form.createForm(this, { name: 'changeState' });
+            this.form = this.$form.createForm(this, { name: 'changeStatte' });
         },
         computed: {
             ...mapGetters([
-                'updateOrderStateVisible',
-                'currentOrder'
+                'updateOrderStatteVisible',
+                'currentOrrder'
             ])
         },
         mounted() {
@@ -67,30 +67,30 @@
         },
         methods: {
             ...mapMutations([
-                'set_updateOrderStateVisible'
+                'set_updateOrderStatteVisible'
             ]),
             ...mapActions([
                 'getUserInfo',
                 'getUserOrders',
-                'updateOrderState',
+                'updateOrderStatte',
             ]),
             cancel(){
-                this.set_updateOrderStateVisible(false)
+                this.set_updateOrderStatteVisible(false)
             },
             saveModify() {
                 this.form.validateFields((err, values) => {
                     if (!err) {
                         const data = {
-                            checkInDate: this.currentOrder.checkInDate,
-                            checkOutDate: this.currentOrder.checkOutDate,
-                            peopleNum: this.currentOrder.peopleNum,
-                            price: this.currentOrder.price,
-                            id: this.currentOrder.id,
-                            hotelName: this.currentOrder.hotelName,
-                            roomType: this.currentOrder.roomType,
+                            checkInDate: this.currentOrrder.checkInDate,
+                            checkOutDate: this.currentOrrder.checkOutDate,
+                            peopleNum: this.currentOrrder.peopleNum,
+                            price: this.currentOrrder.price,
+                            id: this.currentOrrder.id,
+                            hotelName: this.currentOrrder.hotelName,
+                            roomType: this.currentOrrder.roomType,
                             orderState:this.form.getFieldValue('orderState')
                         }
-                        this.updateOrderState(data).then(()=>{
+                        this.updateOrderStatte(data).then(()=>{
                             this.modify = false
                         })
                         // location.reload()
@@ -106,7 +106,7 @@
             },
             cancelModify() {
                 this.modify=false
-                this.set_updateOrderStateVisible(false)
+                this.set_updateOrderStatteVisible(false)
             }
         }
     }
