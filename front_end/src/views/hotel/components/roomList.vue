@@ -98,6 +98,7 @@ export default {
             this.set_orderModalVisible(true)
         },
         showModify(record){
+            this.set_currentOrderRoom(record)
             this.set_modifyRoomVisible(true)
         }
     }

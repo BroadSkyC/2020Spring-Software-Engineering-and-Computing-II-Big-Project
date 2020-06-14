@@ -90,6 +90,8 @@
                             roomType: this.currentOrrder.roomType,
                             orderState:this.form.getFieldValue('orderState')
                         }
+                        console.log("curentorder is")
+                        console.log(this.currentOrrder)
                         this.updateOrderStatte(data).then(()=>{
                             this.modify = false
                         })

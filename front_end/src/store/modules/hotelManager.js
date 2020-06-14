@@ -50,6 +50,7 @@ const hotelManager = {
             price: '',
             total: 0,
             curNum: 0,
+            id:'',
         },
         addRoomModalVisible: false,
         couponVisible: false,
@@ -170,6 +171,7 @@ const hotelManager = {
                     price: '',
                     total: 0,
                     curNum: 0,
+                    id:'',
                 })
                 message.success('修改成功')
             } else {

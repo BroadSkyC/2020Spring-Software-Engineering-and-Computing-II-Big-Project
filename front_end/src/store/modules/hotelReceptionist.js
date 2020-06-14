@@ -8,6 +8,7 @@ const hotelReceptionist = {
         receptionistOrderList: [],
         updateOrderStatteVisible:false,
         currentOrrder:{
+
         },
     },
     mutations: {
@@ -38,8 +39,9 @@ const hotelReceptionist = {
             if(res){
                 message.success('修改成功')
                 commit('set_updateOrderStatteVisible', false)
-                dispatch('getHotelOrders',this.currentOrrder.hotelId)
                 window.location.reload();
+                // dispatch('getHotelOrders',this.currentOrrder.hotelId)
+                // window.location.reload();
             }else{
                 message.error('修改失败')
             }
