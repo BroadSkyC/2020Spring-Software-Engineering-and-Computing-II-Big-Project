@@ -61,6 +61,22 @@
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
     name: '',
+    created() {
+        if (sessionStorage.getItem('store')) {
+            this.$store.replaceState(
+                Object.assign(
+                    {},
+                    this.$store.state,
+                    JSON.parse(sessionStorage.getItem('store'))
+                )
+            )
+        }
+        // 在页面刷新时将vuex里的信息保存到sessionStorage里
+        // beforeunload事件在页面刷新时先触发
+        window.addEventListener('beforeunload', () => {
+            sessionStorage.setItem('store', JSON.stringify(this.$store.state))
+        })
+    },
     data() {
         return {
             current: ['1']
@@ -94,6 +110,7 @@ export default {
         },
         async quit() {
             await this.$store.dispatch('logout')
+            sessionStorage.removeItem('store')
             this.$router.push(`/login?redirect=${this.$route.fullPath}`)
         },
         jumpToUserInfo() {

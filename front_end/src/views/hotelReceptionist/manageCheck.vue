@@ -80,6 +80,22 @@
     ];
     export default {
         name: "manageCheck",
+        // created() {
+        //     if (sessionStorage.getItem('store')) {
+        //         this.$store.replaceState(
+        //             Object.assign(
+        //                 {},
+        //                 this.$store.state,
+        //                 JSON.parse(sessionStorage.getItem('store'))
+        //             )
+        //         )
+        //     }
+        //     // 在页面刷新时将vuex里的信息保存到sessionStorage里
+        //     // beforeunload事件在页面刷新时先触发
+        //     window.addEventListener('beforeunload', () => {
+        //         sessionStorage.setItem('store', JSON.stringify(this.$store.state))
+        //     })
+        // },
         data(){
             return {
                 formLayout: 'horizontal',
@@ -94,7 +110,6 @@
         },
         computed: {
             ...mapGetters([
-                'managingHotel',
                 'userInfo',
                 'receptionistOrderList',
             ]),
@@ -114,6 +129,7 @@
             showchangeStatte(record){
                 this.set_currentOrrder(record)
                 this.set_updateOrderStatteVisible(true)
+                // window.location.reload();
             },
          }
     }

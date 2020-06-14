@@ -93,7 +93,7 @@
                         this.updateOrderStatte(data).then(()=>{
                             this.modify = false
                         })
-                        // location.reload()
+                         // window.location.reload()
                     }
                 });
             },

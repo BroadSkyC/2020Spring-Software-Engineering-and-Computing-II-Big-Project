@@ -74,12 +74,13 @@ const user = {
     },
 
     actions: {
-        login: async ({ dispatch, commit }, userData) => {
+        login: async ({ dispatch, commit,state }, userData) => {
             const res = await loginAPI(userData)
             if(res){
                 setToken(res.id)
                 commit('set_userId', res.id)
                 dispatch('getUserInfo')
+                // sessionStorage.setItem('uif',state.userInfo)
                 router.push('/hotel/hotelList')
             }
         },
@@ -97,8 +98,8 @@ const user = {
                   reject('登录已过期，请重新登录')
                 }
                 commit('set_userInfo', data)
+                  // sessionStorage.setItem('uif',state.userInfo)
                 commit('set_userId', data.id)
-                  commit('set_managingHotel', data.hotelId)
                 resolve(data)
               }).catch(error => {
                 reject(error)
@@ -159,10 +160,11 @@ const user = {
                 message.error('撤销失败')
             }
         },
-        logout: async({ commit }) => {
+        logout: async({ commit,state }) => {
             removeToken()
             resetRouter()
             commit('reset_state')
+            // sessionStorage.setItem('uif',state.userInfo)
         },
           // remove token
         resetToken({ commit }) {

@@ -36,9 +36,10 @@ const hotelReceptionist = {
             }
             const res=await updateOrderStateAPI(params)
             if(res){
+                message.success('修改成功')
                 commit('set_updateOrderStatteVisible', false)
                 dispatch('getHotelOrders',this.currentOrrder.hotelId)
-                message.success('修改成功')
+                window.location.reload();
             }else{
                 message.error('修改失败')
             }
