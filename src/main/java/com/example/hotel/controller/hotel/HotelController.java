@@ -49,4 +49,9 @@ public class HotelController {
         return ResponseVO.buildSuccess(true);
     }
 
+    @PostMapping("/modifyRoom")
+    public ResponseVO modifyRoomInfo(@RequestBody HotelRoom hotelRoom){
+        roomService.modifyRoomInfo(hotelRoom);
+        return ResponseVO.buildSuccess(true);
+    }
 }

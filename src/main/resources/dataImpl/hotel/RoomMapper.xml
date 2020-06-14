@@ -20,6 +20,9 @@
         select curNum from Room where hotel_id=#{hotelId} and roomType=#{roomType} and price=#{price}
     </select>
 
+    <update id="modifyRoomInfo">
+        update Room set roomType=#{roomType},price=#{price},total=#{total},curNum=#{curNum} where hotel_id=#{hotelId} and  id=#{id}
+    </update>
 
     <resultMap id="room" type="com.example.hotel.po.HotelRoom">
         <id column="id" property="id"></id>

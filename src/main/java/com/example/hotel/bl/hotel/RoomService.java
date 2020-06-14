@@ -34,4 +34,6 @@ public interface RoomService {
      * @return
      */
     int getRoomCurNum(Integer hotelId, String roomType,Double price);
+
+    void modifyRoomInfo(HotelRoom hotelRoom);
 }

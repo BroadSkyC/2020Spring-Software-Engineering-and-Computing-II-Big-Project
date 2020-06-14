@@ -1,5 +1,6 @@
 package com.example.hotel.data.hotel;
 
+import com.example.hotel.enums.RoomType;
 import com.example.hotel.po.Hotel;
 import com.example.hotel.po.HotelRoom;
 import org.apache.ibatis.annotations.Mapper;
@@ -19,4 +20,10 @@ public interface RoomMapper {
     List<HotelRoom> selectRoomsByHotelId(@Param("hotelId") Integer hotelId);
 
     int getRoomCurNum(@Param("hotelId") Integer hotelId,@Param("roomType") String roomType,@Param("price") Double price);
+
+    void modifyRoomInfo(@Param("id") Integer id, @Param("hotelId") Integer hotelId,
+                        @Param("roomType") RoomType roomType,
+                        @Param("price") Double price,
+                        @Param("total") Integer total,
+                        @Param("curNum") Integer curNum);
 }
