@@ -25,6 +25,7 @@ const getters = {
   addHotelModalVisible: state => state.hotelManager.addHotelModalVisible,
   addRoomModalVisible: state => state.hotelManager.addRoomModalVisible,
   couponVisible: state => state.hotelManager.couponVisible,
+  //currentRoom: state=> state.hotelManager.currentRoom,
   modifyRoomVisible:state => state.hotelManager.modifyRoomVisible,
   addCouponVisible: state => state.hotelManager.addCouponVisible,
   activeHotelId: state => state.hotelManager.activeHotelId,

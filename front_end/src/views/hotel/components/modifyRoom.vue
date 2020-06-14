@@ -90,6 +90,7 @@
                         }
                         this.set_updateRoomParams(data)
                         this.updateRoomInfo()
+                        this.set_modifyRoomVisible(false)
                         location.reload()
                     }
                 });
