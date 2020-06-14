@@ -55,6 +55,7 @@
         computed: {
             ...mapGetters([
                 'modifyRoomVisible',
+                'currentHotelId',
                 'activeHotelId',
                 'currentOrderRoom',
             ])
@@ -85,7 +86,7 @@
                             price: Number(this.form.getFieldValue('price')),
                             total: Number(this.form.getFieldValue('roomNum')),
                             curNum: Number(this.form.getFieldValue('roomNum')),
-                            hotelId: this.activeHotelId,
+                            hotelId: this.currentHotelId,
                             id:this.currentOrderRoom.id,
                         }
                         this.set_updateRoomParams(data)
