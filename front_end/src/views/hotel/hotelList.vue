@@ -3,7 +3,7 @@
       <div class="search-bar">
           <div class="search-cont"
           >
-              <a-input style="margin-left: 30px" placeholder="输入酒店名或商圈关键字" v-model="searchStr" />
+              <a-input style="margin-left: 30px" placeholder="输入酒店相关关键字" v-model="searchStr" />
           </div>
           <div class="search-cont">
               <a-button
@@ -39,6 +39,8 @@
             </a-layout>
         </a-tab-pane>
         <a-tab-pane tab="列表" key="2">
+            <a-layout>
+                <a-layout-content style="min-width: 800px" >
             <a-table
                     :columns="columns1"
                     :dataSource="hotelList"
@@ -53,6 +55,8 @@
                         <a-button type="primary" size="small" @click="jumpToDetails(record.id)">预定</a-button>
                     </span>
             </a-table>
+                </a-layout-content>
+            </a-layout>
         </a-tab-pane>
     </a-tabs>
 
@@ -182,7 +186,7 @@ export default {
           console.log(this.hotelList)
           console.log(this.hotelList.rooms)
         for(let i=0;i<this.hotelList.length;i++){
-            if(this.hotelList[i].name.indexOf(this.searchStr)>=0 || this.hotelList[i].bizRegion.indexOf(this.searchStr)>=0){
+            if(this.hotelList[i].name.indexOf(this.searchStr)>=0 || this.hotelList[i].bizRegion.indexOf(this.searchStr)>=0 || this.hotelList[i].address.indexOf(this.searchStr)>=0){
                 this.searchData.push(this.hotelList[i]);
             }
         }
