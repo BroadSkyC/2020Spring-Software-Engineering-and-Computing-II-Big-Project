@@ -41,6 +41,13 @@ export function updateOrderAPI(data) {
         data,
     })
 }
+export function updateCommentAPI(data) {
+    return axios({
+        url: `${api.orderPre}/updateComment`,
+        method: 'POST',
+        data,
+    })
+}
 export function updateOrderStateAPI(data) {
     return axios({
         url: `${api.orderPre}/updateOrderState`,

@@ -96,10 +96,12 @@
                             @cancel="cancelCancelOrder"
                             okText="确定"
                             cancelText="取消"
-                            v-if="record.orderState == '已预订'"
+                            v-if="record.orderState === '已预订'"
                         >
                             <a-button type="danger" size="small">撤销</a-button>
                         </a-popconfirm>
+                        <a-divider type="vertical" v-if="record.orderState == '已完成'"></a-divider>
+                        <a-button type="primary" size="small" @click="showComment(record)" v-if="record.orderState === '已完成'">评价</a-button>
                         
                     </span>
                 </a-table>
@@ -107,12 +109,15 @@
         </a-tabs>
         <RegisterVip></RegisterVip>
         <ViewOrder></ViewOrder>
+        <Comment></Comment>
     </div>
 </template>
 <script>
+    //引入一个变量存储是否完成过评价order的属性，若完成过则不可重复评价
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 import RegisterVip from './components/RegisterVip'
 import ViewOrder from "./components/viewOrder";
+import Comment from "./components/comment";
 const columns = [
     {  
         title: '订单号',
@@ -182,6 +187,7 @@ export default {
         }
     },
     components: {
+        Comment,
         ViewOrder,
         RegisterVip
     },
@@ -200,6 +206,7 @@ export default {
         ...mapMutations([
             'set_RegisterVipVisible',
             'set_viewOrderVisible',
+            'set_commentVisible',
             'set_currentOrder'
         ]),
         ...mapActions([
@@ -239,6 +246,10 @@ export default {
             else{
                 this.$message.error('必须信用值高于100才能注册成为会员')
             }
+        },
+        showComment(record){
+            this.set_currentOrder(record)
+            this.set_commentVisible(true)
         },
         showViewOrder(record){
             this.set_currentOrder(record)

@@ -15,8 +15,11 @@ import {
 import {
     getUserOrdersAPI,
     cancelOrderAPI,
+    updateCommentAPI,
 } from '@/api/order'
-
+import{
+    updateRateAPI,
+} from '@/api/hotel'
 const getDefaultState = () => {
     return {
         userId: '',
@@ -28,6 +31,7 @@ const getDefaultState = () => {
         ],
         registerVipVisible:false,
         viewOrderVisible:false,
+        commentVisible:false,
         filterVisible:false
     }
 }
@@ -67,6 +71,9 @@ const user = {
         },
         set_viewOrderVisible: function (state,data) {
             state.viewOrderVisible=data
+        },
+        set_commentVisible: function (state,data) {
+            state.commentVisible=data
         },
         set_filterVisible: function (state,data) {
             state.filterVisible=data
@@ -117,6 +124,17 @@ const user = {
                 dispatch('getUserInfo')
             }
         },
+        updateRate: async({ state, dispatch }, data) => {
+            const res = await updateRateAPI(data)
+        },
+        updateComment: async({ state, dispatch }, data) => {
+            const res = await updateCommentAPI(data)
+            if(res){
+                message.success('感谢您的评价')
+                dispatch('getUserOrders')
+            }
+        },
+
         addCommonVip: async({ commit, dispatch }, data) => {
             const res = await addCommonVipAPI(data)
             if(res){

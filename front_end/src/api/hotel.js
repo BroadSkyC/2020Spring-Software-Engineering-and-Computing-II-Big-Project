@@ -14,3 +14,10 @@ export function getHotelByIdAPI(param) {
         method: 'GET',
     })
 }
+export function updateRateAPI(data) {
+    return axios({
+        url: `${api.hotelPre}/updateRate`,
+        method: 'POST',
+        data,
+    })
+}
