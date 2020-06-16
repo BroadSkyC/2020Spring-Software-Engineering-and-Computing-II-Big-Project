@@ -3,7 +3,29 @@
         <a-tabs>
             <a-tab-pane tab="我的信息" key="1">
                 <a-form :form="form" style="margin-top: 30px">
-                    
+                    <a-form-item label="头像" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1  }">
+                        <a-upload
+                                name="avatar"
+                                list-type="picture-card"
+                                class="avatar-uploader"
+                                :show-upload-list="false"
+                                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                :before-upload="beforeUpload"
+                                @change="handleChange"
+                                v-if="modify"
+                        >
+                            <img v-if="imageUrl" :src="imageUrl" alt="avatar" />
+                            <div v-else>
+                                <a-icon :type="loading ? 'loading' : 'plus'" />
+                                <div class="ant-upload-text">
+                                    上传
+                                </div>
+                            </div>
+                        </a-upload>
+                        <span v-else><a-avatar v-if="imageUrl" size="large" src="imageUrl"></a-avatar>
+                            <span v-else><a-avatar size="large" src="./defaultAvatar.png"></a-avatar></span></span>
+
+                    </a-form-item>
                     <a-form-item label="用户名" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1  }">
                         <a-input
                             placeholder="请填写用户名"
@@ -171,6 +193,11 @@ const columns = [
     },
     
   ];
+function getBase64(img, callback) {
+        const reader = new FileReader();
+        reader.addEventListener('load', () => callback(reader.result));
+        reader.readAsDataURL(img);
+    }
 export default {
     name: 'info',
     data(){
@@ -182,7 +209,9 @@ export default {
             columns,
             data: [],
             form: this.$form.createForm(this, { name: 'coordinated' }),
-            format
+            format,
+            loading: false,
+            imageUrl: '',
         }
     },
     components: {
@@ -262,10 +291,49 @@ export default {
         },
         cancelCancelOrder() {
 
-        }
+        },
+        handleChange(info) {
+            if (info.file.status === 'uploading') {
+                this.loading = true;
+                return;
+            }
+            if (info.file.status === 'done') {
+                // Get this url from response in real world.
+                getBase64(info.file.originFileObj, imageUrl => {
+                    this.imageUrl = imageUrl;
+                    this.loading = false;
+                });
+            }
+        },
+        beforeUpload(file) {
+            const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+            if (!isJpgOrPng) {
+                this.$message.error('请上传JPEG或PNG格式图片');
+            }
+            const isLt2M = file.size / 1024 / 1024 < 2;
+            if (!isLt2M) {
+                this.$message.error('文件大小须小于2MB');
+            }
+            return isJpgOrPng && isLt2M;
+        },
     }
 }
 </script>
+<style>
+    .avatar-uploader > .ant-upload {
+        width: 64px;
+        height: 64px;
+    }
+    .ant-upload-select-picture-card i {
+        font-size: 32px;
+        color: #999;
+    }
+
+    .ant-upload-select-picture-card .ant-upload-text {
+        margin-top: 8px;
+        color: #666;
+    }
+</style>
 <style scoped lang="less">
     .info-wrapper {
         padding: 50px;
