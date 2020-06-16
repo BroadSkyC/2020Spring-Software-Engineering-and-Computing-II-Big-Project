@@ -70,6 +70,7 @@ CREATE TABLE `Hotel` (
   `manager_id` int(11) DEFAULT NULL,
   `minPrice` double DEFAULT 0,
   `maxPrice` double DEFAULT 0,
+  `commentTime` bigint(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -80,7 +81,7 @@ CREATE TABLE `Hotel` (
 
 BEGIN;
 /*!40000 ALTER TABLE `Hotel` DISABLE KEYS */;
-INSERT INTO `Hotel` VALUES (1,'汉庭酒店','欢迎您入住','南京市新街口258号','XiDan','Four',1829373819,4.8,1,199,399),(2,'儒家酒店','欢迎您入住','南京市鼓楼区珠江路268号','XiDan','Four',1829373819,4.8,2,122,399),(3,'桂圆酒店','欢迎您入住','南京市栖霞区珠江路268号','XiDan','Four',1829553719,4.8,6,0,0);
+INSERT INTO `Hotel` VALUES (1,'汉庭酒店','欢迎您入住','南京市新街口258号','XiDan','Four',1829373819,4.8,1,199,399,1),(2,'儒家酒店','欢迎您入住','南京市鼓楼区珠江路268号','XiDan','Four',1829373819,4.8,2,122,399,1),(3,'桂圆酒店','欢迎您入住','南京市栖霞区珠江路268号','XiDan','Four',1829553719,4.8,6,0,0,1);
 /*!40000 ALTER TABLE `Hotel` ENABLE KEYS */;
 COMMIT;
 
@@ -108,6 +109,8 @@ CREATE TABLE `OrderList` (
   `phoneNumber` varchar(255) DEFAULT NULL,
   `orderState` varchar(255) DEFAULT NULL,
   `roomPrice` decimal(65,0) DEFAULT NULL,
+  `rate` double DEFAULT NULL,
+  `feedback` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

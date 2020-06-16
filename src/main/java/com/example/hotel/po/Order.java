@@ -23,6 +23,8 @@ public class Order {
     private String phoneNumber;
     private String orderState;
     private Double roomPrice;
+    private Double rate;
+    private String feedback;
 
     public Integer getId() {
         return id;
@@ -147,4 +149,13 @@ public class Order {
     public Double getRoomPrice(){return roomPrice;}
 
     public void setRoomPrice(Double rp){this.roomPrice=rp;}
+
+    public void setRate(Double rate){this.rate=rate;}
+
+    public Double getRate(){return this.rate;}
+
+    public void setFeedback(String feedback){this.feedback=feedback;}
+
+    public String getFeedback(){return this.feedback;}
+
 }

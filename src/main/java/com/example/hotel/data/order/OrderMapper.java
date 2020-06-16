@@ -4,6 +4,7 @@ import com.example.hotel.po.Order;
 import com.example.hotel.vo.OrderVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+//import org.graalvm.compiler.core.common.type.ArithmeticOpTable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -31,4 +32,6 @@ public interface OrderMapper {
     int updateOrder(Order order);
 
     int updateOrderState(Order order);
+
+    int updateComment(Order order);
 }

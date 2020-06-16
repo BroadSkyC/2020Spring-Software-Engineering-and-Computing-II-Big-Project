@@ -9,27 +9,31 @@
         select * from OrderList where userId=#{userid}
     </select>
     <insert id="addOrder" parameterType="com.example.hotel.po.Order" useGeneratedKeys="true" keyProperty="id">
-        insert into OrderList(userId,hotelId,hotelName,checkInDate,checkOutDate,roomType,roomNum,peopleNum,haveChild,createDate,price,clientName,phoneNumber,orderState,roomPrice)
-        values(#{userId},#{hotelId},#{hotelName},#{checkInDate},#{checkOutDate},#{roomType},#{roomNum},#{peopleNum},#{haveChild},#{createDate},#{price},#{clientName},#{phoneNumber},#{orderState},#{roomPrice})
+        insert into OrderList(userId,hotelId,hotelName,checkInDate,checkOutDate,roomType,roomNum,peopleNum,haveChild,createDate,price,clientName,phoneNumber,orderState,roomPrice,rate,feedback)
+        values(#{userId},#{hotelId},#{hotelName},#{checkInDate},#{checkOutDate},#{roomType},#{roomNum},#{peopleNum},#{haveChild},#{createDate},#{price},#{clientName},#{phoneNumber},#{orderState},#{roomPrice},#{rate},#{feedback})
     </insert>
     <select id="getOrderById" resultMap="Order">
         select * from OrderList where id=#{id}
     </select>
    <!--取消订单的数据库操作-->
     <update id="annulOrder">
-        update Orderlist set orderState='已取消' where id=#{orderid}
+        update OrderList set orderState='已取消' where id=#{orderid}
     </update>
 
     <delete id="deleteOrder" parameterType="com.example.hotel.po.Order">
-        delete from Orderlist where id=#{id}
+        delete from OrderList where id=#{id}
     </delete>
 
     <update id="updateOrder" parameterType="com.example.hotel.po.Order">
-        update Orderlist set checkInDate=#{checkInDate},checkOutDate=#{checkOutDate},peopleNum=#{peopleNum},price=#{price} where id=#{id}
+        update OrderList set checkInDate=#{checkInDate},checkOutDate=#{checkOutDate},peopleNum=#{peopleNum},price=#{price} where id=#{id}
     </update>
 
     <update id="updateOrderState" parameterType="com.example.hotel.po.Order">
-        update Orderlist set orderState=#{orderState} where id=#{id}
+        update OrderList set orderState=#{orderState} where id=#{id}
+    </update>
+
+    <update id="updateComment" parameterType="com.example.hotel.po.Order">
+        update OrderList set rate=#{rate},feedback=#{feedback} where id=#{id}
     </update>
 
     <resultMap id="Order" type="com.example.hotel.po.Order">

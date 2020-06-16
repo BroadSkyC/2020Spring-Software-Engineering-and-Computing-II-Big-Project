@@ -13,6 +13,7 @@ public class Hotel {
     private String bizRegion;
     private HotelStar hotelStar;
     private Double rate;
+    private Integer commentTime;
     private String description;
     private String phoneNum;
     /**
@@ -110,5 +111,11 @@ public class Hotel {
     public void setMaxPrice(Integer maxPrice) {
         this.maxPrice = maxPrice;
     }
+
+    public void setCommentTime(Integer time) {
+        this.commentTime = time;
+    }
+
+    public Integer getCommentTime() { return this.commentTime; }
 }
 

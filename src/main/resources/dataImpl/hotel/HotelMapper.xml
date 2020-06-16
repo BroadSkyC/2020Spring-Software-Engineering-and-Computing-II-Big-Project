@@ -3,8 +3,8 @@
 <mapper namespace="com.example.hotel.data.hotel.HotelMapper">
     <insert id="insertHotel" parameterType="com.example.hotel.po.Hotel"
     useGeneratedKeys="true" keyProperty="id">
-        insert into Hotel(address,bizRegion,hotelDescription,hotelStar,hotelName,phoneNum,rate,manager_id)
-        values (#{address},#{bizRegion},#{description},#{hotelStar},#{hotelName},#{phoneNum},#{rate},#{managerId})
+        insert into Hotel(address,bizRegion,hotelDescription,hotelStar,hotelName,phoneNum,rate,manager_id,commentTime,minPrice,maxPrice)
+        values (#{address},#{bizRegion},#{description},#{hotelStar},#{hotelName},#{phoneNum},#{rate},#{managerId},#{commentTime},#{minPrice},#{maxPrice})
     </insert>
 
     <select id="selectAllHotel" resultMap="Hotel">
@@ -24,6 +24,10 @@
 
     <update id="updateMaxPrice">
         update Hotel set maxPrice=#{maxPrice} where id=#{id}
+    </update>
+
+    <update id="updateRate">
+        update Hotel set rate=#{rate},commentTime=#{commentTime} where id=#{id}
     </update>
 
     <select id="getMinPrice" resultType="double">
@@ -46,7 +50,7 @@
         <result column="minPrice" property="minPrice"></result>
         <result column="maxPrice" property="maxPrice"></result>
         <result column="manager_id" property="managerId"></result>
-
+        <result column="commentTime" property="commentTime"></result>
     </resultMap>
 
 

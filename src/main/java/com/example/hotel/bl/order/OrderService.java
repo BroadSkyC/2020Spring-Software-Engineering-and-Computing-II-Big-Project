@@ -56,6 +56,13 @@ public interface OrderService {
     ResponseVO updateOrder(OrderVO orderVO);
 
     /**
+     *修改订单评价
+     * @param  orderVO
+     * @return
+     */
+    ResponseVO updateComment(OrderVO orderVO);
+
+    /**
      * 修改订单状态
      * @param
      * @return

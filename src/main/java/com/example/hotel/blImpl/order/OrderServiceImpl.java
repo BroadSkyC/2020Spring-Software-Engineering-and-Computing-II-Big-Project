@@ -4,16 +4,18 @@ import com.example.hotel.bl.hotel.HotelService;
 import com.example.hotel.bl.order.OrderService;
 import com.example.hotel.bl.user.AccountService;
 import com.example.hotel.data.order.OrderMapper;
+import com.example.hotel.po.Hotel;
 import com.example.hotel.po.Order;
 import com.example.hotel.po.User;
+import com.example.hotel.vo.HotelVO;
 import com.example.hotel.vo.OrderVO;
 import com.example.hotel.vo.ResponseVO;
+//import org.graalvm.compiler.core.common.type.ArithmeticOpTable;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -54,6 +56,8 @@ public class OrderServiceImpl implements OrderService {
                 orderVO.setPhoneNumber(user.getPhoneNumber());
                 Order order = new Order();
                 BeanUtils.copyProperties(orderVO,order);
+                order.setRate(0.0);
+                order.setFeedback("");
                 orderMapper.addOrder(order);
                 hotelService.updateRoomInfo(orderVO.getHotelId(),orderVO.getRoomType(),orderVO.getRoomNum());
             } catch (Exception e) {
@@ -111,6 +115,15 @@ public class OrderServiceImpl implements OrderService {
         order.setCheckInDate(order.getCheckInDate().substring(0,10));
         order.setCheckOutDate(order.getCheckOutDate().substring(0,10));
         orderMapper.updateOrder(order);
+        return ResponseVO.buildSuccess(true);
+    }
+
+    @Override
+    public ResponseVO updateComment(OrderVO orderVO){
+        Order order=new Order();
+        BeanUtils.copyProperties(orderVO,order);
+        orderMapper.updateComment(order);
+        hotelService.updateRate(order.getHotelId(),order.getRate());
         return ResponseVO.buildSuccess(true);
     }
 

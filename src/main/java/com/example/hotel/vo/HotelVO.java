@@ -19,6 +19,7 @@ public class HotelVO {
     private Integer managerId;
     private double minPrice;
     private double maxPrice;
+    private Integer commentTime;
 
     private List<RoomVO> rooms;
 
@@ -117,5 +118,11 @@ public class HotelVO {
     public void setMaxPrice(Integer maxPrice) {
         this.maxPrice = maxPrice;
     }
+
+    public void setCommentTime(Integer time) {
+        this.commentTime = time;
+    }
+
+    public Integer getCommentTime() { return this.commentTime; }
 
 }

@@ -47,5 +47,7 @@ public interface HotelService {
      */
     int getRoomCurNum(Integer hotelId,String roomType,Double price);
 
+    void updateRate(Integer hotelId,Double rate);
+
     void delHotel(HotelVO hotelVO);
 }

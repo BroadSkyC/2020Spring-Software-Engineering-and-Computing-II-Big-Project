@@ -20,7 +20,6 @@ import com.example.hotel.vo.HotelVO;
 import com.example.hotel.vo.RoomVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,6 +49,9 @@ public class HotelServiceImpl implements HotelService {
         hotel.setManagerId(hotelVO.getManagerId());
         hotel.setRate(hotelVO.getRate());
         hotel.setBizRegion(hotelVO.getBizRegion());
+        hotel.setMinPrice(0);
+        hotel.setMaxPrice(0);
+        hotel.setCommentTime(1);
         //hotel.setBizRegion(BizRegion.valueOf(hotelVO.getBizRegion()));
         hotel.setHotelStar(HotelStar.valueOf(hotelVO.getHotelStar()));
         hotelMapper.insertHotel(hotel);
@@ -67,7 +69,6 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public List<HotelVO> retrieveHotels() {
-
         return hotelMapper.selectAllHotel();
     }
 
@@ -87,6 +88,16 @@ public class HotelServiceImpl implements HotelService {
         hotelVO.setRooms(roomVOS);
 
         return hotelVO;
+    }
+
+    @Override
+    public void updateRate(Integer hotelId,Double rate){
+        HotelVO hotelVO = hotelMapper.selectById(hotelId);
+        double d=(hotelVO.getRate()*hotelVO.getCommentTime()+rate)/(hotelVO.getCommentTime()+1);
+        d=(double) Math.round(d*10)/10;
+        hotelVO.setRate(d);
+        hotelVO.setCommentTime(hotelVO.getCommentTime()+1);
+        hotelMapper.updateRate(hotelId,hotelVO.getRate(),hotelVO.getCommentTime());
     }
 
     @Override

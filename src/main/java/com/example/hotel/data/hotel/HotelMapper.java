@@ -28,5 +28,5 @@ public interface HotelMapper {
 
     double getMaxPrice(@Param("id") Integer id);
 
-
+    void updateRate(@Param("id") Integer id,@Param("rate") Double rate,@Param("commentTime") Integer commentTime);
 }
