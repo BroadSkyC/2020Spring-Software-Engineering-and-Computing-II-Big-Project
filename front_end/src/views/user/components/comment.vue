@@ -67,7 +67,6 @@
             ]),
             ...mapActions([
                 'updateComment',
-                'updateRate'
             ]),
             cancel() {
                 this.set_commentVisible(false)
@@ -82,7 +81,6 @@
                            hotelId:this.currentOrder.hotelId,
                            id:this.currentOrder.id,
                         }
-                        this.updateRate(data)
                         this.updateComment(data)
                         this.set_commentVisible(false)
                     }

@@ -17,9 +17,6 @@ import {
     cancelOrderAPI,
     updateCommentAPI,
 } from '@/api/order'
-import{
-    updateRateAPI,
-} from '@/api/hotel'
 const getDefaultState = () => {
     return {
         userId: '',
@@ -123,9 +120,6 @@ const user = {
                 message.success('修改成功')
                 dispatch('getUserInfo')
             }
-        },
-        updateRate: async({ state, dispatch }, data) => {
-            const res = await updateRateAPI(data)
         },
         updateComment: async({ state, dispatch }, data) => {
             const res = await updateCommentAPI(data)

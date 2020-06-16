@@ -100,9 +100,8 @@
                         >
                             <a-button type="danger" size="small">撤销</a-button>
                         </a-popconfirm>
-                        <a-divider type="vertical" v-if="record.orderState == '已完成'"></a-divider>
-                        <a-button type="primary" size="small" @click="showComment(record)" v-if="record.orderState === '已完成'">评价</a-button>
-                        
+                        <a-divider type="vertical" v-if="record.orderState == '已完成' && !record.feedback"></a-divider>
+                        <a-button type="primary" size="small" @click="showComment(record)" v-if="record.orderState === '已完成' && !record.feedback">评价</a-button>
                     </span>
                 </a-table>
             </a-tab-pane>

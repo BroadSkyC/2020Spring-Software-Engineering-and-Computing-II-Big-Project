@@ -34,6 +34,12 @@
                 <a-form-item  label="订单状态" v-bind="formItemLayout" >
                     <span >{{ currentOrder.orderState}}</span>
                 </a-form-item>
+                <a-form-item label="我的评分" v-bind="formItemLayout" v-if="currentOrder.orderState==='已完成'">
+                    <span>{{currentOrder.rate}}</span>
+                </a-form-item>
+                <a-form-item label="我的评价" v-bind="formItemLayout" v-if="currentOrder.orderState==='已完成'">
+                    <span>{{currentOrder.feedback}}</span>
+                </a-form-item>
 <!--                <a-form-item :wrapper-col="{ span: 8, offset: 4 }" >-->
 <!--                    <a-button type="primary" @click="modifyInfo">-->
 <!--                        评论-->

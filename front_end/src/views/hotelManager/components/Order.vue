@@ -53,6 +53,15 @@
                 />
                 <span v-else>{{ currentOrder.price}}</span>
             </a-form-item>
+            <a-form-item label="订单状态" v-bind="formItemLayout">
+                <span>{{currentOrder.orderState}}</span>
+            </a-form-item>
+            <a-form-item label="用户评分" v-bind="formItemLayout" v-if="currentOrder.orderState==='已完成'">
+                <span>{{currentOrder.rate}}</span>
+            </a-form-item>
+            <a-form-item label="用户反馈" v-bind="formItemLayout" v-if="currentOrder.orderState==='已完成'">
+                <span>{{currentOrder.feedback}}</span>
+            </a-form-item>
             <a-form-item :wrapper-col="{ span: 8, offset: 4 }" v-if="modify">
                 <a-button type="primary" @click="saveModify">
                     保存
