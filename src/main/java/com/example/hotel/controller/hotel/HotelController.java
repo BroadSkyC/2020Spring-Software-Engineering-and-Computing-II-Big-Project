@@ -56,8 +56,8 @@ public class HotelController {
     }
 
     @GetMapping("/{userId}/getManagerHotels")
-    public ResponseVO retrieveManagerHotel(int userId){
-        hotelService.retrieveManagerHotels(userId);
-        return ResponseVO.buildSuccess(true);
+    public ResponseVO retrieveManagerHotel(@PathVariable Integer userId){
+
+        return ResponseVO.buildSuccess(hotelService.retrieveManagerHotels(userId));
     }
 }

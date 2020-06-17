@@ -74,6 +74,7 @@ public class HotelServiceImpl implements HotelService {
         return hotelMapper.selectAllHotel();
     }
 
+    @Override
     public List<HotelVO> retrieveManagerHotels(Integer userId){
         List<HotelVO> HotelO=hotelMapper.selectAllHotel();
         HotelO=HotelO.stream().filter(Hotel -> Hotel.getManagerId().equals(userId)).collect(Collectors.toList());
