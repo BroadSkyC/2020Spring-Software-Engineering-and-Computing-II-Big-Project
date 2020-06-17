@@ -139,6 +139,7 @@ const hotelManager = {
                     description: '',
                     phoneNum: '',
                     managerId: '',
+                    imgUrl: '',
                 })
                 commit('set_addHotelModalVisible', false)
                 message.success('添加成功')

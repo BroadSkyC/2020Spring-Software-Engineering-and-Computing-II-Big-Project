@@ -22,7 +22,7 @@ public class Hotel {
     private Integer managerId;
     private double minPrice;
     private double maxPrice;
-    private String ImgURL;
+    private String imgUrl;
 
 
     public Integer getId() {
@@ -119,8 +119,8 @@ public class Hotel {
 
     public Integer getCommentTime() { return this.commentTime; }
 
-    public String getImgURL(){return this.ImgURL;}
+    public String getImgUrl(){return this.imgUrl;}
 
-    public void setImgURL(String url){this.ImgURL=url;}
+    public void setImgUrl(String url){this.imgUrl=url;}
 }
 

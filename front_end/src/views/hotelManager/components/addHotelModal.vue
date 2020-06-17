@@ -135,7 +135,7 @@ export default {
                 // base64转blob
                 const blob = this.toBlob(base64, fileType);
                 reader.readAsArrayBuffer(blob);
-                reader.onload = function (event) {
+                reader.onload =  (event) => {
                     const OSS = require('ali-oss');
                     const client = new OSS({
                         region: 'oss-cn-shanghai',
@@ -161,7 +161,6 @@ export default {
         },
         handleSubmit(e) {
             e.preventDefault();
-             console.log(this.imgUrl)
             this.form.validateFieldsAndScroll((err, values) => {
                 if (!err) {
                     const data = {

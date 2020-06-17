@@ -71,7 +71,7 @@ CREATE TABLE `Hotel` (
   `minPrice` double DEFAULT 0,
   `maxPrice` double DEFAULT 0,
   `commentTime` bigint(11) DEFAULT NULL,
-  `ImgURL` varchar(255) DEFAULT NULL,
+  `imgUrl` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

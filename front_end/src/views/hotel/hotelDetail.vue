@@ -9,7 +9,7 @@
                     <a-card style="width: 240px">
                         <img
                             alt="example"
-                            src="https://seec67.oss-cn-shanghai.aliyuncs.com/cover.jpeg"
+                            v-bind:src= hotel.imgUrl
                             slot="cover"
                             referrerPolicy="no-referrer"
                             />
