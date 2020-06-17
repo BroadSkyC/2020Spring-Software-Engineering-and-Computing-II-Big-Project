@@ -9,7 +9,7 @@
                     <a-card style="width: 240px">
                         <img
                             alt="example"
-                            src="@/assets/cover.jpeg"
+                            src="https://seec67.oss-cn-shanghai.aliyuncs.com/cover.jpeg"
                             slot="cover"
                             referrerPolicy="no-referrer"
                             />

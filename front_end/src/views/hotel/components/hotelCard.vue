@@ -2,7 +2,7 @@
   <a-card hoverable class="hotelCard ant-col-xs-7 ant-col-lg-5 ant-col-xxl-3">
     <img
       alt="example"
-      src="@/assets/cover.jpeg"
+      src="https://seec67.oss-cn-shanghai.aliyuncs.com/cover.jpeg"
       slot="cover"
       referrerPolicy="no-referrer"
     />

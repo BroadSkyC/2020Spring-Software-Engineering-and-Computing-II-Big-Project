@@ -82,7 +82,7 @@ CREATE TABLE `Hotel` (
 
 BEGIN;
 /*!40000 ALTER TABLE `Hotel` DISABLE KEYS */;
-INSERT INTO `Hotel` VALUES (1,'汉庭酒店','欢迎您入住','南京市新街口258号','XiDan','Four',1829373819,4.8,1,199,399,1),(2,'儒家酒店','欢迎您入住','南京市鼓楼区珠江路268号','XiDan','Four',1829373819,4.8,2,122,399,1),(3,'桂圆酒店','欢迎您入住','南京市栖霞区珠江路268号','XiDan','Four',1829553719,4.8,6,0,0,1);
+INSERT INTO `Hotel` VALUES (1,'汉庭酒店','欢迎您入住','南京市新街口258号','XiDan','Four',1829373819,4.8,1,199,399,1,"https://seec67.oss-cn-shanghai.aliyuncs.com/cover.jpeg"),(2,'儒家酒店','欢迎您入住','南京市鼓楼区珠江路268号','XiDan','Four',1829373819,4.8,2,122,399,1,"https://seec67.oss-cn-shanghai.aliyuncs.com/cover.jpeg"),(3,'桂圆酒店','欢迎您入住','南京市栖霞区珠江路268号','XiDan','Four',1829553719,4.8,6,0,0,1,"https://seec67.oss-cn-shanghai.aliyuncs.com/cover.jpeg");
 /*!40000 ALTER TABLE `Hotel` ENABLE KEYS */;
 COMMIT;
 
