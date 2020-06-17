@@ -174,10 +174,12 @@ export default {
             'addRoomModalVisible',
             'activeHotelId',
             'couponVisible',
+            'userId'
         ]),
     },
     async mounted() {
-        await this.getHotelList()
+        console.log(this.userId)
+        await this.getManagerHotelList(this.userId)
         await this.getAllOrders()
     },
     methods: {
@@ -196,6 +198,7 @@ export default {
             'getHotelCoupon',
             'delHotel',
             'delOrder',
+            'getManagerHotelList'
         ]),
         addHotel() {
             this.set_addHotelModalVisible(true)
