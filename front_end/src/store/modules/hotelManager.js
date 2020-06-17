@@ -20,7 +20,9 @@ import {
 } from '@/api/coupon'
 import { message } from 'ant-design-vue'
 
+
 const hotelManager = {
+
     state: {
         orderList: [],
         addHotelParams: {
@@ -126,10 +128,11 @@ const hotelManager = {
                 commit('set_orderList', res)
             }
         },
-        addHotel: async ({state, dispatch, commit}) => {
+        addHotel: async ({state, dispatch, commit,getters}) => {
             const res = await addHotelAPI(state.addHotelParams)
             if (res) {
-                dispatch('getHotelList')
+                console.log(getters.userId)
+                dispatch('getManagerHotelList',getters.userId)
                 commit('set_addHotelParams', {
                     name: '',
                     address: '',
@@ -252,13 +255,12 @@ const hotelManager = {
                 message.error('添加失败')
             }
         },
-        delHotel: async (dispatch, data) => {
+        delHotel: async ({dispatch, getters},data) => {
             const res = await delHotelAPI(data)
             if (res) {
-                //dispatch('getHotelList')
+                dispatch('getManagerHotelList',getters.userId)
                 message.success('删除成功')
-                window.location.reload();
-                dispatch('getHotelList')
+
             } else {
                 message.error('删除失败')
             }

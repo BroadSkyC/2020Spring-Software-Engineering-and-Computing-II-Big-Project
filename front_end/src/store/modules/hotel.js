@@ -79,6 +79,7 @@ const hotel = {
             }
         },
         getManagerHotelList:async({commit, state},userId) => {
+            console.log(userId)
             const res=await getManagerHotelsAPI(userId)
             if(res){
                 commit('set_hotelList', res)

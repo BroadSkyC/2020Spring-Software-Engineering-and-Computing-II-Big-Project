@@ -30,7 +30,7 @@ const hotelReceptionist = {
                 console.log(state.receptionistOrderList)
             }
         },
-        updateOrderStatte: async ({state,dispatch,commit},data)=>{
+        updateOrderStatte: async ({state,dispatch,commit,getters},data)=>{
             const params={
                 id:state.id,
                 ...data,
@@ -39,9 +39,9 @@ const hotelReceptionist = {
             if(res){
                 message.success('修改成功')
                 commit('set_updateOrderStatteVisible', false)
-                window.location.reload();
-                // dispatch('getHotelOrders',this.currentOrrder.hotelId)
-                // window.location.reload();
+                //window.location.reload();
+                dispatch('getHotelOrders',getters.currentOrrder.hotelId)
+
             }else{
                 message.error('修改失败')
             }
