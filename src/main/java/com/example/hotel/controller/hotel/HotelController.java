@@ -54,4 +54,10 @@ public class HotelController {
         roomService.modifyRoomInfo(hotelRoom);
         return ResponseVO.buildSuccess(true);
     }
+
+    @GetMapping("/{userId}/getManagerHotels")
+    public ResponseVO retrieveManagerHotel(int userId){
+        hotelService.retrieveManagerHotels(userId);
+        return ResponseVO.buildSuccess(true);
+    }
 }

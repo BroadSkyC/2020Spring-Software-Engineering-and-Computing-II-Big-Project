@@ -50,4 +50,6 @@ public interface HotelService {
     void updateRate(Integer hotelId,Double rate);
 
     void delHotel(HotelVO hotelVO);
+
+    List<HotelVO> retrieveManagerHotels(Integer userId);
 }
