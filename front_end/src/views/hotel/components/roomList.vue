@@ -13,8 +13,8 @@
                     <span>￥{{ text }}</span>
                 </span>
                 <span slot="action" slot-scope="record">
-                    <a-button type="primary" @click="order(record)" v-if="userInfo.userType=='Client'">预定</a-button>
-                    <a-button type="primary" @click="showModify(record)" v-if="userInfo.userType=='HotelManager'">修改房间信息</a-button>
+                    <a-button type="primary" @click="order(record)" v-if="userInfo.userType==='Client'">预定</a-button>
+                    <a-button type="primary" @click="showModify(record)" v-if="userInfo.userType==='HotelManager' && currentHotelInfo.managerId===userInfo.id">修改房间信息</a-button>
                 </span>
             </a-table>
         </div>
@@ -78,7 +78,8 @@ export default {
         ...mapGetters([
             'orderModalVisible',
             'modifyRoomVisible',
-            'userInfo'
+            'userInfo',
+            'currentHotelInfo'
         ])
     },
     monuted() {
