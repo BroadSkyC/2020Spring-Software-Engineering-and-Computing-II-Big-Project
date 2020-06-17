@@ -9,7 +9,7 @@
                     <a-card style="width: 240px">
                         <img
                             alt="example"
-                            v-bind:src= hotel.imgUrl
+                            v-bind:src= currentHotelInfo.imgUrl
                             slot="cover"
                             referrerPolicy="no-referrer"
                             />
