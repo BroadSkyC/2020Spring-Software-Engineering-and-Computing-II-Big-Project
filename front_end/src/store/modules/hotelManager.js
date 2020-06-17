@@ -32,6 +32,7 @@ const hotelManager = {
             description:'',
             phoneNum:'',
             managerId:'',
+            imgUrl: ''
         },
         currentOrder:{
 

@@ -71,7 +71,7 @@ export default {
     name: 'addHotelModal',
     data() {
         return {
-
+            imgUrl: '',
             formItemLayout: {
                 labelCol: {
                     xs: { span: 12 },
@@ -100,7 +100,8 @@ export default {
     methods: {
         ...mapMutations([
             'set_addHotelParams',
-            'set_addHotelModalVisible'
+            'set_addHotelModalVisible',
+            'set_imageUrl'
         ]),
         ...mapActions([
             'addHotel'
@@ -147,7 +148,8 @@ export default {
                     const buffer = new OSS.Buffer(event.target.result);
                     // 上传
                     client.put(fileName, buffer).then((result)=> {
-                        console.log(result.url);
+                        // console.log(result.url);
+                       this.imgUrl=result.url;
                     }).catch(function (err) {
                         console.log(err);
                     });
@@ -159,7 +161,7 @@ export default {
         },
         handleSubmit(e) {
             e.preventDefault();
-            console.log(this.data().ImageUrl)
+             console.log(this.imgUrl)
             this.form.validateFieldsAndScroll((err, values) => {
                 if (!err) {
                     const data = {
@@ -171,7 +173,7 @@ export default {
                         rate: this.form.getFieldValue('rate'),
                         bizRegion:this.form.getFieldValue('bizRegion'),
                         managerId: Number(this.userId),
-                     
+                        imgUrl:this.imgUrl
                     }
                     this.set_addHotelParams(data)
                     this.addHotel()
