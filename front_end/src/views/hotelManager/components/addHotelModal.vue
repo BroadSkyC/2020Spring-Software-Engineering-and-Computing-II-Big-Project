@@ -58,15 +58,20 @@
                     v-decorator="['description', { rules: [{ required: true, message: '请填写酒店简介' }] }]"
                 />
             </a-form-item>
+            <a-form-item label="酒店图片" v-bind="formItemLayout">
+                <input type="file" @change="Upload" accept="image/*"/>
+            </a-form-item>
         </a-form>
     </a-modal>
 </template>
+<script src="http://gosspublic.alicdn.com/aliyun-oss-sdk-4.4.4.min.js"></script>
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 export default {
     name: 'addHotelModal',
     data() {
         return {
+
             formItemLayout: {
                 labelCol: {
                     xs: { span: 12 },
@@ -106,8 +111,55 @@ export default {
         changeStar(v){
 
         },
+        toBlob(urlData,fileType) {
+            let bytes = window.atob(urlData);
+            let n = bytes.length;
+            let u8arr = new Uint8Array(n);
+            while (n--) {
+                u8arr[n] = bytes.charCodeAt(n);
+            }
+            return new Blob([u8arr], { type: fileType });
+        },
+        Upload:function(e) {
+            var fileName = 'seec' + `${Date.parse(new Date())}`+'.jpg';  //定义唯一的文件名
+            var file = e.target.files[0];
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            var urlData="";
+            reader.onload = () => {
+                var url = reader.result;
+                urlData = url;
+                const base64 = urlData.split(',').pop();
+                const fileType = urlData.split(';').shift().split(':').pop();
+                // base64转blob
+                const blob = this.toBlob(base64, fileType);
+                reader.readAsArrayBuffer(blob);
+                reader.onload = function (event) {
+                    const OSS = require('ali-oss');
+                    const client = new OSS({
+                        region: 'oss-cn-shanghai',
+                        accessKeyId: 'LTAI4GDPCV3LpbpnQjCoyXNC',
+                        accessKeySecret: 'DXdQfTosIkscieZ1zBn1F2RX3Q0jnT',
+                        bucket: 'seec67'
+                    });
+
+                    // arrayBuffer转Buffer
+                    const buffer = new OSS.Buffer(event.target.result);
+                    // 上传
+                    client.put(fileName, buffer).then((result)=> {
+                        console.log(result.url);
+                    }).catch(function (err) {
+                        console.log(err);
+                    });
+                }
+                reader.onerror = function (error) {
+                    console.log('Error: ', error);
+                };
+            };
+        },
         handleSubmit(e) {
             e.preventDefault();
+            console.log(this.data().ImageUrl)
             this.form.validateFieldsAndScroll((err, values) => {
                 if (!err) {
                     const data = {
@@ -118,7 +170,8 @@ export default {
                         hotelStar: this.form.getFieldValue('hotelStar'),
                         rate: this.form.getFieldValue('rate'),
                         bizRegion:this.form.getFieldValue('bizRegion'),
-                        managerId: Number(this.userId)
+                        managerId: Number(this.userId),
+                     
                     }
                     this.set_addHotelParams(data)
                     this.addHotel()

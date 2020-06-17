@@ -52,6 +52,8 @@ public class HotelServiceImpl implements HotelService {
         hotel.setMinPrice(0);
         hotel.setMaxPrice(0);
         hotel.setCommentTime(1);
+        hotel.setImgURL(hotelVO.getImgURL());
+        System.out.println(hotelVO.getImgURL());
         //hotel.setBizRegion(BizRegion.valueOf(hotelVO.getBizRegion()));
         hotel.setHotelStar(HotelStar.valueOf(hotelVO.getHotelStar()));
         hotelMapper.insertHotel(hotel);
