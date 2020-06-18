@@ -203,7 +203,7 @@ export default {
             form: this.$form.createForm(this, { name: 'coordinated' }),
             format,
             loading: false,
-            imageUrl: '',
+            imgUrl: '',
         }
     },
     components: {
