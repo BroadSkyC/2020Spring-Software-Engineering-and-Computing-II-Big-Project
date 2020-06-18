@@ -33,7 +33,7 @@
         <div class="logout">
             <a-dropdown placement="bottomCenter">
                 <div class="user">
-                    <a-avatar src="./defaultAvatar.png"></a-avatar>
+                    <a-avatar v-bind:src=userInfo.imgUrl></a-avatar>
                     <span style="font-size: 14px">{{ userInfo.userName }}</span>
                     <a-icon style="margin-left: 3px; font-size: 16px" type="down"></a-icon>
                 </div>
@@ -61,6 +61,9 @@
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
     name: '',
+    props: {
+        userInfo: {}
+    },
     created() {
         if (sessionStorage.getItem('store')) {
             this.$store.replaceState(

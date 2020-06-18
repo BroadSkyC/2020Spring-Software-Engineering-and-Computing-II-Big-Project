@@ -58,12 +58,16 @@
                     v-decorator="['description', { rules: [{ required: true, message: '请填写酒店简介' }] }]"
                 />
             </a-form-item>
-            <a-form-item label="酒店图片" v-bind="formItemLayout">
+            <a-form-item label="酒店图片" v-bind="formItemLayout" class="abc">
+                <p class="row" id="imgbox" v-if="this.imgUrl">
+                    <img id="image" v-bind:src=this.imgUrl>
+                </p>
                 <div class="file-input">
-                    <p class="input-container">
-                        选择本地图片
-                        <input type="file" @change="Upload" accept="image/*"/>
+                    <p class="input-container" >
+                        <a-icon type="plus-square" style="font-size: 70px" class="plus" />
+                        <input type="file" @change="Upload" accept="image/*" required="true"/>
                     </p>
+                    <p class="abc2">点击上传</p>
                 </div>
             </a-form-item>
         </a-form>
@@ -112,6 +116,7 @@ export default {
             'addHotel'
         ]),
         cancel() {
+            this.imgUrl=''
             this.set_addHotelModalVisible(false)
         },
         changeStar(v){
@@ -179,6 +184,7 @@ export default {
                         managerId: Number(this.userId),
                         imgUrl:this.imgUrl
                     }
+                    this.imgUrl=''
                     this.set_addHotelParams(data)
                     this.addHotel()
                 }
@@ -188,24 +194,60 @@ export default {
 }
 </script>
 <style>
+    .plus{
+        margin-left: -10px;
+        margin-top: -4px;
+        width: 60px;
+        height: 60px;
+    }
+    .abc{
+        margin-top: 50px;
+    }
+    .abc2{
+        margin-left: -58px;
+        margin-top: -44px;
+    }
     .file-input{
-        line-height:30px;
+        text-align: center;
+        line-height:60px;
         position:relative;
-        margin-top:6px;
+        left: 10px;
+        margin-left:0px;
+        margin-right:auto;
     }
     .file-input .input-container{
-        width:130px;
-        height:32px;
+        width:60px;
+        height:60px;
         text-align: center;
         background:gainsboro;
         color:black;
         border-radius:3px;
-        font-size:14px;
+        font-size:30px;
+        margin-left:100px;
+        margin-right:auto;
     }
     .file-input input{
+        height: 60px;
+        width: 60px;
         position:absolute;
+        text-align: center;
+        margin-left:100px;
+        margin-right:auto;
         left:0;
         top:0;
         opacity:0;
+    }
+    #imgbox{
+        margin-top: -30px;
+        max-width:100%;
+        max-height: 400px;
+        vertical-align: center;
+    }
+    #image{
+        width: auto;/*图片长宽自适应*/
+        height: auto;
+        max-width:100%;
+        max-height: 400px;
+        vertical-align: center;
     }
 </style>

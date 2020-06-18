@@ -9,6 +9,7 @@ public class UserInfoVO {
     private String userName;
     private String phoneNumber;
     private String birthday;
+    private String imgUrl;
 
     public String getPassword() {
         return password;
@@ -37,4 +38,8 @@ public class UserInfoVO {
     public String getBirthday(){return birthday;};
 
     public void setBirthday(String birthday){this.birthday = birthday;};
+
+    public String getImgUrl(){return this.imgUrl;}
+
+    public void setImgUrl(String url){this.imgUrl=url;}
 }

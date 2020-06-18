@@ -4,27 +4,19 @@
             <a-tab-pane tab="我的信息" key="1">
                 <a-form :form="form" style="margin-top: 30px">
                     <a-form-item label="头像" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1  }">
-                        <a-upload
-                                name="avatar"
-                                list-type="picture-card"
-                                class="avatar-uploader"
-                                :show-upload-list="false"
-                                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                                :before-upload="beforeUpload"
-                                @change="handleChange"
-                                v-if="modify"
-                        >
-                            <img v-if="imageUrl" :src="imageUrl" alt="avatar" />
-                            <div v-else>
-                                <a-icon :type="loading ? 'loading' : 'plus'" />
-                                <div class="ant-upload-text">
-                                    上传
-                                </div>
+                        <span v-if="modify">
+                            <p v-if="this.imgUrl" id="imgbox">
+                                <a-avatar size="large" id="image" v-bind:src=this.imgUrl></a-avatar>
+                            </p>
+                            <div class="file-input">
+                            <p class="input-container" v-if="!this.imgUrl">
+                                <a-icon type="plus-circle" style="font-size: 50px" class="plus" />
+                                 <input type="file" @change="Upload" accept="image/*" required="true"/>
+                            </p><p v-if="!this.imgUrl" class="abc2">点击上传</p>
                             </div>
-                        </a-upload>
-                        <span v-else><a-avatar v-if="imageUrl" size="large" src="imageUrl"></a-avatar>
-                            <span v-else><a-avatar size="large" src="./defaultAvatar.png"></a-avatar></span></span>
-
+                        </span>
+                        <span v-else><p id="imgbox2"/><a-avatar size="large" id="image2" v-bind:src=userInfo.imgUrl></a-avatar>
+                        </span>
                     </a-form-item>
                     <a-form-item label="用户名" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1  }">
                         <a-input
@@ -250,9 +242,11 @@ export default {
                         userName: this.form.getFieldValue('userName'),
                         phoneNumber: this.form.getFieldValue('phoneNumber'),
                         password: this.form.getFieldValue('password'),
+                        imgUrl:this.imgUrl,
                         // birthday: this.form.getFieldValue('birthday')
                     }
                     this.updateUserInfo(data).then(()=>{
+                        this.imgUrl=''
                         this.modify = false
                     })
                 }
@@ -284,6 +278,7 @@ export default {
             this.set_viewOrderVisible(true)
         },
         cancelModify() {
+            this.imgUrl=''
             this.modify = false
         },
         confirmCancelOrder(orderId){
@@ -292,29 +287,53 @@ export default {
         cancelCancelOrder() {
 
         },
-        handleChange(info) {
-            if (info.file.status === 'uploading') {
-                this.loading = true;
-                return;
+        toBlob(urlData,fileType) {
+            let bytes = window.atob(urlData);
+            let n = bytes.length;
+            let u8arr = new Uint8Array(n);
+            while (n--) {
+                u8arr[n] = bytes.charCodeAt(n);
             }
-            if (info.file.status === 'done') {
-                // Get this url from response in real world.
-                getBase64(info.file.originFileObj, imageUrl => {
-                    this.imageUrl = imageUrl;
-                    this.loading = false;
-                });
-            }
+            return new Blob([u8arr], { type: fileType });
         },
-        beforeUpload(file) {
-            const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-            if (!isJpgOrPng) {
-                this.$message.error('请上传JPEG或PNG格式图片');
-            }
-            const isLt2M = file.size / 1024 / 1024 < 2;
-            if (!isLt2M) {
-                this.$message.error('文件大小须小于2MB');
-            }
-            return isJpgOrPng && isLt2M;
+        Upload:function(e) {
+            var fileName = 'seec' + `${Date.parse(new Date())}`+'.jpg';  //定义唯一的文件名
+            var file = e.target.files[0];
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            var urlData="";
+            reader.onload = () => {
+                var url = reader.result;
+                urlData = url;
+                const base64 = urlData.split(',').pop();
+                const fileType = urlData.split(';').shift().split(':').pop();
+                // base64转blob
+                const blob = this.toBlob(base64, fileType);
+                reader.readAsArrayBuffer(blob);
+                reader.onload =  (event) => {
+                    const OSS = require('ali-oss');
+                    const client = new OSS({
+                        region: 'oss-cn-shanghai',
+                        accessKeyId: 'LTAI4GDPCV3LpbpnQjCoyXNC',
+                        accessKeySecret: 'DXdQfTosIkscieZ1zBn1F2RX3Q0jnT',
+                        bucket: 'seec67'
+                    });
+
+                    // arrayBuffer转Buffer
+                    const buffer = new OSS.Buffer(event.target.result);
+                    // 上传
+                    client.put(fileName, buffer).then((result)=> {
+                        // console.log(result.url);
+                        this.imgUrl=result.url;
+                        console.log(this.imgUrl);
+                    }).catch(function (err) {
+                        console.log(err);
+                    });
+                }
+                reader.onerror = function (error) {
+                    console.log('Error: ', error);
+                };
+            };
         },
     }
 }
@@ -353,5 +372,57 @@ export default {
     }
 </style>
 <style lang="less">
-    
+    .file-input{
+        text-align: center;
+        line-height:50px;
+        position:relative;
+        left: 10px;
+        border-radius: 100%;
+        margin-left:-100px;
+        margin-right:auto;
+    }
+    .file-input .input-container{
+        width:50px;
+        height:50px;
+        text-align: center;
+        border-radius: 100%;
+        background:gainsboro;
+        color:black;
+        font-size:30px;
+        margin-left:100px;
+        margin-right:auto;
+    }
+    .file-input input{
+        border-radius: 100%;
+        height: 50px;
+        width: 50px;
+        position:absolute;
+        text-align: center;
+        margin-left:100px;
+        margin-right:auto;
+        left:0;
+        top:0;
+        opacity:0;
+    }
+    .abc2{
+        margin-left: -257.5px;
+        margin-top: -42px;
+    }
+    #imgbox{
+        background-size:cover;
+        background-position: center 0;
+    }
+    #image{
+        background-size:cover;
+        background-position: center 0;
+    }
+    #imgbox2{
+        margin-top: -15px;
+        background-size:cover;
+        background-position: center 0;
+    }
+    #image2{
+        background-size: cover;
+        background-position: center 0;
+    }
 </style>
