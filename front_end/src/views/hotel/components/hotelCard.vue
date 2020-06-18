@@ -33,8 +33,8 @@ export default {
 <style scoped lang="less">
     .hotelCard {
         margin: 10px 10px;
-        min-width: 180px;
-        max-height: 350px;
+        min-width: 160px;
+        max-height: 380px;
         img {
           height: 250px;
         }
