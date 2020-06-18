@@ -4,16 +4,14 @@ import com.example.hotel.bl.hotel.HotelService;
 import com.example.hotel.bl.hotel.RoomService;
 import com.example.hotel.bl.order.OrderService;
 import com.example.hotel.bl.user.AccountService;
+import com.example.hotel.data.coupon.CouponMapper;
 import com.example.hotel.data.hotel.HotelMapper;
 import com.example.hotel.data.hotel.RoomMapper;
 import com.example.hotel.data.user.AccountMapper;
 import com.example.hotel.enums.BizRegion;
 import com.example.hotel.enums.HotelStar;
 import com.example.hotel.enums.UserType;
-import com.example.hotel.po.Hotel;
-import com.example.hotel.po.HotelRoom;
-import com.example.hotel.po.Order;
-import com.example.hotel.po.User;
+import com.example.hotel.po.*;
 import com.example.hotel.util.ServiceException;
 import com.example.hotel.vo.CouponVO;
 import com.example.hotel.vo.HotelVO;
@@ -34,6 +32,16 @@ public class HotelServiceImpl implements HotelService {
 
     @Autowired
     private RoomService roomService;
+
+    @Autowired
+    private CouponMapper couponMapper;
+
+    @Autowired
+    private RoomMapper roomMapper;
+
+    public HotelServiceImpl() {
+    }
+
 
     @Override
     public void addHotel(HotelVO hotelVO) throws ServiceException {
@@ -111,7 +119,10 @@ public class HotelServiceImpl implements HotelService {
     public void delHotel(HotelVO hotelVO) {
         Hotel hotel = new Hotel();
         hotel.setId(hotelVO.getId());
+        List<HotelRoom> rooms=roomMapper.selectRoomsByHotelId(hotel.getId());
+        List<Coupon> coupons= couponMapper.selectByHotelId(hotel.getId());
         hotelMapper.deleteHotel(hotel);
+        for(int i=0;i<coupons.size();i++) couponMapper.deleteCoupon(coupons.get(i));
+        for(int i=0;i<rooms.size();i++) roomMapper.deleRoom(rooms.get(i));
     }
-
 }

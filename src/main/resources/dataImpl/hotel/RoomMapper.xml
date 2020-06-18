@@ -24,6 +24,10 @@
         update Room set roomType=#{roomType},price=#{price},total=#{total},curNum=#{curNum} where hotel_id=#{hotelId} and  id=#{id}
     </update>
 
+    <delete id="deleRoom">
+        delete from Room where id=#{id}
+    </delete>
+
     <resultMap id="room" type="com.example.hotel.po.HotelRoom">
         <id column="id" property="id"></id>
         <result column="roomType" property="roomType"></result>

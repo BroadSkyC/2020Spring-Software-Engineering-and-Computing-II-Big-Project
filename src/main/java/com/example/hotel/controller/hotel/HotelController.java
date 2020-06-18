@@ -44,7 +44,6 @@ public class HotelController {
 
     @PostMapping("/delHotel")
     public ResponseVO deleHotel(@RequestBody HotelVO hotelVO) throws ServiceException {
-
         hotelService.delHotel(hotelVO);
         return ResponseVO.buildSuccess(true);
     }

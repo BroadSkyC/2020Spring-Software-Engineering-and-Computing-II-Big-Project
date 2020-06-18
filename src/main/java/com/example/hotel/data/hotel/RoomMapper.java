@@ -26,4 +26,6 @@ public interface RoomMapper {
                         @Param("price") Double price,
                         @Param("total") Integer total,
                         @Param("curNum") Integer curNum);
+
+    void deleRoom(HotelRoom hotelRoom);
 }

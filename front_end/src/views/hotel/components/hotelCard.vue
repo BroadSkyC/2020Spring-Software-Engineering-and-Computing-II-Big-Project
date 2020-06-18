@@ -9,8 +9,10 @@
     <a-tooltip :title="hotel.title" placement="top">
       <a-card-meta :title="hotel.name">
       <template slot="description">
-        <a-rate style="font-size: 15px" :value="hotel.rate" disabled allowHalf /> {{hotel.rate}}分
-      </template>
+              <a style="font-size: 15px" /> {{hotel.address}}<br/>
+              <a-rate style="font-size: 15px" :value="hotel.rate" disabled allowHalf /> {{hotel.rate}}分<br/>
+              <a style="font-size: 15px" /> 价格区间:{{hotel.minPrice}} ~ {{hotel.maxPrice}}元
+            </template>
     </a-card-meta>
     </a-tooltip>
   </a-card>
