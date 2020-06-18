@@ -59,7 +59,12 @@
                 />
             </a-form-item>
             <a-form-item label="酒店图片" v-bind="formItemLayout">
-                <input type="file" @change="Upload" accept="image/*"/>
+                <div class="file-input">
+                    <p class="input-container">
+                        选择本地图片
+                        <input type="file" @change="Upload" accept="image/*"/>
+                    </p>
+                </div>
             </a-form-item>
         </a-form>
     </a-modal>
@@ -182,3 +187,25 @@ export default {
     }
 }
 </script>
+<style>
+    .file-input{
+        line-height:30px;
+        position:relative;
+        margin-top:6px;
+    }
+    .file-input .input-container{
+        width:130px;
+        height:32px;
+        text-align: center;
+        background:gainsboro;
+        color:black;
+        border-radius:3px;
+        font-size:14px;
+    }
+    .file-input input{
+        position:absolute;
+        left:0;
+        top:0;
+        opacity:0;
+    }
+</style>

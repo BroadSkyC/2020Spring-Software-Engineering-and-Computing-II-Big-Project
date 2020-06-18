@@ -72,4 +72,9 @@ public class RoomServiceImpl implements RoomService {
                 hotelRoom.getTotal(),
                 hotelRoom.getCurNum());
     }
+
+    @Override
+    public void deleteRoom(HotelRoom hotelRoom){
+        roomMapper.deleRoom(hotelRoom);
+    }
 }
