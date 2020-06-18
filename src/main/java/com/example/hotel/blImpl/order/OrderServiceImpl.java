@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -99,7 +100,21 @@ public class OrderServiceImpl implements OrderService {
         //orders=orders.stream().filter(order -> !order.getOrderState().equals("已撤销")).collect(Collectors.toList());
         return orders;
     }
-
+    
+    @Override
+    public List<Order> getManageOrders(Integer userId){
+        List<HotelVO> Hotel=hotelService.retrieveManagerHotels(userId);
+        List<Order> order;
+        List<Order> all=new ArrayList<Order>();
+        for(int i=0;i<Hotel.size();i++){
+            order=orderService.getHotelOrders(Hotel.get(i).getId());
+            for(int j=0;j<order.size();j++){
+                all.add(order.get(j));
+                
+            }
+        }
+        return all;
+    }
     @Override
     public ResponseVO delOrder(OrderVO orderVO){
         Order order=new Order();

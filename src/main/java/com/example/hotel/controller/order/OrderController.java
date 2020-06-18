@@ -72,4 +72,9 @@ public class OrderController {
     public  ResponseVO retrieveHotelOrders(@PathVariable int hotelId){
         return ResponseVO.buildSuccess(orderService.getHotelOrders(hotelId));
     }
+
+    @GetMapping("/{userId}/getManageOrders")
+    public  ResponseVO retrieveManageOrders(@PathVariable Integer userId){
+        return ResponseVO.buildSuccess(orderService.getManageOrders(userId));
+    }
 }
