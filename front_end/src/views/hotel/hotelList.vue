@@ -227,7 +227,9 @@ export default {
       justify-content: space-around;
       flex-wrap: wrap;
       flex-grow: 3;
-      min-height: 800px
+      min-height: 800px;
+        background-color: white;
+
     }
     .card-wrapper .card-item {
       margin: 30px;

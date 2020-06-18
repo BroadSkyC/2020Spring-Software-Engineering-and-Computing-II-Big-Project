@@ -12,13 +12,13 @@
             <a-form-item label="最低价格" v-bind="formItemLayout">
                 <a-input
                         placeholder="请填写您预期房间的最低价格"
-                        v-decorator="['exp_min', { rules: [{ required: true, message: '请填写您预期房间的最低价格' }] }]"
+                        v-decorator="['exp_min', { rules: [{ required: false, message: '请填写您预期房间的最低价格' }]  }]"
                 />
             </a-form-item>
             <a-form-item label="最高价格" v-bind="formItemLayout">
                 <a-input
                         placeholder="请填写您预期房间的最高价格"
-                        v-decorator="['exp_max', { rules: [{ required: true, message: '请填写您预期房间的最高价格' }] }]"
+                        v-decorator="['exp_max', { rules: [{ required: false, message: '请填写您预期房间的最高价格' }] }]"
                 />
             </a-form-item>
             <a-form-item label="排列依据" v-bind="formItemLayout">
@@ -71,7 +71,6 @@
             ])
         },
         mounted() {
-
         },
         methods: {
             ...mapMutations([
@@ -87,6 +86,14 @@
             handleSubmit(e){
                 console.log(this.hotelList)
                 e.preventDefault();
+                if(isNaN(Number(this.form.getFieldValue('exp_max'))) || Number(this.form.getFieldValue('exp_max'))===0){
+                    console.log("yes")
+                    this.form.setFieldsValue({"exp_max":"10000"});
+                }
+                if(isNaN(Number(this.form.getFieldValue('exp_min')))){
+                    console.log("yes")
+                    this.form.setFieldsValue({"exp_min":"0"});
+                }
                 this.form.validateFieldsAndScroll((err, values) => {
                     if (!err) {
                         const data = {
@@ -94,8 +101,8 @@
                             exp_max:Number(this.form.getFieldValue('exp_max')),
                             sortType: this.form.getFieldValue('sortType'),
                         }
+                        console.log(data)
                         this.sortHotel(data)
-                        console.log(this.hotelList)
                         this.set_filterVisible(false)
                     }
                 });
