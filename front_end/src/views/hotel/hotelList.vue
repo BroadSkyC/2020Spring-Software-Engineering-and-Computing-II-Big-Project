@@ -45,6 +45,7 @@
                     :columns="columns1"
                     :dataSource="hotelList"
                     bordered
+                    class="list_table"
             >
              <span slot="hotelStar" slot-scope="text">
                         <span v-if="text == 'Three'">三星级</span>
@@ -244,6 +245,9 @@ export default {
           display: flex;
           align-items: center;
           margin: 0px 0px 0px 0px;
+      }
+      .list_table{
+          background-color: white;
       }
   }
 </style>
