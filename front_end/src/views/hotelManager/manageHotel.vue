@@ -43,6 +43,15 @@
                         <span v-if="text == 'Family'">家庭房</span>
                     </span>
                     <span slot="action" slot-scope="record">
+                         <a-popconfirm
+                                 title="确定想删除该订单吗？"
+                                 @confirm="deleteOrder(record)"
+                                 okText="确定"
+                                 cancelText="取消"
+                         >
+                            <a-button type="danger" size="small">删除订单</a-button>
+                        </a-popconfirm>
+                        <a-divider type="vertical"></a-divider>
                         <a-button type="primary" size="small" @click="showOrder(record)">订单详情</a-button>
                         <a-divider type="vertical"></a-divider>
                         <a-button type="primary" size="small" @click="showchangeState(record)">更改状态</a-button>
@@ -186,7 +195,7 @@ export default {
     async mounted() {
         console.log(this.userId)
         await this.getManagerHotelList(this.userId)
-        await this.getAllOrders()
+        await this.getManageOrders(this.userId)
     },
     methods: {
         ...mapMutations([
@@ -206,7 +215,8 @@ export default {
             'delHotel',
             'delOrder',
             'getManagerHotelList',
-            'getReceptionistList'
+            'getReceptionistList',
+            'getManageOrders',
         ]),
         addHotel() {
             this.set_addHotelModalVisible(true)

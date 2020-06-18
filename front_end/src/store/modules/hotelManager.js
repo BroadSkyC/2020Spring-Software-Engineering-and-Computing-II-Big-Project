@@ -13,7 +13,8 @@ import {
     getAllOrdersAPI,
     updateOrderAPI,
     updateOrderStateAPI,
-    delOrderAPI
+    delOrderAPI,
+    getManageOrdersAPI
 } from '@/api/order'
 import {
     hotelAllCouponsAPI,
@@ -152,6 +153,12 @@ const hotelManager = {
     actions: {
         getAllOrders: async ({state, commit}) => {
             const res = await getAllOrdersAPI()
+            if (res) {
+                commit('set_orderList', res)
+            }
+        },
+        getManageOrders:async ({state, commit},userId) => {
+            const res = await getManageOrdersAPI(userId)
             if (res) {
                 commit('set_orderList', res)
             }
@@ -315,13 +322,12 @@ const hotelManager = {
                 message.error('删除失败')
             }
         },
-        delOrder: async (dispatch, data) => {
+        delOrder: async ({dispatch, getters},data) => {
             const res = await delOrderAPI(data)
             if (res) {
                 //dispatch('getHotelList')
                 message.success('删除成功')
-                window.location.reload();
-                dispatch('getAllOrders')
+                dispatch('getManageOrders',getters.userId)
             } else {
                 message.error('删除失败')
             }
@@ -359,7 +365,7 @@ const hotelManager = {
                 dispatch('getUserInfo')
             }
         },
-        updateOrderState: async ({state, dispatch,commit}, data) => {
+        updateOrderState: async ({state, dispatch,commit,getters}, data) => {
             const params = {
                 id: state.id,
                 ...data,
@@ -368,7 +374,7 @@ const hotelManager = {
             if (res) {
                 message.success('修改成功')
                 commit("set_updateOrderStateVisible",false)
-                dispatch('getAllOrders')
+                dispatch('getManageOrders',getters.userId)
             } else {
                 message.error('修改失败')
             }

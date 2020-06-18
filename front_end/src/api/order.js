@@ -61,3 +61,9 @@ export function getHotelOrdersAPI(hotelId) {
         method: 'GET',
     })
 }
+export function getManageOrdersAPI(userId) {
+    return axios({
+        url: `${api.orderPre}/${userId}/getManageOrders`,
+        method: 'GET',
+    })
+}
