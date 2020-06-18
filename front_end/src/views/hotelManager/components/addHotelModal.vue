@@ -67,7 +67,6 @@
                         <a-icon type="plus-square" style="font-size: 70px" class="plus" />
                         <input type="file" @change="Upload" accept="image/*" required="true"/>
                     </p>
-                    <p class="abc2">点击上传</p>
                 </div>
             </a-form-item>
         </a-form>

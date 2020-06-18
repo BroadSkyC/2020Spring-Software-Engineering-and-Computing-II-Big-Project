@@ -12,7 +12,7 @@
                             <p class="input-container" v-if="!this.imgUrl">
                                 <a-icon type="plus-circle" style="font-size: 50px" class="plus" />
                                  <input type="file" @change="Upload" accept="image/*" required="true"/>
-                            </p><p v-if="!this.imgUrl" class="abc2">点击上传</p>
+                            </p>
                             </div>
                         </span>
                         <span v-else><p id="imgbox2"/><a-avatar size="large" id="image2" v-bind:src=userInfo.imgUrl></a-avatar>
@@ -386,8 +386,7 @@ export default {
         height:50px;
         text-align: center;
         border-radius: 100%;
-        background:gainsboro;
-        color:black;
+        background-color: white;
         font-size:30px;
         margin-left:100px;
         margin-right:auto;
