@@ -4,6 +4,11 @@ import {
     addHotelAPI,
     delHotelAPI,
 } from '@/api/hotelManager'
+import{
+    hotelAllReceptionistAPI,
+    delReceptionistAPI,
+    addReceptionistAPI
+} from '@/api/hotelReceptionist'
 import {
     getAllOrdersAPI,
     updateOrderAPI,
@@ -25,6 +30,7 @@ const hotelManager = {
 
     state: {
         orderList: [],
+        receptionistList: [],
         addHotelParams: {
             name: '',
             address: '',
@@ -55,10 +61,17 @@ const hotelManager = {
             curNum: 0,
             id:'',
         },
+        addReceptionistParams: {
+            email:'',
+            password:'',
+            hotelId:'',
+        },
         addRoomModalVisible: false,
         couponVisible: false,
+        receptionistVisible:false,
         modifyRoomVisible:false,
         addCouponVisible: false,
+        addReceptionistVisible:false,
         orderVisible:false,
         updateOrderStateVisible:false,
         changeHotelInfoVisible:false,
@@ -87,6 +100,12 @@ const hotelManager = {
                 ...data,
             }
         },
+        set_addReceptionistParams: function(state, data) {
+            state.addReceptionistParams = {
+                ...state.addReceptionistParams,
+                ...data,
+            }
+        },
         set_updateRoomParams:function(state, data) {
             state.updateRoomParams = {
                 ...state.updateRoomParams,
@@ -98,6 +117,9 @@ const hotelManager = {
         },
         set_orderVisible: function(state, data) {
             state.orderVisible = data
+        },
+        set_receptionistVisible:function(state, data) {
+            state.receptionistVisible = data
         },
         set_updateOrderStateVisible: function(state, data) {
             state.updateOrderStateVisible = data
@@ -117,9 +139,15 @@ const hotelManager = {
         set_couponList: function(state, data) {
             state.couponList = data
         },
+        set_receptionistList: function(state, data) {
+            state.receptionistList = data
+        },
         set_addCouponVisible: function(state, data) {
             state.addCouponVisible = data
-        }
+        },
+        set_addReceptionistVisible: function(state, data) {
+            state.addReceptionistVisible = data
+        },
     },
     actions: {
         getAllOrders: async ({state, commit}) => {
@@ -146,6 +174,21 @@ const hotelManager = {
                 })
                 commit('set_addHotelModalVisible', false)
                 message.success('添加成功')
+            } else {
+                message.error('添加失败')
+            }
+        },
+        addReceptionist: async ({state, commit, dispatch}) => {
+            const res = await addReceptionistAPI(state.addReceptionistParams)
+            if (res) {
+                commit('set_addReceptionistParams', {
+                    email: '',
+                    password: '',
+                    hotelId: ''
+                })
+                commit('set_addReceptionistVisible', false)
+                message.success('添加成功')
+                dispatch('getReceptionistList')
             } else {
                 message.error('添加失败')
             }
@@ -188,6 +231,13 @@ const hotelManager = {
             if (res) {
                 // 获取到酒店策略之后的操作（将获取到的数组赋值给couponList）
                 commit('set_couponList', res)
+            }
+        },
+        getReceptionistList: async ({state, commit}) => {
+            const res = await hotelAllReceptionistAPI(state.activeHotelId)
+            if (res) {
+                // 获取到酒店策略之后的操作（将获取到的数组赋值给couponList）
+                commit('set_receptionistList', res)
             }
         },
         addHotelCoupon: async ({commit, dispatch}, data) => {
@@ -283,6 +333,17 @@ const hotelManager = {
                 commit('set_couponVisible', false)
                 // window.location.reload();
                 // dispatch('getHotelCoupon')
+            } else {
+                message.error('删除失败')
+            }
+        },
+        delReceptionist: async ({commit, dispatch}, data) => {
+            const res = await delReceptionistAPI(data)
+            if (res) {
+                message.success('删除成功')
+                commit('set_receptionistVisible', false)
+                // window.location.reload();
+                // dispatch('getReceptionistList')
             } else {
                 message.error('删除失败')
             }

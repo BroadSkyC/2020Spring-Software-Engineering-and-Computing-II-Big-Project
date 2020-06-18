@@ -3,7 +3,7 @@
         <a-tabs>
             <a-tab-pane tab="账户管理" key="1">
                 <div style="width: 100%; text-align: right; margin:20px 0">
-                    <a-button type="primary" @click="addManager"><a-icon type="plus" />添加用户</a-button>
+                    <a-button type="primary" @click="addManagerModal"><a-icon type="plus" />添加用户</a-button>
                 </div>
                 <a-table
                     :columns="columns"
@@ -83,7 +83,7 @@ export default {
             'getManagerList',
             'delManager'
         ]),
-        addManager(){
+        addManagerModal(){
             this.set_addManagerModalVisible(true)
         },
         deleteManager(record){

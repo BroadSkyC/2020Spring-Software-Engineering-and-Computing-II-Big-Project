@@ -23,6 +23,8 @@
                         >
                             <a-button type="danger" size="small">删除酒店</a-button>
                         </a-popconfirm>
+                        <a-divider type="vertical"></a-divider>
+                        <a-button type="primary" size="small" @click="showReceptionist(record)">酒店前台</a-button>
                     </span>
                 </a-table>
             </a-tab-pane>
@@ -53,6 +55,7 @@
         <AddRoomModal></AddRoomModal>
         <Coupon></Coupon>
         <Order></Order>
+        <Receptionist></Receptionist>
         <ChangeState></ChangeState>
     </div>
 </template>
@@ -63,6 +66,7 @@ import AddRoomModal from './components/addRoomModal'
 import Order from './components/Order'
 import Coupon from './components/coupon'
 import ChangeState from './components/changeState'
+import Receptionist from "./components/Receptionist";
 const moment = require('moment')
 const columns1 = [
     {  
@@ -160,6 +164,7 @@ export default {
         }
     },
     components: {
+        Receptionist,
         AddHotelModal,
         AddRoomModal,
         Coupon,
@@ -174,6 +179,7 @@ export default {
             'addRoomModalVisible',
             'activeHotelId',
             'couponVisible',
+            'receptionistVisible',
             'userId'
         ]),
     },
@@ -191,6 +197,7 @@ export default {
             'set_activeHotelId',
             'set_currentOrder',
             'set_updateOrderStateVisible',
+            'set_receptionistVisible'
         ]),
         ...mapActions([
             'getHotelList',
@@ -198,7 +205,8 @@ export default {
             'getHotelCoupon',
             'delHotel',
             'delOrder',
-            'getManagerHotelList'
+            'getManagerHotelList',
+            'getReceptionistList'
         ]),
         addHotel() {
             this.set_addHotelModalVisible(true)
@@ -215,6 +223,11 @@ export default {
         showOrder(record){
             this.set_currentOrder(record)
             this.set_orderVisible(true)
+        },
+        showReceptionist(record){
+            this.set_activeHotelId(record.id)
+            this.set_receptionistVisible(true)
+            this.getReceptionistList()
         },
         deleteHotel(record){
             this.delHotel(record)
