@@ -82,7 +82,7 @@ CREATE TABLE `Hotel` (
 
 BEGIN;
 /*!40000 ALTER TABLE `Hotel` DISABLE KEYS */;
-INSERT INTO `Hotel` VALUES (1,'汉庭酒店','欢迎您入住','南京市新街口258号','XiDan','Four',1829373819,4.8,1,199,399,1,"https://seec67.oss-cn-shanghai.aliyuncs.com/cover.jpeg"),(2,'儒家酒店','欢迎您入住','南京市鼓楼区珠江路268号','XiDan','Four',1829373819,4.8,2,122,399,1,"https://seec67.oss-cn-shanghai.aliyuncs.com/cover.jpeg"),(3,'桂圆酒店','欢迎您入住','南京市栖霞区珠江路268号','XiDan','Four',1829553719,4.8,6,0,0,1,"https://seec67.oss-cn-shanghai.aliyuncs.com/cover.jpeg");
+INSERT INTO `Hotel` VALUES (1,'汉庭酒店','欢迎您入住','南京市新街口258号','XiDan','Four',1829373819,4.8,1,199,399,1,"https://farsky-seec-homework1.oss-accelerate.aliyuncs.com/%E9%BB%98%E8%AE%A4%E9%85%92%E5%BA%97.jpeg"),(2,'儒家酒店','欢迎您入住','南京市鼓楼区珠江路268号','XiDan','Four',1829373819,4.8,2,122,399,1,"https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E9%85%92%E5%BA%97.jpeg"),(3,'桂圆酒店','欢迎您入住','南京市栖霞区珠江路268号','XiDan','Four',1829553719,4.8,6,0,0,1,"https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E9%85%92%E5%BA%97.jpeg");
 /*!40000 ALTER TABLE `Hotel` ENABLE KEYS */;
 COMMIT;
 
@@ -181,7 +181,7 @@ CREATE TABLE `User` (
 
 BEGIN;
 /*!40000 ALTER TABLE `User` DISABLE KEYS */;
-INSERT INTO `User` VALUES (4,'1012681@qq.com','123456','测试一号','12345678919',100,'Client','2000-05-26',NULL,NULL,NULL,"https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.jpg"),(5,'123@qq.com','123456','测试二号','12345678911',100,'Client','2000-05-27',NULL,NULL,NULL,"https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.jpg"),(6,'333@qq.com','123456',NULL,NULL,NULL,'HotelManager','2000-05-28',NULL,NULL,NULL,"https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.jpg"),(7,'789@qq.com','123456',NULL,NULL,NULL,'HotelReceptionist','2000-05-28',NULL,NULL,1,"https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.jpg"),(8,'456@qq.com','123456',NULL,NULL,NULL,'Admin','2000-05-28',NULL,NULL,NULL,"https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.jpg");
+INSERT INTO `User` VALUES (4,'1012681@qq.com','123456','客户一号','12345678919',100,'Client','2000-05-26',NULL,NULL,NULL,"https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.jpg"),(5,'123@qq.com','123456','客户二号','12345678911',100,'Client','2000-05-27',NULL,NULL,NULL,"https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.jpg"),(6,'333@qq.com','123456',"经理一号",NULL,NULL,'HotelManager','2000-05-28',NULL,NULL,NULL,"https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.jpg"),(7,'789@qq.com','123456',"前台一号",NULL,NULL,'HotelReceptionist','2000-05-28',NULL,NULL,1,"https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.jpg"),(8,'456@qq.com','123456',"管理员一号",NULL,NULL,'Admin','2000-05-28',NULL,NULL,NULL,"https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.jpg");
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
 COMMIT;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

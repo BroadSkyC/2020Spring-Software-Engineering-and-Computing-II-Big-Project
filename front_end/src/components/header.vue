@@ -61,9 +61,6 @@
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
     name: '',
-    props: {
-        userInfo: {}
-    },
     created() {
         if (sessionStorage.getItem('store')) {
             this.$store.replaceState(

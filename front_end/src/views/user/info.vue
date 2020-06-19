@@ -5,17 +5,17 @@
                 <a-form :form="form" style="margin-top: 30px">
                     <a-form-item label="头像" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1  }">
                         <span v-if="modify">
-                            <p v-if="this.imgUrl" id="imgbox">
-                                <a-avatar size="large" id="image" v-bind:src=this.imgUrl></a-avatar>
+                            <p v-if="this.imgLocalUrl" >
+                                <a-avatar size="large"  v-bind:src=this.imgLocalUrl></a-avatar>
                             </p>
                             <div class="file-input">
-                            <p class="input-container" v-if="!this.imgUrl">
+                            <p class="input-container" >
                                 <a-icon type="plus-circle" style="font-size: 50px" class="plus" />
-                                 <input type="file" @change="Upload" accept="image/*" required="true"/>
+                                 <input type="file" @change="Upload" accept="image/*"/>
                             </p>
                             </div>
                         </span>
-                        <span v-else><p id="imgbox2"/><a-avatar size="large" id="image2" v-bind:src=userInfo.imgUrl></a-avatar>
+                        <span v-else><a-avatar size="large"  v-bind:src=userInfo.imgUrl></a-avatar>
                         </span>
                     </a-form-item>
                     <a-form-item label="用户名" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1  }">
@@ -131,6 +131,7 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
 import RegisterVip from './components/RegisterVip'
 import ViewOrder from "./components/viewOrder";
 import Comment from "./components/comment";
+import { client, put, remove } from '../../utils/client';
 const columns = [
     {  
         title: '订单号',
@@ -185,16 +186,14 @@ const columns = [
     },
     
   ];
-function getBase64(img, callback) {
-        const reader = new FileReader();
-        reader.addEventListener('load', () => callback(reader.result));
-        reader.readAsDataURL(img);
-    }
 export default {
     name: 'info',
     data(){
         const format="YYYY-MM-DD "
         return {
+            uploadClickTime:0,
+            uploadClickTime_:0,
+            filePath:'',
             modify: false,
             formLayout: 'horizontal',
             pagination: {},
@@ -204,6 +203,7 @@ export default {
             format,
             loading: false,
             imgUrl: '',
+            imgLocalUrl:'',
         }
     },
     components: {
@@ -236,7 +236,7 @@ export default {
             'cancelOrder'
         ]),
         saveModify() {
-            this.form.validateFields((err, values) => {
+           this.form.validateFields((err, values) => {
                 if (!err) {
                     const data = {
                         userName: this.form.getFieldValue('userName'),
@@ -246,8 +246,12 @@ export default {
                         // birthday: this.form.getFieldValue('birthday')
                     }
                     this.updateUserInfo(data).then(()=>{
+                        this.filePath=''
+                        this.uploadClickTime=0
+                        this.uploadClickTime_=0
                         this.imgUrl=''
                         this.modify = false
+                        this.imgLocalUrl=''
                     })
                 }
             });
@@ -278,14 +282,31 @@ export default {
             this.set_viewOrderVisible(true)
         },
         cancelModify() {
+            if(this.filePath)remove(this.filePath);
             this.imgUrl=''
             this.modify = false
+            this.filePath=''
+            this.uploadClickTime=0
+            this.uploadClickTime_=0
+            this.imgLocalUrl=''
         },
         confirmCancelOrder(orderId){
             this.cancelOrder(orderId)
         },
         cancelCancelOrder() {
 
+        },
+        getObjectURL(file) {
+            var url = null ;
+            // 下面函数执行的效果是一样的，只是需要针对不同的浏览器执行不同的 js 函数而已
+            if (window.createObjectURL!=undefined) { // basic
+                url = window.createObjectURL(file) ;
+            } else if (window.URL!=undefined) { // mozilla(firefox)
+                url = window.URL.createObjectURL(file) ;
+            } else if (window.webkitURL!=undefined) { // webkit or chrome
+                url = window.webkitURL.createObjectURL(file) ;
+            }
+            return url ;
         },
         toBlob(urlData,fileType) {
             let bytes = window.atob(urlData);
@@ -297,9 +318,10 @@ export default {
             return new Blob([u8arr], { type: fileType });
         },
         Upload:function(e) {
-            var fileName = 'seec' + `${Date.parse(new Date())}`+'.jpg';  //定义唯一的文件名
+            this.uploadClickTime+=1;
             var file = e.target.files[0];
             const reader = new FileReader();
+            this.imgLocalUrl=this.getObjectURL(file);
             reader.readAsDataURL(file);
             var urlData="";
             reader.onload = () => {
@@ -312,23 +334,18 @@ export default {
                 reader.readAsArrayBuffer(blob);
                 reader.onload =  (event) => {
                     const OSS = require('ali-oss');
-                    const client = new OSS({
-                        region: 'oss-cn-shanghai',
-                        accessKeyId: 'LTAI4GDPCV3LpbpnQjCoyXNC',
-                        accessKeySecret: 'DXdQfTosIkscieZ1zBn1F2RX3Q0jnT',
-                        bucket: 'seec67'
-                    });
-
                     // arrayBuffer转Buffer
                     const buffer = new OSS.Buffer(event.target.result);
                     // 上传
-                    client.put(fileName, buffer).then((result)=> {
-                        // console.log(result.url);
-                        this.imgUrl=result.url;
-                        console.log(this.imgUrl);
+                    var fileName =`${Date.parse(new Date())}`+'.jpg';  //定义唯一的文件
+                    if(this.uploadClickTime>1 && this.uploadClickTime_<this.uploadClickTime) remove(this.filePath);
+                    this.filePath=fileName;
+                    put(fileName, buffer).then((result) => {
+                        this.imgUrl = result.url;
                     }).catch(function (err) {
                         console.log(err);
                     });
+                    this.uploadClickTime_+=1;
                 }
                 reader.onerror = function (error) {
                     console.log('Error: ', error);
@@ -407,21 +424,5 @@ export default {
         margin-left: -257.5px;
         margin-top: -42px;
     }
-    #imgbox{
-        background-size:cover;
-        background-position: center 0;
-    }
-    #image{
-        background-size:cover;
-        background-position: center 0;
-    }
-    #imgbox2{
-        margin-top: -15px;
-        background-size:cover;
-        background-position: center 0;
-    }
-    #image2{
-        background-size: cover;
-        background-position: center 0;
-    }
+
 </style>

@@ -59,27 +59,31 @@
                 />
             </a-form-item>
             <a-form-item label="酒店图片" v-bind="formItemLayout" class="abc">
-                <p class="row" id="imgbox" v-if="this.imgUrl">
-                    <img id="image" v-bind:src=this.imgUrl>
+                <p class="row" id="imgbox" v-if="this.imgLocalUrl">
+                    <img id="image" v-bind:src=this.imgLocalUrl>
                 </p>
                 <div class="file-input">
                     <p class="input-container" >
                         <a-icon type="plus-square" style="font-size: 70px" class="plus" />
-                        <input type="file" @change="Upload" accept="image/*" required="true"/>
+                        <input type="file" @change="Upload" accept="image/*"/>
                     </p>
                 </div>
             </a-form-item>
         </a-form>
     </a-modal>
 </template>
-<script src="http://gosspublic.alicdn.com/aliyun-oss-sdk-4.4.4.min.js"></script>
 <script>
-import { mapGetters, mapMutations, mapActions } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex';
+import { client, put, remove } from '../../../utils/client';
 export default {
     name: 'addHotelModal',
     data() {
         return {
             imgUrl: '',
+            imgLocalUrl:'',
+            uploadClickTime:0,
+            uploadClickTime_:0,
+            filePath:'',
             formItemLayout: {
                 labelCol: {
                     xs: { span: 12 },
@@ -115,11 +119,28 @@ export default {
             'addHotel'
         ]),
         cancel() {
+            if(this.filePath)remove(this.filePath);
             this.imgUrl=''
+            this.imgLocalUrl=''
+            this.filePath=''
+            this.uploadClickTime=0
+            this.uploadClickTime_=0
             this.set_addHotelModalVisible(false)
         },
         changeStar(v){
 
+        },
+        getObjectURL(file) {
+            var url = null ;
+            // 下面函数执行的效果是一样的，只是需要针对不同的浏览器执行不同的 js 函数而已
+            if (window.createObjectURL!=undefined) { // basic
+                url = window.createObjectURL(file) ;
+            } else if (window.URL!=undefined) { // mozilla(firefox)
+                url = window.URL.createObjectURL(file) ;
+            } else if (window.webkitURL!=undefined) { // webkit or chrome
+                url = window.webkitURL.createObjectURL(file) ;
+            }
+            return url ;
         },
         toBlob(urlData,fileType) {
             let bytes = window.atob(urlData);
@@ -131,9 +152,10 @@ export default {
             return new Blob([u8arr], { type: fileType });
         },
         Upload:function(e) {
-            var fileName = 'seec' + `${Date.parse(new Date())}`+'.jpg';  //定义唯一的文件名
+            this.uploadClickTime+=1;
             var file = e.target.files[0];
             const reader = new FileReader();
+            this.imgLocalUrl=this.getObjectURL(file);
             reader.readAsDataURL(file);
             var urlData="";
             reader.onload = () => {
@@ -146,22 +168,18 @@ export default {
                 reader.readAsArrayBuffer(blob);
                 reader.onload =  (event) => {
                     const OSS = require('ali-oss');
-                    const client = new OSS({
-                        region: 'oss-cn-shanghai',
-                        accessKeyId: 'LTAI4GDPCV3LpbpnQjCoyXNC',
-                        accessKeySecret: 'DXdQfTosIkscieZ1zBn1F2RX3Q0jnT',
-                        bucket: 'seec67'
-                    });
-
                     // arrayBuffer转Buffer
                     const buffer = new OSS.Buffer(event.target.result);
                     // 上传
-                    client.put(fileName, buffer).then((result)=> {
-                        // console.log(result.url);
-                       this.imgUrl=result.url;
+                    var fileName =`${Date.parse(new Date())}`+'.jpg';  //定义唯一的文件
+                    if(this.uploadClickTime>1 && this.uploadClickTime_<this.uploadClickTime) remove(this.filePath);
+                    this.filePath=fileName;
+                    put(fileName, buffer).then((result) => {
+                        this.imgUrl = result.url;
                     }).catch(function (err) {
                         console.log(err);
                     });
+                    this.uploadClickTime_+=1;
                 }
                 reader.onerror = function (error) {
                     console.log('Error: ', error);
@@ -184,6 +202,10 @@ export default {
                         imgUrl:this.imgUrl
                     }
                     this.imgUrl=''
+                    this.imgLocalUrl=''
+                    this.filePath=''
+                    this.uploadClickTime=0
+                    this.uploadClickTime_=0
                     this.set_addHotelParams(data)
                     this.addHotel()
                 }
