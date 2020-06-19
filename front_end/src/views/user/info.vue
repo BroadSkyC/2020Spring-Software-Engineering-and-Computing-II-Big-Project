@@ -192,7 +192,6 @@ export default {
         const format="YYYY-MM-DD "
         return {
             uploadClickTime:0,
-            uploadClickTime_:0,
             filePath:'',
             modify: false,
             formLayout: 'horizontal',
@@ -248,7 +247,6 @@ export default {
                     this.updateUserInfo(data).then(()=>{
                         this.filePath=''
                         this.uploadClickTime=0
-                        this.uploadClickTime_=0
                         this.imgUrl=''
                         this.modify = false
                         this.imgLocalUrl=''
@@ -287,7 +285,6 @@ export default {
             this.modify = false
             this.filePath=''
             this.uploadClickTime=0
-            this.uploadClickTime_=0
             this.imgLocalUrl=''
         },
         confirmCancelOrder(orderId){
@@ -318,13 +315,13 @@ export default {
             return new Blob([u8arr], { type: fileType });
         },
         Upload:function(e) {
-            this.uploadClickTime+=1;
             var file = e.target.files[0];
             const reader = new FileReader();
             this.imgLocalUrl=this.getObjectURL(file);
             reader.readAsDataURL(file);
             var urlData="";
             reader.onload = () => {
+                this.uploadClickTime+=1;
                 var url = reader.result;
                 urlData = url;
                 const base64 = urlData.split(',').pop();
@@ -338,14 +335,15 @@ export default {
                     const buffer = new OSS.Buffer(event.target.result);
                     // 上传
                     var fileName =`${Date.parse(new Date())}`+'.jpg';  //定义唯一的文件
-                    if(this.uploadClickTime>1 && this.uploadClickTime_<this.uploadClickTime) remove(this.filePath);
-                    this.filePath=fileName;
                     put(fileName, buffer).then((result) => {
                         this.imgUrl = result.url;
                     }).catch(function (err) {
                         console.log(err);
                     });
-                    this.uploadClickTime_+=1;
+                    if(this.uploadClickTime>1) {
+                        remove(this.filePath);
+                    }
+                    this.filePath=fileName;
                 }
                 reader.onerror = function (error) {
                     console.log('Error: ', error);
