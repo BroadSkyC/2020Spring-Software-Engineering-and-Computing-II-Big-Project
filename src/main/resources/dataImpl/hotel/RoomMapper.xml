@@ -4,8 +4,8 @@
 
     <insert id="insertRoom" parameterType="com.example.hotel.po.HotelRoom"
     useGeneratedKeys="true" keyProperty="id">
-        insert into Room(roomType,price,curNum,total,hotel_id)
-        values (#{roomType},#{price},#{curNum},#{total},#{hotelId})
+        insert into Room(roomType,price,curNum,total,hotel_id,beginDate,endDate,alldays,availableRoom)
+        values (#{roomType},#{price},#{curNum},#{total},#{hotelId},#{beginDate},#{endDate},#{alldays},#{availableRoom})
     </insert>
 
     <select id="selectRoomsByHotelId" resultMap="room">
@@ -35,6 +35,10 @@
         <result column="curNum" property="curNum"></result>
         <result column="total" property="total"></result>
         <result column="hotel_id" property="hotelId"></result>
+        <result column="beginDate" property="beginDate"></result>
+        <result column="endDate" property="endDate"></result>
+        <result column="alldays" property="alldays"></result>
+        <result column="availableRoom" property="availableRoom"></result>
     </resultMap>
 
 
