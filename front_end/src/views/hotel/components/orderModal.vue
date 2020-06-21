@@ -29,17 +29,21 @@
             </a-form-item>
             
             <a-form-item v-bind="formItemLayout" label="入住日期">
-                <a-range-picker
-                    format="YYYY-MM-DD"
-                    @change="changeDate"
-                    v-decorator="[
-                        'date', 
-                        {
-                            rules: [{ required: true, message: '请选择入住时间' }]   
-                        }
-                    ]"
-                    :placeholder="['入住日期','退房日期']"
-                />
+<!--                <a-range-picker-->
+<!--                    format="YYYY-MM-DD"-->
+<!--                    @change="changeDate"-->
+<!--                    v-decorator="[-->
+<!--                        'date', -->
+<!--                        {-->
+<!--                            rules: [{ required: true, message: '请选择入住时间' }]   -->
+<!--                        }-->
+<!--                    ]"-->
+<!--                    :placeholder="['入住日期','退房日期']"-->
+<!--                />-->
+                <span>{{ currentHotelInfo.checkInDate }}</span>
+            </a-form-item>
+            <a-form-item v-bind="formItemLayout" label="退房日期">
+                <span>{{ currentHotelInfo.checkOutDate }}</span>
             </a-form-item>
             <a-form-item v-bind="formItemLayout" label="入住人数">
                 <a-select
@@ -265,8 +269,10 @@ export default {
                         hotelId: this.currentHotelId,
                         hotelName: this.currentHotelInfo.name,
                         userId: Number(this.userId),
-                        checkInDate: moment(this.form.getFieldValue('date')[0]).format('YYYY-MM-DD'),
-                        checkOutDate: moment(this.form.getFieldValue('date')[1]).format('YYYY-MM-DD'),
+                        checkInDate:this.currentHotelInfo.checkInDate,
+                        checkOutDate: this.currentHotelInfo.checkOutDate,
+                        // checkInDate: moment(this.form.getFieldValue('date')[0]).format('YYYY-MM-DD'),
+                        // checkOutDate: moment(this.form.getFieldValue('date')[1]).format('YYYY-MM-DD'),
                         roomType: this.currentOrderRoom.roomType == '大床房' ? 'BigBed' : this.currentOrderRoom.roomType == '双床房' ? 'DoubleBed' : 'Family',
                         roomNum: this.form.getFieldValue('roomNum'),
                         peopleNum: this.form.getFieldValue('peopleNum'),
@@ -287,8 +293,10 @@ export default {
                 hotelId: this.currentHotelId,
                 orderPrice: this.totalPrice,
                 roomNum: this.form.getFieldValue('roomNum'),
-                checkIn: moment(this.form.getFieldValue('date')[0]).format('YYYY-MM-DD'),
-                checkOut: moment(this.form.getFieldValue('date')[1]).format('YYYY-MM-DD'),
+                checkIn: this.currentHotelInfo.checkInDate,
+                checkOut: this.currentHotelInfo.checkOutDate,
+                // checkIn: moment(this.form.getFieldValue('date')[0]).format('YYYY-MM-DD'),
+                // checkOut: moment(this.form.getFieldValue('date')[1]).format('YYYY-MM-DD'),
             }
             this.getOrderMatchCoupons(data)
         }
