@@ -16,6 +16,43 @@ public class HotelRoom {
      */
     private int total;
 
+    private String beginDate;
+    private String endDate;
+    private Integer alldays;
+    private String avaliableRoom;
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public Integer getAlldays() {
+        return alldays;
+    }
+
+    public void setAlldays(Integer alldays) {
+        this.alldays = alldays;
+    }
+
+    public String getAvaliableRoom() {
+        return avaliableRoom;
+    }
+
+    public void setAvaliableRoom(String avaliableRoom) {
+        this.avaliableRoom = avaliableRoom;
+    }
+
+    public String getBeginDate() {
+        return beginDate;
+    }
+
+    public void setBeginDate(String beginDate) {
+        this.beginDate = beginDate;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -63,4 +100,5 @@ public class HotelRoom {
     public void setTotal(int total) {
         this.total = total;
     }
+
 }
