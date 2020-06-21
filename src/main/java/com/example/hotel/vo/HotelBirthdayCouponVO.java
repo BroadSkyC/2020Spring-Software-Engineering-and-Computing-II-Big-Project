@@ -4,7 +4,7 @@ public class HotelBirthdayCouponVO extends CouponVO{
     // TODO: 2020/5/25
     private Integer hotelId;
 
-    private Integer discount;
+    private double discount;
 
     public Integer getHotelId() {
         return hotelId;
@@ -14,11 +14,11 @@ public class HotelBirthdayCouponVO extends CouponVO{
         this.hotelId = hotelId;
     }
 
-    public Integer getDiscount() {
+    public double getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Integer discount) {
+    public void setDiscount(double discount) {
         this.discount = discount;
     }
 }

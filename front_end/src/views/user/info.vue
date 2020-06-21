@@ -4,27 +4,19 @@
             <a-tab-pane tab="我的信息" key="1">
                 <a-form :form="form" style="margin-top: 30px">
                     <a-form-item label="头像" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1  }">
-                        <a-upload
-                                name="avatar"
-                                list-type="picture-card"
-                                class="avatar-uploader"
-                                :show-upload-list="false"
-                                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                                :before-upload="beforeUpload"
-                                @change="handleChange"
-                                v-if="modify"
-                        >
-                            <img v-if="imageUrl" :src="imageUrl" alt="avatar" />
-                            <div v-else>
-                                <a-icon :type="loading ? 'loading' : 'plus'" />
-                                <div class="ant-upload-text">
-                                    上传
-                                </div>
+                        <span v-if="modify">
+                            <p v-if="this.imgLocalUrl" >
+                                <a-avatar size="large"  v-bind:src=this.imgLocalUrl></a-avatar>
+                            </p>
+                            <div class="file-input">
+                            <p class="input-container" >
+                                <a-icon type="plus-circle" style="font-size: 50px" class="plus" />
+                                 <input type="file" @change="Upload" accept="image/*"/>
+                            </p>
                             </div>
-                        </a-upload>
-                        <span v-else><a-avatar v-if="imageUrl" size="large" src="imageUrl"></a-avatar>
-                            <span v-else><a-avatar size="large" src="./defaultAvatar.png"></a-avatar></span></span>
-
+                        </span>
+                        <span v-else><a-avatar size="large"  v-bind:src=userInfo.imgUrl></a-avatar>
+                        </span>
                     </a-form-item>
                     <a-form-item label="用户名" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1  }">
                         <a-input
@@ -139,6 +131,7 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
 import RegisterVip from './components/RegisterVip'
 import ViewOrder from "./components/viewOrder";
 import Comment from "./components/comment";
+import { client, put, remove } from '../../utils/client';
 const columns = [
     {  
         title: '订单号',
@@ -193,16 +186,13 @@ const columns = [
     },
     
   ];
-function getBase64(img, callback) {
-        const reader = new FileReader();
-        reader.addEventListener('load', () => callback(reader.result));
-        reader.readAsDataURL(img);
-    }
 export default {
     name: 'info',
     data(){
         const format="YYYY-MM-DD "
         return {
+            uploadClickTime:0,
+            filePath:'',
             modify: false,
             formLayout: 'horizontal',
             pagination: {},
@@ -211,7 +201,8 @@ export default {
             form: this.$form.createForm(this, { name: 'coordinated' }),
             format,
             loading: false,
-            imageUrl: '',
+            imgUrl: '',
+            imgLocalUrl:'',
         }
     },
     components: {
@@ -244,16 +235,21 @@ export default {
             'cancelOrder'
         ]),
         saveModify() {
-            this.form.validateFields((err, values) => {
+           this.form.validateFields((err, values) => {
                 if (!err) {
                     const data = {
                         userName: this.form.getFieldValue('userName'),
                         phoneNumber: this.form.getFieldValue('phoneNumber'),
                         password: this.form.getFieldValue('password'),
+                        imgUrl:this.imgUrl,
                         // birthday: this.form.getFieldValue('birthday')
                     }
                     this.updateUserInfo(data).then(()=>{
+                        this.filePath=''
+                        this.uploadClickTime=0
+                        this.imgUrl=''
                         this.modify = false
+                        this.imgLocalUrl=''
                     })
                 }
             });
@@ -284,7 +280,12 @@ export default {
             this.set_viewOrderVisible(true)
         },
         cancelModify() {
+            if(this.filePath)remove(this.filePath);
+            this.imgUrl=''
             this.modify = false
+            this.filePath=''
+            this.uploadClickTime=0
+            this.imgLocalUrl=''
         },
         confirmCancelOrder(orderId){
             this.cancelOrder(orderId)
@@ -292,29 +293,62 @@ export default {
         cancelCancelOrder() {
 
         },
-        handleChange(info) {
-            if (info.file.status === 'uploading') {
-                this.loading = true;
-                return;
+        getObjectURL(file) {
+            var url = null ;
+            // 下面函数执行的效果是一样的，只是需要针对不同的浏览器执行不同的 js 函数而已
+            if (window.createObjectURL!=undefined) { // basic
+                url = window.createObjectURL(file) ;
+            } else if (window.URL!=undefined) { // mozilla(firefox)
+                url = window.URL.createObjectURL(file) ;
+            } else if (window.webkitURL!=undefined) { // webkit or chrome
+                url = window.webkitURL.createObjectURL(file) ;
             }
-            if (info.file.status === 'done') {
-                // Get this url from response in real world.
-                getBase64(info.file.originFileObj, imageUrl => {
-                    this.imageUrl = imageUrl;
-                    this.loading = false;
-                });
-            }
+            return url ;
         },
-        beforeUpload(file) {
-            const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-            if (!isJpgOrPng) {
-                this.$message.error('请上传JPEG或PNG格式图片');
+        toBlob(urlData,fileType) {
+            let bytes = window.atob(urlData);
+            let n = bytes.length;
+            let u8arr = new Uint8Array(n);
+            while (n--) {
+                u8arr[n] = bytes.charCodeAt(n);
             }
-            const isLt2M = file.size / 1024 / 1024 < 2;
-            if (!isLt2M) {
-                this.$message.error('文件大小须小于2MB');
-            }
-            return isJpgOrPng && isLt2M;
+            return new Blob([u8arr], { type: fileType });
+        },
+        Upload:function(e) {
+            var file = e.target.files[0];
+            const reader = new FileReader();
+            this.imgLocalUrl=this.getObjectURL(file);
+            reader.readAsDataURL(file);
+            var urlData="";
+            reader.onload = () => {
+                this.uploadClickTime+=1;
+                var url = reader.result;
+                urlData = url;
+                const base64 = urlData.split(',').pop();
+                const fileType = urlData.split(';').shift().split(':').pop();
+                // base64转blob
+                const blob = this.toBlob(base64, fileType);
+                reader.readAsArrayBuffer(blob);
+                reader.onload =  (event) => {
+                    const OSS = require('ali-oss');
+                    // arrayBuffer转Buffer
+                    const buffer = new OSS.Buffer(event.target.result);
+                    // 上传
+                    var fileName =`${Date.parse(new Date())}`+'.jpg';  //定义唯一的文件
+                    put(fileName, buffer).then((result) => {
+                        this.imgUrl = result.url;
+                    }).catch(function (err) {
+                        console.log(err);
+                    });
+                    if(this.uploadClickTime>1) {
+                        remove(this.filePath);
+                    }
+                    this.filePath=fileName;
+                }
+                reader.onerror = function (error) {
+                    console.log('Error: ', error);
+                };
+            };
         },
     }
 }
@@ -353,5 +387,40 @@ export default {
     }
 </style>
 <style lang="less">
-    
+    .file-input{
+        text-align: center;
+        line-height:50px;
+        position:relative;
+        left: 10px;
+        border-radius: 100%;
+        margin-left:-100px;
+        margin-right:auto;
+    }
+    .file-input .input-container{
+        width:50px;
+        height:50px;
+        text-align: center;
+        border-radius: 100%;
+        background-color: white;
+        font-size:30px;
+        margin-left:100px;
+        margin-right:auto;
+    }
+    .file-input input{
+        border-radius: 100%;
+        height: 50px;
+        width: 50px;
+        position:absolute;
+        text-align: center;
+        margin-left:100px;
+        margin-right:auto;
+        left:0;
+        top:0;
+        opacity:0;
+    }
+    .abc2{
+        margin-left: -257.5px;
+        margin-top: -42px;
+    }
+
 </style>

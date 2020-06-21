@@ -19,6 +19,7 @@ public class UserVO {
     private VipType vipType;
     private String company;
     private Integer hotelId;
+    private String imgUrl;
 
     public Integer getId() {
         return id;
@@ -91,4 +92,8 @@ public class UserVO {
     public Integer getHotelId(){return hotelId;}
 
     public void setHotelId(Integer hotelId){this.hotelId=hotelId;}
+
+    public String getImgUrl(){return this.imgUrl;}
+
+    public void setImgUrl(String url){this.imgUrl=url;}
 }

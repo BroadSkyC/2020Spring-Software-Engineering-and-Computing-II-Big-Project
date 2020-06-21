@@ -58,10 +58,13 @@
                     v-decorator="['description', { rules: [{ required: true, message: '请填写酒店简介' }] }]"
                 />
             </a-form-item>
-            <a-form-item label="酒店图片" v-bind="formItemLayout">
+            <a-form-item label="酒店图片" v-bind="formItemLayout" class="abc">
+                <p class="row" id="imgbox" v-if="this.imgLocalUrl">
+                    <img id="image" v-bind:src=this.imgLocalUrl>
+                </p>
                 <div class="file-input">
-                    <p class="input-container">
-                        选择本地图片
+                    <p class="input-container" >
+                        <a-icon type="plus-square" style="font-size: 70px" class="plus" />
                         <input type="file" @change="Upload" accept="image/*"/>
                     </p>
                 </div>
@@ -69,14 +72,17 @@
         </a-form>
     </a-modal>
 </template>
-<script src="http://gosspublic.alicdn.com/aliyun-oss-sdk-4.4.4.min.js"></script>
 <script>
-import { mapGetters, mapMutations, mapActions } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex';
+import { client, put, remove } from '../../../utils/client';
 export default {
     name: 'addHotelModal',
     data() {
         return {
             imgUrl: '',
+            imgLocalUrl:'',
+            uploadClickTime:0,
+            filePath:'',
             formItemLayout: {
                 labelCol: {
                     xs: { span: 12 },
@@ -112,10 +118,27 @@ export default {
             'addHotel'
         ]),
         cancel() {
+            if(this.filePath)remove(this.filePath);
+            this.imgUrl=''
+            this.imgLocalUrl=''
+            this.filePath=''
+            this.uploadClickTime=0
             this.set_addHotelModalVisible(false)
         },
         changeStar(v){
 
+        },
+        getObjectURL(file) {
+            var url = null ;
+            // 下面函数执行的效果是一样的，只是需要针对不同的浏览器执行不同的 js 函数而已
+            if (window.createObjectURL!=undefined) { // basic
+                url = window.createObjectURL(file) ;
+            } else if (window.URL!=undefined) { // mozilla(firefox)
+                url = window.URL.createObjectURL(file) ;
+            } else if (window.webkitURL!=undefined) { // webkit or chrome
+                url = window.webkitURL.createObjectURL(file) ;
+            }
+            return url ;
         },
         toBlob(urlData,fileType) {
             let bytes = window.atob(urlData);
@@ -127,12 +150,13 @@ export default {
             return new Blob([u8arr], { type: fileType });
         },
         Upload:function(e) {
-            var fileName = 'seec' + `${Date.parse(new Date())}`+'.jpg';  //定义唯一的文件名
             var file = e.target.files[0];
             const reader = new FileReader();
+            this.imgLocalUrl=this.getObjectURL(file);
             reader.readAsDataURL(file);
             var urlData="";
             reader.onload = () => {
+                this.uploadClickTime+=1;
                 var url = reader.result;
                 urlData = url;
                 const base64 = urlData.split(',').pop();
@@ -142,22 +166,17 @@ export default {
                 reader.readAsArrayBuffer(blob);
                 reader.onload =  (event) => {
                     const OSS = require('ali-oss');
-                    const client = new OSS({
-                        region: 'oss-cn-shanghai',
-                        accessKeyId: 'LTAI4GDPCV3LpbpnQjCoyXNC',
-                        accessKeySecret: 'DXdQfTosIkscieZ1zBn1F2RX3Q0jnT',
-                        bucket: 'seec67'
-                    });
-
                     // arrayBuffer转Buffer
                     const buffer = new OSS.Buffer(event.target.result);
                     // 上传
-                    client.put(fileName, buffer).then((result)=> {
-                        // console.log(result.url);
-                       this.imgUrl=result.url;
+                    var fileName =`${Date.parse(new Date())}`+'.jpg';  //定义唯一的文件
+                    put(fileName, buffer).then((result) => {
+                        this.imgUrl = result.url;
                     }).catch(function (err) {
                         console.log(err);
                     });
+                    if(this.uploadClickTime>1) remove(this.filePath);
+                    this.filePath=fileName;
                 }
                 reader.onerror = function (error) {
                     console.log('Error: ', error);
@@ -179,6 +198,10 @@ export default {
                         managerId: Number(this.userId),
                         imgUrl:this.imgUrl
                     }
+                    this.imgUrl=''
+                    this.imgLocalUrl=''
+                    this.filePath=''
+                    this.uploadClickTime=0
                     this.set_addHotelParams(data)
                     this.addHotel()
                 }
@@ -188,24 +211,60 @@ export default {
 }
 </script>
 <style>
+    .plus{
+        margin-left: -10px;
+        margin-top: -4px;
+        width: 60px;
+        height: 60px;
+    }
+    .abc{
+        margin-top: 50px;
+    }
+    .abc2{
+        margin-left: -58px;
+        margin-top: -44px;
+    }
     .file-input{
-        line-height:30px;
+        text-align: center;
+        line-height:60px;
         position:relative;
-        margin-top:6px;
+        left: 10px;
+        margin-left:0px;
+        margin-right:auto;
     }
     .file-input .input-container{
-        width:130px;
-        height:32px;
+        width:60px;
+        height:60px;
         text-align: center;
         background:gainsboro;
         color:black;
         border-radius:3px;
-        font-size:14px;
+        font-size:30px;
+        margin-left:100px;
+        margin-right:auto;
     }
     .file-input input{
+        height: 60px;
+        width: 60px;
         position:absolute;
+        text-align: center;
+        margin-left:100px;
+        margin-right:auto;
         left:0;
         top:0;
         opacity:0;
+    }
+    #imgbox{
+        margin-top: -30px;
+        max-width:100%;
+        max-height: 400px;
+        vertical-align: center;
+    }
+    #image{
+        width: auto;/*图片长宽自适应*/
+        height: auto;
+        max-width:100%;
+        max-height: 400px;
+        vertical-align: center;
     }
 </style>

@@ -30,6 +30,8 @@ public class AccountController {
 
     @PostMapping("/register")
     public ResponseVO registerAccount(@RequestBody UserVO userVO) {
+    if(userVO.getImgUrl()=="")
+        userVO.setImgUrl("https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.jpg");
         return accountService.registerAccount(userVO);
     }
 
@@ -45,7 +47,8 @@ public class AccountController {
 
     @PostMapping("/{id}/userInfo/update")
     public ResponseVO updateInfo(@RequestBody UserInfoVO userInfoVO,@PathVariable int id){
-        return accountService.updateUserInfo(id,userInfoVO.getPassword(),userInfoVO.getUserName(),userInfoVO.getPhoneNumber());
+            if(userInfoVO.getImgUrl()=="") userInfoVO.setImgUrl("https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.jpg");
+        return accountService.updateUserInfo(id,userInfoVO.getPassword(),userInfoVO.getUserName(),userInfoVO.getPhoneNumber(),userInfoVO.getImgUrl());
 
     }
 

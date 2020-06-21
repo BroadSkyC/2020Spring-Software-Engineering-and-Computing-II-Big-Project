@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.hotel.data.user.AccountMapper">
     <insert id="createNewAccount" parameterType="com.example.hotel.po.User" useGeneratedKeys="true" keyProperty="id">
-        insert into User(email,password,username,phonenumber,credit,usertype)
-        values(#{email},#{password},#{userName},#{phoneNumber},#{credit},#{userType})
+        insert into User(email,password,username,phonenumber,credit,usertype,imgUrl)
+        values(#{email},#{password},#{userName},#{phoneNumber},#{credit},#{userType},#{imgUrl})
     </insert>
     <select id="getAccountByName" resultMap="User">
         select * from User where email=#{email}
@@ -12,7 +12,7 @@
         select * from User where id=#{id}
     </select>
     <update id="updateAccount">
-        update User set password=#{password},username=#{userName},phonenumber=#{phoneNumber}
+        update User set password=#{password},username=#{userName},phonenumber=#{phoneNumber},imgUrl=#{imgUrl}
         where id=#{id}
     </update>
 
@@ -38,5 +38,6 @@
         <result column="birthday" property="birthday"></result>
         <result column="viptype" property="vipType"></result>
         <result column="company" property="company"></result>
+        <result column="imgUrl" property="imgUrl"></result>
     </resultMap>
 </mapper>
