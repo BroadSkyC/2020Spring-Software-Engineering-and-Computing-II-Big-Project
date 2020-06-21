@@ -1,7 +1,7 @@
 <template>
     <div class="header">
         <div class="label">
-            <img src="@/assets/resizeApi.png" class="logo" alt="logo" @click="jumpToHome">
+            <img src="@/assets/Hh.png" class="logo" alt="logo" @click="jumpToHome">
             <span class="title">NJUSE 酒店管理系统</span>
             
         </div>

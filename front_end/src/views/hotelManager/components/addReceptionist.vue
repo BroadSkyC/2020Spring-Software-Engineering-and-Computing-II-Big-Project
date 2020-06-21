@@ -24,6 +24,14 @@
                     ]"
                 />
             </a-form-item >
+            <a-form-item v-bind="formItemLayout" label="手机号">
+                <a-input
+                        v-decorator="[
+                        'phoneNum',
+                        { rules: [{required: true, message: '请输入手机号', }] }
+                    ]"
+                />
+            </a-form-item >
         </a-form>
     </a-modal>
 </template>
@@ -79,6 +87,7 @@
                             email: this.form.getFieldValue('email'),
                             password: this.form.getFieldValue('password'),
                             hotelId:Number(this.activeHotelId),
+                            phoneNum:this.form.getFieldValue('phoneNum')
                         }
                         this.set_addReceptionistParams(data)
                         this.addReceptionist()
