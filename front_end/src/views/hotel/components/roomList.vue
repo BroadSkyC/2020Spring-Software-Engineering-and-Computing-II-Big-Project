@@ -139,8 +139,8 @@ export default {
         .search-cont{
             display: flex;
             align-items: center;
-            margin-left: 30px;
+            margin-right: 30px;
             font-family: "Yuanti TC",serif;
-            font-size: 17px;
+            /*font-size: 17px;*/
         }
 </style>
