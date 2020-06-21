@@ -6,6 +6,7 @@ import com.example.hotel.po.HotelRoom;
 import com.example.hotel.util.ServiceException;
 import com.example.hotel.vo.HotelVO;
 import com.example.hotel.vo.ResponseVO;
+import com.example.hotel.vo.SearchRoom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,5 +59,11 @@ public class HotelController {
     public ResponseVO retrieveManagerHotel(@PathVariable Integer userId){
 
         return ResponseVO.buildSuccess(hotelService.retrieveManagerHotels(userId));
+    }
+
+    @PostMapping("updateRoom")
+    public ResponseVO getAvailableRoom(@RequestBody SearchRoom searchRoom){
+        roomService.retrieveAvaliableRoomInfo(searchRoom);
+        return ResponseVO.buildSuccess(true);
     }
 }
