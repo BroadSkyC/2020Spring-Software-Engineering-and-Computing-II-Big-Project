@@ -137,6 +137,10 @@ CREATE TABLE `Room` (
   `total` int(11) DEFAULT NULL,
   `hotel_id` int(11) DEFAULT NULL,
   `roomType` varchar(50) DEFAULT NULL,
+  `beginDate` varchar(255) DEFAULT NULL,
+  `endDate` varchar(255) DEFAULT NULL,
+  `alldays` int(11) DEFAULT NULL,
+  `avaliableRoom` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
