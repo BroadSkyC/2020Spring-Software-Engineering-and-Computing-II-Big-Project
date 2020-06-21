@@ -52,6 +52,8 @@
                 'currentHotelId',
                 'currentHotelInfo',
                 'userId',
+                'checkInDate',
+                'checkOutDate',
             ]),
         },
         beforeCreate() {
@@ -60,10 +62,12 @@
         methods: {
             ...mapMutations([
                 'set_chooseDateVisible',
-                'clear_rooms'
+                'clear_rooms',
+                'set_checkIndate',
+                'set_checkOutdate',
             ]),
             ...mapActions([
-
+                'updateCurrentHotelInfo'
             ]),
             exits(){
                 // eslint-disable-next-line no-undef
@@ -80,6 +84,11 @@
                             checkInDate: moment(this.form.getFieldValue('date')[0]).format('YYYY-MM-DD'),
                             checkOutDate: moment(this.form.getFieldValue('date')[1]).format('YYYY-MM-DD'),
                         }
+                        console.log(data.hotelId)
+                        console.log(data.checkInDate)
+                        console.log(data.checkOutDate)
+                        this.set_checkIndate(moment(this.form.getFieldValue('date')[0]).format('YYYY-MM-DD'))
+                        this.set_checkOutdate(moment(this.form.getFieldValue('date')[1]).format('YYYY-MM-DD'))
                         this.updateCurrentHotelInfo(data)
                     }
                 });

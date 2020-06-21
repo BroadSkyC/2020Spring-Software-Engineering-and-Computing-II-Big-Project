@@ -3,11 +3,11 @@
                 <div class="search-bar">
                     <div class="search-cont"
                     >
-                        <span>入住时间：{{currentHotelInfo.checkInDate}}</span>
+                        <span>入住时间：{{checkInDate}}</span>
                     </div>
                     <div class="search-cont"
                     >
-                        <span>离店时间：{{currentHotelInfo.checkOutDate}} </span>
+                        <span>离店时间：{{checkOutDate}} </span>
                     </div>
                     <div class="search-cont">
                         <a-button
@@ -101,7 +101,9 @@ export default {
             'modifyRoomVisible',
             'chooseDateVisible',
             'userInfo',
-            'currentHotelInfo'
+            'currentHotelInfo',
+            'checkInDate',
+            'checkOutDate',
         ])
     },
     monuted() {

@@ -34,7 +34,9 @@ const hotel = {
         },
         orderMatchCouponList: [
 
-        ]
+        ],
+        checkInDate:'',
+        checkOutDate:'',
     },
     mutations: {
         set_hotelList: function(state, data) {
@@ -58,8 +60,14 @@ const hotel = {
                 ...data,
             }
         },
+        set_checkIndate: function(state, data) {
+            state.checkInDate= data
+        },
+        set_checkOutdate: function(state, data) {
+            state.checkOutDate= data
+        },
         clear_rooms:function(state){
-            state.currentHotelInfo.rooms="";
+            state.currentHotelInfo.rooms=[];
         },
         set_orderModalVisible: function(state, data) {
             state.orderModalVisible = data
@@ -75,6 +83,9 @@ const hotel = {
         },
         set_orderMatchCouponList: function(state, data) {
             state.orderMatchCouponList = data
+        },
+        set_currentHotelInfoRooms:function (state,data) {
+            state.currentHotelInfo.rooms=data
         }
     },
 
@@ -116,12 +127,12 @@ const hotel = {
                 commit('set_orderMatchCouponList', res)
             }
         },
-        updateCurrentHotelInfo: async ({state, dispatch,commit,getters}, data) => {
+        updateCurrentHotelInfo: async ({state, commit}, data) => {
             const res = await updateCurrentHotelInfoAPI(data)
             if (res) {
                 message.success('修改成功')
                 commit("set_chooseDateVisible",false)
-                commit('set_currentHotelInfo', res)
+                commit('set_currentHotelInfoRooms', res)
             } else {
                 message.error('修改失败')
             }
