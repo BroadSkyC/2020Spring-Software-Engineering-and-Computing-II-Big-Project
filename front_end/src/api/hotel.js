@@ -22,7 +22,7 @@ export function getManagerHotelsAPI(userId) {
 }
 export function updateCurrentHotelInfoAPI(data) {
     return axios({
-        url: `${api.hotelPre}/modifyRoom`,
+        url: `${api.hotelPre}/updateRoom`,
         method: 'POST',
         data,
     })
