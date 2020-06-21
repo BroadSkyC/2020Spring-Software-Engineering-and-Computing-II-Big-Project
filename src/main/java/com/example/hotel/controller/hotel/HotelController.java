@@ -61,9 +61,12 @@ public class HotelController {
         return ResponseVO.buildSuccess(hotelService.retrieveManagerHotels(userId));
     }
 
-    @PostMapping("updateRoom")
-    public ResponseVO getAvailableRoom(@RequestBody SearchRoom searchRoom){
-        roomService.retrieveAvaliableRoomInfo(searchRoom);
-        return ResponseVO.buildSuccess(true);
+    @GetMapping("/{hotelId}/{checkInDate}/{checkOutDate}/updateRoom")
+    public ResponseVO getAvailableRoom(@PathVariable Integer hotelId,@PathVariable String checkInDate,@PathVariable String checkOutDate){
+        SearchRoom searchRoom=new SearchRoom();
+        searchRoom.setHotelId(hotelId);
+        searchRoom.setCheckInDate(checkInDate);
+        searchRoom.setCheckOutDate(checkOutDate);
+        return ResponseVO.buildSuccess(roomService.retrieveAvaliableRoomInfo(searchRoom));
     }
 }
