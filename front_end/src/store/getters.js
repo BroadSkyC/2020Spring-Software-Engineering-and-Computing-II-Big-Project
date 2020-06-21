@@ -9,6 +9,7 @@ const getters = {
   currentHotelInfo: state => state.hotel.currentHotelInfo,
   currentHotelId: state => state.hotel.currentHotelId,
   orderModalVisible: state => state.hotel.orderModalVisible,
+  chooseDateVisible:  state => state.hotel.chooseDateVisible,
   registerVipVisible: state=> state.user.registerVipVisible,
   viewOrderVisible: state=>state.user.viewOrderVisible,
   commentVisible: state=>state.user.commentVisible,

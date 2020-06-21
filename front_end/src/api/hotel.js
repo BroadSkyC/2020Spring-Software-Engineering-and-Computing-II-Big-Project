@@ -20,3 +20,10 @@ export function getManagerHotelsAPI(userId) {
         method: 'GET',
     })
 }
+export function updateCurrentHotelInfoAPI(data) {
+    return axios({
+        url: `${api.hotelPre}/modifyRoom`,
+        method: 'POST',
+        data,
+    })
+}

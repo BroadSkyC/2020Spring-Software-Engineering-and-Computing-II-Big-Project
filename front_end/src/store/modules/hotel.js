@@ -4,6 +4,7 @@ import {
     getHotelsAPI,
     getHotelByIdAPI,
     getManagerHotelsAPI,
+    updateCurrentHotelInfoAPI,
 } from '@/api/hotel'
 import {
     reserveHotelAPI
@@ -27,6 +28,7 @@ const hotel = {
 
         },
         orderModalVisible: false,
+        chooseDateVisible: false,
         currentOrderRoom: {
 
         },
@@ -56,8 +58,14 @@ const hotel = {
                 ...data,
             }
         },
+        clear_rooms:function(state){
+            state.currentHotelInfo.rooms="";
+        },
         set_orderModalVisible: function(state, data) {
             state.orderModalVisible = data
+        },
+        set_chooseDateVisible: function(state, data) {
+            state.chooseDateVisible = data
         },
         set_currentOrderRoom: function(state, data) {
             state.currentOrderRoom = {
@@ -107,7 +115,17 @@ const hotel = {
             if(res){
                 commit('set_orderMatchCouponList', res)
             }
-        }
+        },
+        updateCurrentHotelInfo: async ({state, dispatch,commit,getters}, data) => {
+            const res = await updateCurrentHotelInfoAPI(data)
+            if (res) {
+                message.success('修改成功')
+                commit("set_chooseDateVisible",false)
+                commit('set_currentHotelInfo', res)
+            } else {
+                message.error('修改失败')
+            }
+        },
     }
 }
 

@@ -1,7 +1,19 @@
 <template>
     <div class="room-list">
-        <div class="filter">
-
+                <div class="search-bar">
+                    <div class="search-cont"
+                    >
+                        <span>入住时间：{{currentHotelInfo.checkInDate}}</span>
+                    </div>
+                    <div class="search-cont"
+                    >
+                        <span>离店时间：{{currentHotelInfo.checkOutDate}} </span>
+                    </div>
+                    <div class="search-cont">
+                        <a-button
+                                type="primary" style="margin-left: 10px"
+                                @click="showChooseDate">设置</a-button>
+                    </div>
         </div>
         <div class="list">
             <a-table
@@ -20,12 +32,15 @@
         </div>
         <OrderModal></OrderModal>
         <ModifyRoom></ModifyRoom>
+        <ChooseDate></ChooseDate>
     </div>
 </template>
 <script>
 import { mapGetters, mapActions, mapMutations } from 'vuex'
+import { message } from 'ant-design-vue'
 import OrderModal from './orderModal'
 import ModifyRoom from "./modifyRoom";
+import ChooseDate from "./chooseDate";
 const columns = [
     {  
       title: '房型',
@@ -70,7 +85,13 @@ export default {
             columns,
         }
     },
+    mounted() {
+        if(this.userInfo.userType==='Client') {
+            this.set_chooseDateVisible(true)
+        }
+    },
     components: {
+        ChooseDate,
         ModifyRoom,
         OrderModal
     },
@@ -78,6 +99,7 @@ export default {
         ...mapGetters([
             'orderModalVisible',
             'modifyRoomVisible',
+            'chooseDateVisible',
             'userInfo',
             'currentHotelInfo'
         ])
@@ -89,7 +111,8 @@ export default {
         ...mapMutations([
             'set_orderModalVisible',
             'set_currentOrderRoom',
-            'set_modifyRoomVisible'
+            'set_modifyRoomVisible',
+            'set_chooseDateVisible'
         ]),
         ...mapActions([
 
@@ -101,7 +124,23 @@ export default {
         showModify(record){
             this.set_currentOrderRoom(record)
             this.set_modifyRoomVisible(true)
+        },
+        showChooseDate(){
+            this.set_chooseDateVisible(true)
         }
     }
 }
 </script>
+<style scoped lang="less">
+        .search-bar{
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .search-cont{
+            display: flex;
+            align-items: center;
+            margin-left: 30px;
+            font-family: "Yuanti TC",serif;
+            font-size: 17px;
+        }
+</style>
