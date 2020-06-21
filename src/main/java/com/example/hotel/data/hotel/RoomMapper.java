@@ -28,4 +28,17 @@ public interface RoomMapper {
                         @Param("curNum") Integer curNum);
 
     void deleRoom(HotelRoom hotelRoom);
+
+    void updateAvailableRoom(@Param("hotelId") Integer hotelId,
+                             @Param("roomType") String roomType,
+                             @Param("price") Double price,
+                             @Param("availableRoom") String availableRoom);
+
+    String getAvailableRoom(@Param("hotelId") Integer hotelId,
+                            @Param("roomType") String roomType,
+                            @Param("price") Double price);
+
+    String getBeginDate(@Param("hotelId") Integer hotelId,
+                        @Param("roomType") String roomType,
+                        @Param("price") Double price);
 }

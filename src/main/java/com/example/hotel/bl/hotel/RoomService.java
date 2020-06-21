@@ -1,6 +1,7 @@
 package com.example.hotel.bl.hotel;
 
 import com.example.hotel.po.HotelRoom;
+import com.example.hotel.vo.SearchRoom;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ public interface RoomService {
      */
     List<HotelRoom> retrieveHotelRoomInfo(Integer hotelId);
 
+    List<HotelRoom> retrieveAvaliableRoomInfo(SearchRoom searchRoom);
     /**
      * 添加酒店客房信息
      * @param hotelRoom

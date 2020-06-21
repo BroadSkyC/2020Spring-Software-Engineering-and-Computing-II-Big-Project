@@ -3,7 +3,9 @@ package com.example.hotel.blImpl.order;
 import com.example.hotel.bl.hotel.HotelService;
 import com.example.hotel.bl.order.OrderService;
 import com.example.hotel.bl.user.AccountService;
+import com.example.hotel.data.hotel.RoomMapper;
 import com.example.hotel.data.order.OrderMapper;
+import com.example.hotel.enums.RoomType;
 import com.example.hotel.po.Hotel;
 import com.example.hotel.po.Order;
 import com.example.hotel.po.User;
@@ -16,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,11 +40,20 @@ public class OrderServiceImpl implements OrderService {
     AccountService accountService;
     @Autowired
     OrderService orderService;
-
+    @Autowired
+    RoomMapper roomMapper;
     @Override
     public ResponseVO addOrder(OrderVO orderVO) {
         int reserveRoomNum = orderVO.getRoomNum();
+
         try {
+/*            String availableRoom = roomMapper.getAvailableRoom(orderVO.getHotelId(), orderVO.getRoomType(),orderVO.getRoomPrice());
+            LocalDate beginDate = LocalDate.parse(roomMapper.getBeginDate(orderVO.getHotelId(), orderVO.getRoomType(),orderVO.getRoomPrice()));
+            String rooms[] = availableRoom.split(",");
+            LocalDate checkin = LocalDate.parse(orderVO.getCheckInDate());
+            LocalDate checkout = LocalDate.parse(orderVO.getCheckOutDate());
+
+            */
             int curNum = hotelService.getRoomCurNum(orderVO.getHotelId(),orderVO.getRoomType(),orderVO.getRoomPrice());
             if(reserveRoomNum>curNum){
                 return ResponseVO.buildFailure(ROOMNUM_LACK);
