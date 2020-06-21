@@ -4,6 +4,7 @@ import com.example.hotel.bl.admin.AdminService;
 import com.example.hotel.data.admin.AdminMapper;
 import com.example.hotel.enums.UserType;
 import com.example.hotel.po.User;
+import com.example.hotel.vo.ReceptionistForm;
 import com.example.hotel.vo.ResponseVO;
 import com.example.hotel.vo.UserForm;
 import org.springframework.beans.BeanUtils;
@@ -45,6 +46,31 @@ public class AdminServiceImpl implements AdminService {
     public ResponseVO delManager(UserForm userForm){
         User user =new User();
         BeanUtils.copyProperties(userForm,user);
+        adminMapper.delManager(user);
+        return ResponseVO.buildSuccess(true);
+    }
+
+    public ResponseVO addReceptionist(ReceptionistForm receptionistForm){
+        User user=new User();
+        user.setEmail(receptionistForm.getEmail());
+        user.setPassword(receptionistForm.getPassword());
+        user.setPhoneNumber(receptionistForm.getPhoneNum());
+        user.setHotelId(receptionistForm.getHotelId());
+        user.setUserType(UserType.HotelReceptionist);
+        try {
+            adminMapper.addReceptionist(user);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseVO.buildFailure(ACCOUNT_EXIST);
+        }
+        return ResponseVO.buildSuccess(true);
+    }
+
+    public List<User> getHotelReceptionistList(Integer hotelId){
+        return adminMapper.getHotelReceptionistList(hotelId);
+    }
+
+    public ResponseVO delReceptionist(User user){
         adminMapper.delManager(user);
         return ResponseVO.buildSuccess(true);
     }

@@ -5,11 +5,25 @@
         insert into User(email,password,usertype)
         values(#{email},#{password},#{userType})
     </insert>
+
+    <insert id="addReceptionist" parameterType="com.example.hotel.po.User" useGeneratedKeys="true" keyProperty="id">
+        insert into User(email,password,usertype,phonenumber,hotelId)
+        values(#{email},#{password},#{userType},#{phoneNumber},#{hotelId})
+    </insert>
+
     <select id="getAllManagers" resultMap="User">
         select * from User where usertype='HotelManager'
     </select>
 
+    <select id="getHotelReceptionistList" resultMap="User">
+        select * from User where usertype='HotelReceptionist' and hotelId=#{hotelId}
+    </select>
+
     <delete id="delManager" parameterType="com.example.hotel.po.User">
+        delete from User where email=#{email}
+    </delete>
+
+    <delete id="delReceptionist" parameterType="com.example.hotel.po.User">
         delete from User where email=#{email}
     </delete>
 

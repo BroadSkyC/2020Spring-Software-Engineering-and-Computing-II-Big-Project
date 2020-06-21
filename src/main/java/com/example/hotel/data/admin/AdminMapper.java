@@ -19,4 +19,10 @@ public interface AdminMapper {
     List<User> getAllManagers();
 
     int delManager(User user);
+
+    int addReceptionist(User user);
+
+    List<User> getHotelReceptionistList(Integer hotelId);
+
+    int delReceptionist(User user);
 }

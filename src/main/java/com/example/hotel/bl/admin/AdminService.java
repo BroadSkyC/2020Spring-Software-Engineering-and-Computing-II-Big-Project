@@ -1,6 +1,7 @@
 package com.example.hotel.bl.admin;
 
 import com.example.hotel.po.User;
+import com.example.hotel.vo.ReceptionistForm;
 import com.example.hotel.vo.ResponseVO;
 import com.example.hotel.vo.UserForm;
 
@@ -31,4 +32,10 @@ public interface AdminService {
      * @return
      */
     ResponseVO delManager(UserForm userForm);
+
+    ResponseVO addReceptionist(ReceptionistForm receptionistForm);
+
+    List<User> getHotelReceptionistList(Integer hotelId);
+
+    ResponseVO delReceptionist(User user);
 }
