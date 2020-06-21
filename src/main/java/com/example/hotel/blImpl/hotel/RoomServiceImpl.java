@@ -5,10 +5,12 @@ import com.example.hotel.bl.hotel.RoomService;
 import com.example.hotel.data.hotel.HotelMapper;
 import com.example.hotel.data.hotel.RoomMapper;
 import com.example.hotel.po.HotelRoom;
+import com.example.hotel.vo.SearchRoom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,6 +27,45 @@ public class RoomServiceImpl implements RoomService {
         return roomMapper.selectRoomsByHotelId(hotelId);
     }
 
+    @Override
+    public List<HotelRoom> retrieveAvaliableRoomInfo(SearchRoom searchRoom){
+        List<HotelRoom> allRooms=roomMapper.selectRoomsByHotelId(searchRoom.getHotelId());
+        List<HotelRoom> avaliableRooms=new ArrayList<HotelRoom>();
+        LocalDate CheckInDate = LocalDate.parse(searchRoom.getCheckInDate());
+        LocalDate CheckOutDate = LocalDate.parse(searchRoom.getCheckOutDate());
+        int beginNum,endNum;
+        LocalDate beginDate;
+        String[] avaliable;
+        int a=0,b=0,mini=Integer.MAX_VALUE;
+        for (HotelRoom allRoom : allRooms) {
+            beginDate = LocalDate.parse(allRoom.getBeginDate());
+            if (beginDate.getMonth() == CheckInDate.getMonth()) {
+                beginNum = CheckInDate.getDayOfMonth() - beginDate.getDayOfMonth() + 1;
+            } else {
+                beginNum = CheckInDate.getDayOfMonth() + beginDate.lengthOfMonth() - beginDate.getDayOfMonth() + 1;
+            }
+            if (beginDate.getMonth() == CheckOutDate.getMonth()) {
+                endNum = CheckOutDate.getDayOfMonth() - beginDate.getDayOfMonth();
+            } else {
+                endNum = CheckOutDate.getDayOfMonth() + beginDate.lengthOfMonth() - beginDate.getDayOfMonth();
+            }
+            avaliable = allRoom.getAvaliableRoom().split(",");
+            for (int j = beginNum; j <= endNum; j++) {
+                a = Integer.parseInt(avaliable[j - 1].substring(avaliable[j - 1].length() - 1));
+                if (a == 0) {
+                    b = 1;
+                    break;
+                }
+                mini = Math.min(a, mini);
+            }
+            if (b == 1) {
+                break;
+            }
+            allRoom.setCurNum(mini);
+            avaliableRooms.add(allRoom);
+        }
+        return avaliableRooms;
+    }
     @Override
     public void insertRoomInfo(HotelRoom hotelRoom) {
         List<HotelRoom> hotelRooms = retrieveHotelRoomInfo(hotelRoom.getHotelId());
@@ -51,12 +92,12 @@ public class RoomServiceImpl implements RoomService {
         LocalDate beginDate = LocalDate.parse(hotelRoom.getBeginDate());
         LocalDate endDate = LocalDate.parse(hotelRoom.getEndDate());
         int days = 0;
-        if (beginDate.getMonth()!=endDate.getMonth()){
+        if (beginDate.getMonth()==endDate.getMonth()){
             days = endDate.getDayOfMonth()-beginDate.getDayOfMonth();
         }else {
           days = endDate.getDayOfMonth() + beginDate.lengthOfMonth() - beginDate.getDayOfMonth();
         }
-        hotelRoom.setAlldays(days);
+        hotelRoom.setAlldays(days+1);
         String availableRoom = "";
         for (int i=1;i<days;i++){
             availableRoom += i + "*" + hotelRoom.getTotal() + ",";
