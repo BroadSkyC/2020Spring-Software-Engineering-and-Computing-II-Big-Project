@@ -58,9 +58,10 @@ public class RoomServiceImpl implements RoomService {
         }
         hotelRoom.setAlldays(days);
         String availableRoom = "";
-        for (int i=1;i<=days;i++){
-            availableRoom += i + "*" + hotelRoom.getTotal();
+        for (int i=1;i<days;i++){
+            availableRoom += i + "*" + hotelRoom.getTotal() + ",";
         }
+        availableRoom += days+"*"+hotelRoom.getTotal();
         hotelRoom.setAvaliableRoom(availableRoom);
         hotelMapper.updateMinPrice(hotel_id, minPrice);
         hotelMapper.updateMaxPrice(hotel_id, maxPrice);
