@@ -22,3 +22,23 @@ export function delManagerAPI(data) {
         data
     })
 }
+export function  hotelAllReceptionistAPI(hotelId) {
+    return axios({
+        url: `${api.adminPre}/${hotelId}/hotelAllReceptionist`,
+        method: 'GET',
+    })
+}
+export function delReceptionistAPI(data) {
+    return axios({
+        url:`${api.adminPre}/delReceptionist`,
+        method:'POST',
+        data,
+    })
+}
+export function addReceptionistAPI(data) {
+    return axios({
+        url: `${api.adminPre}/addReceptionist`,
+        method: 'POST',
+        data
+    })
+}

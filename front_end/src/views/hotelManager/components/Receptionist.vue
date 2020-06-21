@@ -38,16 +38,20 @@
     import AddReceptionist from "./addReceptionist";
     const columns=[
         {
-            title: '用户名',
-            dataIndex: 'userName'
+            title: '编号',
+            dataIndex: 'id'
         },
         {
-            title: '电话号码',
-            dataIndex: 'phoneNumber'
+            title: '用户邮箱',
+            dataIndex: 'email'
         },
         {
             title: '密码',
             dataIndex: 'password'
+        },
+        {
+            title: '电话号码',
+            dataIndex: 'phoneNumber'
         },
         {
             title: '操作',
@@ -74,20 +78,15 @@
         },
         methods: {
             ...mapMutations([
-                // 将 `this.set_addCouponVisible(data)` 映射为 `this.$store.commit('set_addCouponVisible',data)`；下面一个同理
-                // 这种方式必须在根结点里注入store
                 'set_receptionistVisible',
                 'set_addReceptionistVisible'
             ]),
             // 从store里面获取数据
             ...mapActions([
-                // 将 `this.getHotelCoupon()` 映射为 `this.$store.dispatch('getHotelCoupon')`
-                // 这种方式必须在根结点里注入store
                 'getReceptionistList',
                 'delReceptionist'
             ]),
             cancel() {
-                // 下面三个通过调用mapXXX方法接口来改变state里面的全局数据
                 this.set_receptionistVisible(false)
             },
             addReceptionist() {

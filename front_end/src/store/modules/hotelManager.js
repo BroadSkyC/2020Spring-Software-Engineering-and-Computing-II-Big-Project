@@ -8,7 +8,7 @@ import{
     hotelAllReceptionistAPI,
     delReceptionistAPI,
     addReceptionistAPI
-} from '@/api/hotelReceptionist'
+} from '@/api/admin'
 import {
     getAllOrdersAPI,
     updateOrderAPI,
@@ -191,9 +191,11 @@ const hotelManager = {
                 commit('set_addReceptionistParams', {
                     email: '',
                     password: '',
-                    hotelId: ''
+                    hotelId: '',
+                    phoneNum:''
                 })
                 commit('set_addReceptionistVisible', false)
+                commit('set_receptionistVisible',true)
                 message.success('添加成功')
                 dispatch('getReceptionistList')
             } else {
@@ -243,7 +245,6 @@ const hotelManager = {
         getReceptionistList: async ({state, commit}) => {
             const res = await hotelAllReceptionistAPI(state.activeHotelId)
             if (res) {
-                // 获取到酒店策略之后的操作（将获取到的数组赋值给couponList）
                 commit('set_receptionistList', res)
             }
         },
@@ -338,7 +339,7 @@ const hotelManager = {
                 message.success('删除成功')
                 commit('set_couponVisible', false)
                 // window.location.reload();
-                // dispatch('getHotelCoupon')
+                dispatch('getHotelCoupon')
             } else {
                 message.error('删除失败')
             }
@@ -347,9 +348,8 @@ const hotelManager = {
             const res = await delReceptionistAPI(data)
             if (res) {
                 message.success('删除成功')
-                commit('set_receptionistVisible', false)
                 // window.location.reload();
-                // dispatch('getReceptionistList')
+                dispatch('getReceptionistList')
             } else {
                 message.error('删除失败')
             }
