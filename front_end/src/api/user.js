@@ -23,9 +23,9 @@ export function getUserInfoAPI(id){
         method: 'GET'
     })
 }
-export function getUserCreditRecordAPI(id){
+export function getUserCreditRecordAPI(userId){
     return axios({
-        url:`${api.userPre}/${id}/getUserCreditRecord`,
+        url:`${api.userPre}/${userId}/getUserCreditRecord`,
         method: 'GET',
     })
 }

@@ -40,7 +40,7 @@
                     </a-form-item>
                     <a-form-item label="信用值" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }">
                     <span>{{ userInfo.credit }} </span>
-                        <a-button type="default" @click="showCreditRecord">查看记录</a-button>
+                        <a-button type="default" @click="showCreditRecord" v-if="userInfo.userType==='Client'">查看记录</a-button>
                 </a-form-item>
                     <a-form-item label="密码" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }" v-if="modify">
                         <a-input
@@ -393,6 +393,9 @@ export default {
     .info-wrapper {
         .ant-tabs-bar {
             padding-left: 30px
+        }
+        .items{
+            margin-right: 10px;
         }
     }
 </style>

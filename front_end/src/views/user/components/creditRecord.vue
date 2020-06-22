@@ -47,8 +47,7 @@
             this.form = this.$form.createForm(this, { name: 'creditRecord' });
         },
         async mounted() {
-            await this.getUserOrders()
-            await this.getUserCreditRecord()
+            await this.getUserCreditRecord(this.userId)
         },
         computed: {
             ...mapGetters([
@@ -63,7 +62,8 @@
                 'set_creditRecordVisible'
             ]),
             ...mapActions([
-                'getUserCreditRecord'
+                'getUserCreditRecord',
+                'getUserOrders'
             ]),
             cancel(){
                 this.set_creditRecordVisible(false)
