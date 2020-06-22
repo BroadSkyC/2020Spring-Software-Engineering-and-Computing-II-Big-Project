@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,16 +42,18 @@ public class RoomServiceImpl implements RoomService {
         for (HotelRoom allRoom : allRooms) {
             b=0;
             beginDate = LocalDate.parse(allRoom.getBeginDate());
-            if (beginDate.getMonth() == CheckInDate.getMonth()) {
+            /*if (beginDate.getMonth() == CheckInDate.getMonth()) {
                 beginNum = CheckInDate.getDayOfMonth() - beginDate.getDayOfMonth() + 1;
             } else {
                 beginNum = CheckInDate.getDayOfMonth() + beginDate.lengthOfMonth() - beginDate.getDayOfMonth() + 1;
-            }
-            if (beginDate.getMonth() == CheckOutDate.getMonth()) {
+            }*/
+            beginNum= (int)ChronoUnit.DAYS.between(beginDate, CheckInDate)+1;
+            /*if (beginDate.getMonth() == CheckOutDate.getMonth()) {
                 endNum = CheckOutDate.getDayOfMonth() - beginDate.getDayOfMonth();
             } else {
                 endNum = CheckOutDate.getDayOfMonth() + beginDate.lengthOfMonth() - beginDate.getDayOfMonth();
-            }
+            }*/
+            endNum=(int)ChronoUnit.DAYS.between(beginDate, CheckOutDate);
             avaliable = allRoom.getAvailableRoom().split(",");
             if(endNum>avaliable.length||beginNum<1){
                 continue;
