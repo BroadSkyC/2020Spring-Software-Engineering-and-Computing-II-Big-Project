@@ -28,7 +28,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public List<HotelRoom> retrieveAvailableRoomInfo(SearchRoom searchRoom){
+    public List<HotelRoom> retrieveAvaliableRoomInfo(SearchRoom searchRoom){
         List<HotelRoom> allRooms=roomMapper.selectRoomsByHotelId(searchRoom.getHotelId());
         List<HotelRoom> availableRooms=new ArrayList<HotelRoom>();
         LocalDate CheckInDate = LocalDate.parse(searchRoom.getCheckInDate());
@@ -51,7 +51,8 @@ public class RoomServiceImpl implements RoomService {
             }
             avaliable = allRoom.getAvailableRoom().split(",");
             for (int j = beginNum; j <= endNum; j++) {
-                a = Integer.parseInt(avaliable[j - 1].substring(avaliable[j - 1].length() - 1));
+                String[] slice=avaliable[j - 1].split("\\*");
+                a = Integer.parseInt(slice[1]);
                 if (a == 0) {
                     b = 1;
                     break;
@@ -97,7 +98,8 @@ public class RoomServiceImpl implements RoomService {
         }else {
           days = endDate.getDayOfMonth() + beginDate.lengthOfMonth() - beginDate.getDayOfMonth();
         }
-        hotelRoom.setAlldays(days+1);
+        days++;
+        hotelRoom.setAlldays(days);
         String availableRoom = "";
         for (int i=1;i<days;i++){
             availableRoom += i + "*" + hotelRoom.getTotal() + ",";
