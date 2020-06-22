@@ -20,13 +20,16 @@
                 :columns="columns"
                 :dataSource="rooms"
             >
-
+                    <span slot="roomType" slot-scope="text">
+                        <span v-if="text == 'BigBed'">大床房</span>
+                        <span v-if="text == 'DoubleBed'">双床房</span>
+                        <span v-if="text == 'Family'">家庭房</span>
+                    </span>
                 <span slot="price" slot-scope="text">
                     <span>￥{{ text }}</span>
                 </span>
-                <span slot="action" slot-scope="record">
+                <span slot="action" slot-scope="record" v-if="userInfo.userType==='Client'">
                     <a-button type="primary" @click="order(record)" v-if="userInfo.userType==='Client'">预定</a-button>
-                    <a-button type="primary" @click="showModify(record)" v-if="userInfo.userType==='HotelManager' && currentHotelInfo.managerId===userInfo.id">修改房间信息</a-button>
                 </span>
             </a-table>
         </div>
@@ -44,16 +47,11 @@ import ChooseDate from "./chooseDate";
 const columns = [
     {  
       title: '房型',
-        filters: [{ text: '大床房', value: '大床房' }, { text: '双床房', value: '双床房' }, { text: '家庭房', value: '家庭房' }],
+        filters: [{ text: '大床房', value: 'BigBed' }, { text: '双床房', value: 'DoubleBed' }, { text: '家庭房', value: 'Family' }],
         onFilter: (value, record) => record.roomType.includes(value),
         sorter:(a,b)=>{return a.roomType.localeCompare(b.roomType)},
       dataIndex: 'roomType',
       key: 'roomType',
-    },
-    {
-      title: '床型',
-      dataIndex: 'bedType',
-      key: 'bedType',
     },
     {
       title: '房价',
@@ -86,9 +84,11 @@ export default {
         }
     },
     mounted() {
-        if(this.userInfo.userType==='Client') {
             this.set_chooseDateVisible(true)
-        }
+            this.set_checkIndate("")
+            console.log("rooms are" )
+            console.log(this.currentHotelInfo.rooms)
+            this.set_checkOutdate("")
     },
     components: {
         ChooseDate,
@@ -106,15 +106,15 @@ export default {
             'checkOutDate',
         ])
     },
-    monuted() {
-
-    },
     methods: {
         ...mapMutations([
             'set_orderModalVisible',
             'set_currentOrderRoom',
             'set_modifyRoomVisible',
-            'set_chooseDateVisible'
+            'set_chooseDateVisible',
+            'clear_rooms',
+            'set_checkIndate',
+            'set_checkOutdate'
         ]),
         ...mapActions([
 

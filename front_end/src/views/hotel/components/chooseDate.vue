@@ -73,7 +73,7 @@
                 // eslint-disable-next-line no-undef
                 message.warn("请务必填写入住日期，否则无法查看房间列表")
                 this.set_chooseDateVisible(false)
-                this.clear_rooms()
+                // this.clear_rooms()
             },
             handleSubmit(e) {
                 e.preventDefault();

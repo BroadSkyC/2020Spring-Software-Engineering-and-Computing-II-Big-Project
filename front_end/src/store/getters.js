@@ -21,6 +21,7 @@ const getters = {
   orderMatchCouponList: state => state.hotel.orderMatchCouponList,
   checkInDate:state=>state.hotel.checkInDate,
   checkOutDate:state=>state.hotel.checkOutDate,
+  allRooms:state=>state.hotel.allRooms,
   //admin
   managerList: state => state.admin.managerList,
   addManagerModalVisible: state => state.admin.addManagerModalVisible,

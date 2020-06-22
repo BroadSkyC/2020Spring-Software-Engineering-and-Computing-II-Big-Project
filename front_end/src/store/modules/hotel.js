@@ -24,6 +24,7 @@ const hotel = {
         },
         hotelListLoading: true,
         currentHotelId: '',
+        visitCount: 0,
         currentHotelInfo: {
 
         },
@@ -37,6 +38,7 @@ const hotel = {
         ],
         checkInDate:'',
         checkOutDate:'',
+        allRooms:[],
     },
     mutations: {
         set_hotelList: function(state, data) {
@@ -63,10 +65,17 @@ const hotel = {
         set_checkIndate: function(state, data) {
             state.checkInDate= data
         },
+        set_allRooms:function(state, data) {
+            state.allRooms= data
+        },
+        set_visitCount: function(state, data) {
+            state.visitCount= data
+        },
         set_checkOutdate: function(state, data) {
             state.checkOutDate= data
         },
         clear_rooms:function(state){
+            console.log("clear all")
             state.currentHotelInfo.rooms=[];
         },
         set_orderModalVisible: function(state, data) {
@@ -111,6 +120,11 @@ const hotel = {
             })
             if(res){
                 commit('set_currentHotelInfo', res)
+                if(state.visitCount===0) {
+                       commit('set_allRooms',state.currentHotelInfo.rooms)
+                       console.log(state.allRooms)
+                       commit('clear_rooms')
+                }
             }
         },
         addOrder: async({ state, commit }, data) => {
@@ -130,7 +144,7 @@ const hotel = {
         updateCurrentHotelInfo: async ({state, commit}, data) => {
             const res = await updateCurrentHotelInfoAPI(data)
             if (res) {
-                message.success('修改成功')
+                message.success('设置成功')
                 commit("set_chooseDateVisible",false)
                 commit('set_currentHotelInfo', res)
             } else {

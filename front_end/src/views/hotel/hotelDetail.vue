@@ -45,6 +45,9 @@
                     <a-tab-pane tab="房间信息" key="1">
                         <RoomList :rooms="currentHotelInfo.rooms"></RoomList>
                     </a-tab-pane>
+                    <a-tab-pane tab="全部房间" key="3" v-if="userInfo.userType==='HotelManager' && currentHotelInfo.managerId===userInfo.id ">
+                        <AllRoomInfo :rooms="allRooms"></AllRoomInfo>
+                    </a-tab-pane>
                     <a-tab-pane tab="酒店详情" key="2">
                         <div class="items" v-if="currentHotelInfo.description">
                             <span class="label">酒店简介:</span>
@@ -59,24 +62,31 @@
 <script>
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 import RoomList from './components/roomList'
+import AllRoomInfo from "./components/allRoomInfo";
 export default {
     name: 'hotelDetail',
     components: {
+        AllRoomInfo,
         RoomList,
     },
     data() {
         return {
-
+            count:0,
         }
     },
     computed: {
         ...mapGetters([
             'currentHotelInfo',
+            'allRooms',
+            'userInfo'
         ])
     },
     mounted() {
+        this.set_visitCount(this.count)
         this.set_currentHotelId(Number(this.$route.params.hotelId))
         this.getHotelById()
+        this.clear_rooms()
+        this.count++;
     },
     beforeRouteUpdate(to, from, next) {
         this.set_currentHotelId(Number(to.params.hotelId))
@@ -86,6 +96,8 @@ export default {
     methods: {
         ...mapMutations([
             'set_currentHotelId',
+            'set_visitCount',
+            'clear_rooms'
         ]),
         ...mapActions([
             'getHotelById'
