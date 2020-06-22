@@ -28,9 +28,9 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public List<HotelRoom> retrieveAvaliableRoomInfo(SearchRoom searchRoom){
+    public List<HotelRoom> retrieveAvailableRoomInfo(SearchRoom searchRoom){
         List<HotelRoom> allRooms=roomMapper.selectRoomsByHotelId(searchRoom.getHotelId());
-        List<HotelRoom> avaliableRooms=new ArrayList<HotelRoom>();
+        List<HotelRoom> availableRooms=new ArrayList<HotelRoom>();
         LocalDate CheckInDate = LocalDate.parse(searchRoom.getCheckInDate());
         LocalDate CheckOutDate = LocalDate.parse(searchRoom.getCheckOutDate());
         int beginNum,endNum;
@@ -49,7 +49,7 @@ public class RoomServiceImpl implements RoomService {
             } else {
                 endNum = CheckOutDate.getDayOfMonth() + beginDate.lengthOfMonth() - beginDate.getDayOfMonth();
             }
-            avaliable = allRoom.getAvaliableRoom().split(",");
+            avaliable = allRoom.getAvailableRoom().split(",");
             for (int j = beginNum; j <= endNum; j++) {
                 a = Integer.parseInt(avaliable[j - 1].substring(avaliable[j - 1].length() - 1));
                 if (a == 0) {
@@ -62,9 +62,9 @@ public class RoomServiceImpl implements RoomService {
                 break;
             }
             allRoom.setCurNum(mini);
-            avaliableRooms.add(allRoom);
+            availableRooms.add(allRoom);
         }
-        return avaliableRooms;
+        return availableRooms;
     }
     @Override
     public void insertRoomInfo(HotelRoom hotelRoom) {
@@ -103,7 +103,7 @@ public class RoomServiceImpl implements RoomService {
             availableRoom += i + "*" + hotelRoom.getTotal() + ",";
         }
         availableRoom += days+"*"+hotelRoom.getTotal();
-        hotelRoom.setAvaliableRoom(availableRoom);
+        hotelRoom.setAvailableRoom(availableRoom);
         hotelMapper.updateMinPrice(hotel_id, minPrice);
         hotelMapper.updateMaxPrice(hotel_id, maxPrice);
         roomMapper.insertRoom(hotelRoom);

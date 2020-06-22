@@ -19,7 +19,8 @@ public class HotelRoom {
     private String beginDate;
     private String endDate;
     private Integer alldays;
-    private String avaliableRoom;
+    private String availableRoom;
+
 
     public String getEndDate() {
         return endDate;
@@ -37,12 +38,13 @@ public class HotelRoom {
         this.alldays = alldays;
     }
 
-    public String getAvaliableRoom() {
-        return avaliableRoom;
+    public String getAvailableRoom() {
+        return availableRoom;
     }
 
-    public void setAvaliableRoom(String avaliableRoom) {
-        this.avaliableRoom = avaliableRoom;
+
+    public void setAvailableRoom(String availableRoom) {
+        this.availableRoom = availableRoom;
     }
 
     public String getBeginDate() {
