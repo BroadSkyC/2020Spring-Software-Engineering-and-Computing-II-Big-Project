@@ -51,7 +51,7 @@ public class RoomServiceImpl implements RoomService {
             }
             avaliable = allRoom.getAvailableRoom().split(",");
             if(endNum>avaliable.length){
-                break;
+                continue;
             }
             for (int j = beginNum; j <= endNum; j++) {
                 String[] slice=avaliable[j - 1].split("\\*");
