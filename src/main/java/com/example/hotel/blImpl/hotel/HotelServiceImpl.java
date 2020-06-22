@@ -16,8 +16,11 @@ import com.example.hotel.util.ServiceException;
 import com.example.hotel.vo.CouponVO;
 import com.example.hotel.vo.HotelVO;
 import com.example.hotel.vo.RoomVO;
+import com.example.hotel.vo.SearchRoom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -87,10 +90,29 @@ public class HotelServiceImpl implements HotelService {
         HotelO=HotelO.stream().filter(Hotel -> Hotel.getManagerId().equals(userId)).collect(Collectors.toList());
         return HotelO;
     }
+
     @Override
     public HotelVO retrieveHotelDetails(Integer hotelId) {
         HotelVO hotelVO = hotelMapper.selectById(hotelId);
         List<HotelRoom> rooms = roomService.retrieveHotelRoomInfo(hotelId);
+        List<RoomVO> roomVOS = rooms.stream().map(r -> {
+            RoomVO roomVO = new RoomVO();
+            roomVO.setId(r.getId());
+            roomVO.setPrice(r.getPrice());
+            roomVO.setRoomType(r.getRoomType().toString());
+            roomVO.setCurNum(r.getCurNum());
+            roomVO.setTotal(r.getTotal());
+            return roomVO;
+        }).collect(Collectors.toList());
+        hotelVO.setRooms(roomVOS);
+
+        return hotelVO;
+    }
+
+    @Override
+    public HotelVO retrieveHotelDetails_setDate(SearchRoom searchRoom) {
+        HotelVO hotelVO = hotelMapper.selectById(searchRoom.getHotelId());
+        List<HotelRoom> rooms = roomService.retrieveAvailableRoomInfo(searchRoom);
         List<RoomVO> roomVOS = rooms.stream().map(r -> {
             RoomVO roomVO = new RoomVO();
             roomVO.setId(r.getId());

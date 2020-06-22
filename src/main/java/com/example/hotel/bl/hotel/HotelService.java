@@ -5,6 +5,7 @@ import com.example.hotel.po.Order;
 import com.example.hotel.util.ServiceException;
 import com.example.hotel.vo.CouponVO;
 import com.example.hotel.vo.HotelVO;
+import com.example.hotel.vo.SearchRoom;
 
 import java.util.List;
 
@@ -52,4 +53,6 @@ public interface HotelService {
     void delHotel(HotelVO hotelVO);
 
     List<HotelVO> retrieveManagerHotels(Integer userId);
+
+    HotelVO retrieveHotelDetails_setDate(SearchRoom searchRoom);
 }
