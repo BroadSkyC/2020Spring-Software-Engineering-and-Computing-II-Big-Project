@@ -41,4 +41,8 @@ public interface RoomMapper {
     String getBeginDate(@Param("hotelId") Integer hotelId,
                         @Param("roomType") String roomType,
                         @Param("price") Double price);
+
+    int getTotalNum(@Param("id") Integer id);
+
+    int getCurNum(@Param("id") Integer id);
 }

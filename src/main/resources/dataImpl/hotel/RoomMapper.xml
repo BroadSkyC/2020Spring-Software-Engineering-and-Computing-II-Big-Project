@@ -40,6 +40,14 @@
         select beginDate from Room where hotel_id=#{hotelId} and roomType=#{roomType} and price=#{price}
     </select>
 
+    <select id="getTotalNum" resultType="int">
+        select total from Room where id=#{id}
+    </select>
+
+    <select id="getCurNum" resultType="int">
+        select curNum from Room where id=#{id}
+    </select>
+
     <resultMap id="room" type="com.example.hotel.po.HotelRoom">
         <id column="id" property="id"></id>
         <result column="roomType" property="roomType"></result>

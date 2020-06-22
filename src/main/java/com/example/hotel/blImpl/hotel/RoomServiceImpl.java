@@ -6,6 +6,7 @@ import com.example.hotel.data.hotel.HotelMapper;
 import com.example.hotel.data.hotel.RoomMapper;
 import com.example.hotel.po.HotelRoom;
 import com.example.hotel.vo.SearchRoom;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -72,6 +73,7 @@ public class RoomServiceImpl implements RoomService {
 
         return availableRooms;
     }
+
     @Override
     public void insertRoomInfo(HotelRoom hotelRoom) {
         List<HotelRoom> hotelRooms = retrieveHotelRoomInfo(hotelRoom.getHotelId());
@@ -129,13 +131,17 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public void modifyRoomInfo(HotelRoom hotelRoom) {
+        //get Origin total
+        int origin_total = roomMapper.getTotalNum(hotelRoom.getId());
+        //get Origin curNum
+        int origin_curNum = roomMapper.getCurNum(hotelRoom.getId());
         //update roomInfo
         roomMapper.modifyRoomInfo(hotelRoom.getId(),
                 hotelRoom.getHotelId(),
                 hotelRoom.getRoomType(),
                 hotelRoom.getPrice(),
                 hotelRoom.getTotal(),
-                hotelRoom.getCurNum());
+                origin_curNum+hotelRoom.getTotal()-origin_total);
         //update minPrice and maxPrice
         int hotel_id = hotelRoom.getHotelId();
         List<HotelRoom> hotelRooms = retrieveHotelRoomInfo(hotelRoom.getHotelId());
@@ -150,19 +156,32 @@ public class RoomServiceImpl implements RoomService {
                 maxPrice = room.getPrice();
             }
         }
+        //update availableRoom
+        String availableRoom = roomMapper.getAvailableRoom(hotel_id,hotelRoom.getRoomType().name(),hotelRoom.getPrice());
+        String rooms[] = availableRoom.split(",");
+        int diff = hotelRoom.getTotal()-origin_total;
+        availableRoom = "";
+        for (int i=0;i<rooms.length;i++){
+            if (i!=rooms.length-1){
+                availableRoom += rooms[i].split("\\*")[0] + "*" + (Integer.parseInt(rooms[i].split("\\*")[1]) + diff) + ",";
+            }else {
+                availableRoom += rooms[i].split("\\*")[0] + "*" + (Integer.parseInt(rooms[i].split("\\*")[1]) + diff);
+            }
+        }
+        roomMapper.updateAvailableRoom(hotel_id,hotelRoom.getRoomType().name(),hotelRoom.getPrice(),availableRoom);
+
         hotelMapper.updateMinPrice(hotel_id, minPrice); //update
         hotelMapper.updateMaxPrice(hotel_id, maxPrice);
-        /*roomMapper.modifyRoomInfo(hotelRoom.getId(),
-                hotelRoom.getHotelId(),
-                hotelRoom.getRoomType(),
-                hotelRoom.getPrice(),
-                hotelRoom.getTotal(),
-                hotelRoom.getCurNum());*/
     }
 
 
     @Override
     public void deleteRoom(HotelRoom hotelRoom){
         roomMapper.deleRoom(hotelRoom);
+    }
+
+    @Override
+    public int getTotalNum(Integer id){
+        return roomMapper.getTotalNum(id);
     }
 }

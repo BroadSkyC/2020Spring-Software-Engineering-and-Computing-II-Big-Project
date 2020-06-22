@@ -2,6 +2,7 @@ package com.example.hotel.bl.hotel;
 
 import com.example.hotel.po.HotelRoom;
 import com.example.hotel.vo.SearchRoom;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -40,4 +41,6 @@ public interface RoomService {
     void modifyRoomInfo(HotelRoom hotelRoom);
 
     void deleteRoom(HotelRoom hotelRoom);
+
+    int getTotalNum(Integer id);
 }
