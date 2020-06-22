@@ -38,6 +38,7 @@ public class RoomServiceImpl implements RoomService {
         String[] avaliable;
         int a=0,b=0,mini=Integer.MAX_VALUE;
         for (HotelRoom allRoom : allRooms) {
+            b=0;
             beginDate = LocalDate.parse(allRoom.getBeginDate());
             if (beginDate.getMonth() == CheckInDate.getMonth()) {
                 beginNum = CheckInDate.getDayOfMonth() - beginDate.getDayOfMonth() + 1;
@@ -63,7 +64,7 @@ public class RoomServiceImpl implements RoomService {
                 mini = Math.min(a, mini);
             }
             if (b == 1) {
-                break;
+                continue;
             }
             allRoom.setCurNum(mini);
             availableRooms.add(allRoom);
