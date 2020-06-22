@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -71,6 +72,44 @@ public class OrderServiceImpl implements OrderService {
                 BeanUtils.copyProperties(orderVO,order);
                 order.setRate(0.0);
                 order.setFeedback("");
+                //update availableRoom
+                LocalDate beginDate = LocalDate.parse(roomMapper.getBeginDate(orderVO.getHotelId(), orderVO.getRoomType(),orderVO.getRoomPrice()));
+                LocalDate checkin = LocalDate.parse(orderVO.getCheckInDate());
+                LocalDate checkout = LocalDate.parse(orderVO.getCheckOutDate());
+                String availableRoom = roomMapper.getAvailableRoom(orderVO.getHotelId(), orderVO.getRoomType(),orderVO.getRoomPrice());
+                String rooms[] = availableRoom.split(",");
+                int checkin_to_begin = (int)ChronoUnit.DAYS.between(beginDate,checkin);
+                int checkout_to_begin = (int)ChronoUnit.DAYS.between(beginDate,checkout);
+                String ordered_room[] = new String[checkout_to_begin-checkin_to_begin];
+                availableRoom = "";
+                for (int j=0;j<checkin_to_begin;j++){
+                    availableRoom += rooms[j] + ",";
+                }
+                for (int i=checkin_to_begin;i<checkout_to_begin;i++){
+                    String room = rooms[i];
+                    int num = Integer.parseInt(room.split("\\*")[1])-orderVO.getRoomNum();
+                    ordered_room[i-checkin_to_begin] = i + "*" + num;
+                    if (i!=checkout_to_begin-1){
+                        availableRoom += ordered_room[i-checkin_to_begin] + ",";
+                    }else{
+                        if (checkout_to_begin!=rooms.length-1){
+                            availableRoom += ordered_room[i-checkin_to_begin] + ",";
+                        }else {
+                            availableRoom += ordered_room[i-checkin_to_begin];
+                        }
+                    }
+                }
+                if (checkout_to_begin!=rooms.length-1){
+                    for (int k=checkout_to_begin;k<rooms.length;k++){
+                        if (k!=rooms.length-1){
+                            availableRoom += rooms[k] + ",";
+                        }else {
+                            availableRoom += rooms[k];
+                        }
+                    }
+                }
+                roomMapper.updateAvailableRoom(orderVO.getHotelId(),orderVO.getRoomType(),orderVO.getRoomPrice(),availableRoom);
+
                 orderMapper.addOrder(order);
                 hotelService.updateRoomInfo(orderVO.getHotelId(),orderVO.getRoomType(),orderVO.getRoomNum());
             } catch (Exception e) {
