@@ -67,6 +67,7 @@ public class HotelController {
         searchRoom.setHotelId(hotelId);
         searchRoom.setCheckInDate(checkInDate);
         searchRoom.setCheckOutDate(checkOutDate);
+        //HotelVO hotelVO= hotelService.retrieveHotelDetails_setDate(searchRoom);
         return ResponseVO.buildSuccess(hotelService.retrieveHotelDetails_setDate(searchRoom));
     }
 }
