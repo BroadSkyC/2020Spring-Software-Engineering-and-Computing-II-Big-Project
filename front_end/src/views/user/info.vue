@@ -39,7 +39,8 @@
                         <span v-else>{{ userInfo.phoneNumber}}</span>
                     </a-form-item>
                     <a-form-item label="信用值" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }">
-                    <span>{{ userInfo.credit }}</span>
+                    <span>{{ userInfo.credit }} </span>
+                        <a-button type="default" @click="showCreditRecord">查看记录</a-button>
                 </a-form-item>
                     <a-form-item label="密码" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }" v-if="modify">
                         <a-input
@@ -123,6 +124,7 @@
         <RegisterVip></RegisterVip>
         <ViewOrder></ViewOrder>
         <Comment></Comment>
+        <CreditRecord></CreditRecord>
     </div>
 </template>
 <script>
@@ -131,6 +133,7 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
 import RegisterVip from './components/RegisterVip'
 import ViewOrder from "./components/viewOrder";
 import Comment from "./components/comment";
+import CreditRecord from "./components/creditRecord";
 import { client, put, remove } from '../../utils/client';
 const columns = [
     {  
@@ -206,6 +209,7 @@ export default {
         }
     },
     components: {
+        CreditRecord,
         Comment,
         ViewOrder,
         RegisterVip
@@ -214,7 +218,8 @@ export default {
         ...mapGetters([
             'userId',
             'userInfo',
-            'userOrderList'
+            'userOrderList',
+            'userCreditRecord',
         ])
     },
     async mounted() {
@@ -226,11 +231,13 @@ export default {
             'set_RegisterVipVisible',
             'set_viewOrderVisible',
             'set_commentVisible',
-            'set_currentOrder'
+            'set_currentOrder',
+            'set_creditRecordVisible',
         ]),
         ...mapActions([
             'getUserInfo',
             'getUserOrders',
+            'getUserCreditRecord',
             'updateUserInfo',
             'cancelOrder'
         ]),
@@ -262,6 +269,9 @@ export default {
                 })
             }, 0)
             this.modify = true
+        },
+        showCreditRecord(){
+            this.set_creditRecordVisible(true)
         },
         showRegisterVip(){
             if(this.userInfo.credit>=100) {

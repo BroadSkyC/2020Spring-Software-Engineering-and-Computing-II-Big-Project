@@ -1,7 +1,10 @@
 package com.example.hotel.blImpl.user;
 
+import com.example.hotel.bl.order.OrderService;
 import com.example.hotel.bl.user.AccountService;
 import com.example.hotel.data.user.AccountMapper;
+import com.example.hotel.po.CreditRecord;
+import com.example.hotel.po.Order;
 import com.example.hotel.po.User;
 import com.example.hotel.vo.UserForm;
 import com.example.hotel.vo.ResponseVO;
@@ -10,6 +13,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -17,6 +23,7 @@ public class AccountServiceImpl implements AccountService {
     private final static String UPDATE_ERROR = "修改失败";
     @Autowired
     private AccountMapper accountMapper;
+    private OrderService orderService;
 
     @Override
     public ResponseVO registerAccount(UserVO userVO) {
@@ -47,6 +54,28 @@ public class AccountServiceImpl implements AccountService {
             return null;
         }
         return user;
+    }
+
+    @Override
+    public List<CreditRecord> getUserCreditRecord(Integer userId){
+        List<Order> UserOrders= orderService.getUserOrders(userId);
+        List<Order> finishedOrders=new ArrayList<>();
+        for(int i=0;i>UserOrders.size();i++){
+            if(UserOrders.get(i).getOrderState()=="已完成"||UserOrders.get(i).getOrderState()=="已撤销")
+                finishedOrders.add(UserOrders.get(i));
+        }
+        List<CreditRecord> creditRecords=new ArrayList<>();
+        for(int i=0;i<finishedOrders.size();i++){
+            CreditRecord cr=new CreditRecord();
+            cr.setId(i);
+            cr.setOrderId(finishedOrders.get(i).getId());
+            cr.setAction(finishedOrders.get(i).getOrderState().substring(1,-1));
+            cr.setUserId(finishedOrders.get(i).getUserId());
+            cr.setCreditChange(finishedOrders.get(i).getCreditChange());
+            cr.setCurrentCredit(finishedOrders.get(i).getUserCredit());
+            creditRecords.add(cr);
+        }
+        return creditRecords;
     }
 
     @Override

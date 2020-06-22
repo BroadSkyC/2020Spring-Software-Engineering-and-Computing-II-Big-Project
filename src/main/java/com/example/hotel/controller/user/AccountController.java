@@ -45,6 +45,13 @@ public class AccountController {
         return ResponseVO.buildSuccess(user);
     }
 
+
+    @GetMapping("/{id}/getUserCreditRecord")
+    public ResponseVO getUserCreditRecord(@PathVariable int userId) {
+        return ResponseVO.buildSuccess(accountService.getUserCreditRecord(userId));
+    }
+
+
     @PostMapping("/{id}/userInfo/update")
     public ResponseVO updateInfo(@RequestBody UserInfoVO userInfoVO,@PathVariable int id){
             if(userInfoVO.getImgUrl()=="") userInfoVO.setImgUrl("https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.jpg");

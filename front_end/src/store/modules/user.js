@@ -9,7 +9,8 @@ import {
     getUserInfoAPI,
     updateUserInfoAPI,
     addCommonVipAPI,
-    addCompanyVipAPI
+    addCompanyVipAPI,
+    getUserCreditRecordAPI,
 } from '@/api/user'
 
 import {
@@ -26,10 +27,14 @@ const getDefaultState = () => {
         userOrderList: [
 
         ],
+        userCreditRecord:[
+
+        ],
         registerVipVisible:false,
         viewOrderVisible:false,
         commentVisible:false,
-        filterVisible:false
+        filterVisible:false,
+        creditRecordVisible:false,
     }
 }
 
@@ -43,7 +48,8 @@ const user = {
             state.userInfo = {
                 
             },
-            state.userOrderList = []
+            state.userOrderList = [],
+            state.userCreditRecord=[]
         },
         set_token: function(state, token){
             state.token = token
@@ -63,6 +69,9 @@ const user = {
         set_userOrderList: (state, data) => {
             state.userOrderList = data
         },
+        set_userCreditRecord: (state, data) => {
+            state.userCreditRecord = data
+        },
         set_RegisterVipVisible: function(state, data) {
             state.registerVipVisible = data
         },
@@ -71,6 +80,9 @@ const user = {
         },
         set_commentVisible: function (state,data) {
             state.commentVisible=data
+        },
+        set_creditRecordVisible: function (state,data) {
+            state.creditRecordVisible=data
         },
         set_filterVisible: function (state,data) {
             state.filterVisible=data
@@ -160,7 +172,15 @@ const user = {
             const res = await getUserOrdersAPI(data)
             if(res){
                 commit('set_userOrderList', res)
-                console.log(state.userOrderList)
+            }
+        },
+        getUserCreditRecord:async({ state, commit }) => {
+            const data = {
+                userId: Number(state.userId)
+            }
+            const res = await getUserCreditRecordAPI(data)
+            if(res){
+                commit('set_userCreditRecord', res)
             }
         },
         cancelOrder: async({ state, dispatch }, orderId) => {

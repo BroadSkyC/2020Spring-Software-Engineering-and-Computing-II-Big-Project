@@ -25,6 +25,8 @@ public class OrderVO {
     private Double roomPrice;
     private Double rate;
     private String feedback;
+    private Integer creditChange;
+    private Integer userCredit;
 
     public Integer getId() {
         return id;
@@ -156,4 +158,12 @@ public class OrderVO {
     public void setFeedback(String feedback){this.feedback=feedback;}
 
     public String getFeedback(){return this.feedback;}
+
+    public void setCreditChange(Integer creditChange){this.creditChange=creditChange;}
+
+    public Integer getCreditChange(){return this.creditChange;}
+
+    public void setUserCredit(Integer userCredit){this.userCredit=userCredit;}
+
+    public Integer getUserCredit(){return this.userCredit;}
 }

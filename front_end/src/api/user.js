@@ -23,6 +23,12 @@ export function getUserInfoAPI(id){
         method: 'GET'
     })
 }
+export function getUserCreditRecordAPI(id){
+    return axios({
+        url:`${api.userPre}/${id}/getUserCreditRecord`,
+        method: 'GET',
+    })
+}
 export function updateUserInfoAPI(data) {
     return axios({
         url: `${api.userPre}/${data.id}/userInfo/update`,

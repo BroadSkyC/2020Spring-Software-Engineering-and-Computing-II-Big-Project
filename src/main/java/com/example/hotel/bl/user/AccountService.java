@@ -1,7 +1,9 @@
 package com.example.hotel.bl.user;
 
+import com.example.hotel.po.CreditRecord;
 import com.example.hotel.po.User;
 import com.example.hotel.vo.*;
+import java.util.List;
 
 /**
  * @author huwen
@@ -29,6 +31,8 @@ public interface AccountService {
      * @return
      */
     User getUserInfo(int id);
+
+    List<CreditRecord> getUserCreditRecord(Integer userId);
 
     /**
      * 更新用户个人信息
