@@ -51,7 +51,7 @@ public class RoomServiceImpl implements RoomService {
                 endNum = CheckOutDate.getDayOfMonth() + beginDate.lengthOfMonth() - beginDate.getDayOfMonth();
             }
             avaliable = allRoom.getAvailableRoom().split(",");
-            if(endNum>avaliable.length){
+            if(endNum>avaliable.length||beginNum<1){
                 continue;
             }
             for (int j = beginNum; j <= endNum; j++) {
