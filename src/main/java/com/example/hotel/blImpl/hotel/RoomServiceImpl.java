@@ -50,6 +50,9 @@ public class RoomServiceImpl implements RoomService {
                 endNum = CheckOutDate.getDayOfMonth() + beginDate.lengthOfMonth() - beginDate.getDayOfMonth();
             }
             avaliable = allRoom.getAvailableRoom().split(",");
+            if(endNum>avaliable.length){
+                break;
+            }
             for (int j = beginNum; j <= endNum; j++) {
                 String[] slice=avaliable[j - 1].split("\\*");
                 a = Integer.parseInt(slice[1]);
@@ -65,6 +68,7 @@ public class RoomServiceImpl implements RoomService {
             allRoom.setCurNum(mini);
             availableRooms.add(allRoom);
         }
+
         return availableRooms;
     }
     @Override
