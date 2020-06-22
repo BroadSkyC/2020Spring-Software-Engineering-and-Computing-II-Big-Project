@@ -132,7 +132,7 @@ const hotel = {
             if (res) {
                 message.success('修改成功')
                 commit("set_chooseDateVisible",false)
-                commit('set_currentHotelInfoRooms', res)
+                commit('set_currentHotelInfo', res)
             } else {
                 message.error('修改失败')
             }
