@@ -28,7 +28,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public List<HotelRoom> retrieveAvaliableRoomInfo(SearchRoom searchRoom){
+    public List<HotelRoom> retrieveAvailableRoomInfo(SearchRoom searchRoom){
         List<HotelRoom> allRooms=roomMapper.selectRoomsByHotelId(searchRoom.getHotelId());
         List<HotelRoom> availableRooms=new ArrayList<HotelRoom>();
         LocalDate CheckInDate = LocalDate.parse(searchRoom.getCheckInDate());

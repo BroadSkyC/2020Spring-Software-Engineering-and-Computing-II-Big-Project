@@ -14,7 +14,7 @@ public interface RoomService {
      */
     List<HotelRoom> retrieveHotelRoomInfo(Integer hotelId);
 
-    List<HotelRoom> retrieveAvaliableRoomInfo(SearchRoom searchRoom);
+    List<HotelRoom> retrieveAvailableRoomInfo(SearchRoom searchRoom);
     /**
      * 添加酒店客房信息
      * @param hotelRoom
