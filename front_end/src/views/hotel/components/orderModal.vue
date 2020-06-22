@@ -40,10 +40,10 @@
 <!--                    ]"-->
 <!--                    :placeholder="['入住日期','退房日期']"-->
 <!--                />-->
-                <span>{{ currentHotelInfo.checkInDate }}</span>
+                <span>{{ checkInDate }}</span>
             </a-form-item>
             <a-form-item v-bind="formItemLayout" label="退房日期">
-                <span>{{ currentHotelInfo.checkOutDate }}</span>
+                <span>{{ checkOutDate }}</span>
             </a-form-item>
             <a-form-item v-bind="formItemLayout" label="入住人数">
                 <a-select
@@ -185,7 +185,9 @@ export default {
             'currentHotelId',
             'currentHotelInfo',
             'userId',
-            'orderMatchCouponList'
+            'orderMatchCouponList',
+            'checkInDate',
+            'checkOutDate'
         ]),
         
     },
@@ -269,8 +271,8 @@ export default {
                         hotelId: this.currentHotelId,
                         hotelName: this.currentHotelInfo.name,
                         userId: Number(this.userId),
-                        checkInDate:this.currentHotelInfo.checkInDate,
-                        checkOutDate: this.currentHotelInfo.checkOutDate,
+                        checkInDate:this.checkInDate,
+                        checkOutDate: this.checkOutDate,
                         // checkInDate: moment(this.form.getFieldValue('date')[0]).format('YYYY-MM-DD'),
                         // checkOutDate: moment(this.form.getFieldValue('date')[1]).format('YYYY-MM-DD'),
                         roomType: this.currentOrderRoom.roomType == '大床房' ? 'BigBed' : this.currentOrderRoom.roomType == '双床房' ? 'DoubleBed' : 'Family',
@@ -293,8 +295,8 @@ export default {
                 hotelId: this.currentHotelId,
                 orderPrice: this.totalPrice,
                 roomNum: this.form.getFieldValue('roomNum'),
-                checkIn: this.currentHotelInfo.checkInDate,
-                checkOut: this.currentHotelInfo.checkOutDate,
+                checkIn: this.checkInDate,
+                checkOut: this.checkOutDate,
                 // checkIn: moment(this.form.getFieldValue('date')[0]).format('YYYY-MM-DD'),
                 // checkOut: moment(this.form.getFieldValue('date')[1]).format('YYYY-MM-DD'),
             }
