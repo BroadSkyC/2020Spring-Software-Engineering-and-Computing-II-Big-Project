@@ -99,6 +99,8 @@ export default {
                         hotelId: this.activeHotelId,
                         beginDate: (this.form.getFieldValue('date')[0]).format('YYYY-MM-DD'),
                         endDate: (this.form.getFieldValue('date')[1]).format('YYYY-MM-DD'),
+                        alldays:0,
+                        availableRoom:""
                     }
                     console.log(data.beginDate)
                     console.log(data.endDate)

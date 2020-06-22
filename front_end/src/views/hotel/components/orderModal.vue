@@ -220,7 +220,7 @@ export default {
 
         },
         changeRoomNum(v) {
-            this.totalPrice = Number(v) * Number(this.currentOrderRoom.price) * moment(this.form.getFieldValue('date')[1]).diff(moment(this.form.getFieldValue('date')[0]),'day')
+            this.totalPrice = Number(v) * Number(this.currentOrderRoom.price) * moment(this.checkInDate).diff(moment(this.checkOutDate),'day')
             this.finalPrice = this.totalPrice;
             this.finalPrice = this.finalPrice.toFixed(2)
             this.roomNum =  v
