@@ -53,6 +53,8 @@ const hotelManager = {
             price: '',
             total: 0,
             curNum: 0,
+            beginDate:'',
+            endDate:'',
         },
         updateRoomParams:{
             roomType: '',
@@ -212,6 +214,8 @@ const hotelManager = {
                     price: '',
                     total: 0,
                     curNum: 0,
+                    beginDate:'',
+                    endDate:'',
                 })
                 message.success('添加成功')
             } else {

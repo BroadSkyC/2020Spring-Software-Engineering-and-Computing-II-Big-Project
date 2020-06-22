@@ -31,6 +31,18 @@
                     v-decorator="['price', { rules: [{ required: true, message: '请输入原始价格' }] }]"
                 />
             </a-form-item>
+            <a-form-item v-bind="formItemLayout" label="可用日期">
+                <a-range-picker
+                        format="YYYY-MM-DD"
+                        v-decorator="[
+                        'date',
+                        {
+                            rules: [{ required: true, message: '请选择入住时间' }]
+                        }
+                    ]"
+                        :placeholder="['开始日期','结束日期']"
+                />
+            </a-form-item>
         </a-form>
     </a-modal>
 </template>
@@ -55,7 +67,7 @@ export default {
     computed: {
         ...mapGetters([
             'addRoomModalVisible',
-            'activeHotelId'
+            'activeHotelId',
         ])
     },
     beforeCreate() {
@@ -85,7 +97,11 @@ export default {
                         total: Number(this.form.getFieldValue('roomNum')),
                         curNum: Number(this.form.getFieldValue('roomNum')),
                         hotelId: this.activeHotelId,
+                        beginDate: (this.form.getFieldValue('date')[0]).format('YYYY-MM-DD'),
+                        endDate: (this.form.getFieldValue('date')[1]).format('YYYY-MM-DD'),
                     }
+                    console.log(data.beginDate)
+                    console.log(data.endDate)
                     this.set_addRoomParams(data)
                     this.addRoom()
                 }
