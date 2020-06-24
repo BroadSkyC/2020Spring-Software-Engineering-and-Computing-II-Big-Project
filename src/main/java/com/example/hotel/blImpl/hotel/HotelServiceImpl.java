@@ -70,8 +70,8 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
-    public void updateRoomInfo(Integer hotelId, String roomType, Integer rooms) {
-        roomService.updateRoomInfo(hotelId,roomType,rooms);
+    public void updateRoomInfo(Integer hotelId, String roomType, Integer rooms,Double price) {
+        roomService.updateRoomInfo(hotelId,roomType,rooms,price);
     }
 
     @Override

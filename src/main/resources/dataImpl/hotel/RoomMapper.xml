@@ -13,7 +13,7 @@
     </select>
 
     <update id="updateRoomInfo">
-        update Room set curNum=curNum-#{curNum} where hotel_id=#{hotelId} and roomType=#{roomType}
+        update Room set curNum=curNum-#{curNum} where hotel_id=#{hotelId} and roomType=#{roomType} and price=#{price}
     </update>
 
     <select id="getRoomCurNum" resultType="int">

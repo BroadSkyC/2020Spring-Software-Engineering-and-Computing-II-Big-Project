@@ -5,7 +5,8 @@ import com.example.hotel.bl.order.OrderService;
 import com.example.hotel.bl.user.AccountService;
 import com.example.hotel.data.hotel.RoomMapper;
 import com.example.hotel.data.order.OrderMapper;
-import com.example.hotel.enums.RoomType;
+import com.example.hotel.data.user.AccountMapper;
+import com.example.hotel.blImpl.order.updateAvailable;
 import com.example.hotel.po.Hotel;
 import com.example.hotel.po.Order;
 import com.example.hotel.po.User;
@@ -43,6 +44,10 @@ public class OrderServiceImpl implements OrderService {
     OrderService orderService;
     @Autowired
     RoomMapper roomMapper;
+    @Autowired
+    AccountMapper accountMapper;
+
+    updateAvailable updateAvailable;
     @Override
     public ResponseVO addOrder(OrderVO orderVO) {
         int reserveRoomNum = orderVO.getRoomNum();
@@ -73,7 +78,7 @@ public class OrderServiceImpl implements OrderService {
                 order.setRate(0.0);
                 order.setFeedback("");
                 //update availableRoom
-                LocalDate beginDate = LocalDate.parse(roomMapper.getBeginDate(orderVO.getHotelId(), orderVO.getRoomType(),orderVO.getRoomPrice()));
+                /*LocalDate beginDate = LocalDate.parse(roomMapper.getBeginDate(orderVO.getHotelId(), orderVO.getRoomType(),orderVO.getRoomPrice()));
                 LocalDate checkin = LocalDate.parse(orderVO.getCheckInDate());
                 LocalDate checkout = LocalDate.parse(orderVO.getCheckOutDate());
                 String availableRoom = roomMapper.getAvailableRoom(orderVO.getHotelId(), orderVO.getRoomType(),orderVO.getRoomPrice());
@@ -108,10 +113,10 @@ public class OrderServiceImpl implements OrderService {
                         }
                     }
                 }
-                roomMapper.updateAvailableRoom(orderVO.getHotelId(),orderVO.getRoomType(),orderVO.getRoomPrice(),availableRoom);
-
+                roomMapper.updateAvailableRoom(orderVO.getHotelId(),orderVO.getRoomType(),orderVO.getRoomPrice(),availableRoom);*/
+                updateAvailable.update(orderVO,true);
                 orderMapper.addOrder(order);
-                hotelService.updateRoomInfo(orderVO.getHotelId(),orderVO.getRoomType(),orderVO.getRoomNum());
+                hotelService.updateRoomInfo(orderVO.getHotelId(),orderVO.getRoomType(),orderVO.getRoomNum(),orderVO.getRoomPrice());
             } catch (Exception e) {
                 System.out.println(e.getMessage());
                 return ResponseVO.buildFailure(RESERVE_ERROR);
@@ -136,7 +141,51 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ResponseVO annulOrder(int orderid) {
         //取消订单逻辑的具体实现（注意可能有和别的业务类之间的交互）
+        Order order = orderMapper.getOrderById(orderid);
+/*        LocalDate beginDate = LocalDate.parse(roomMapper.getBeginDate(order.getHotelId(),order.getRoomType(),order.getRoomPrice()));
+        LocalDate checkin = LocalDate.parse(order.getCheckInDate());
+        LocalDate checkout = LocalDate.parse(order.getCheckOutDate());
+        int checkin_to_begin = (int)ChronoUnit.DAYS.between(beginDate,checkin);
+        int checkout_to_begin = (int)ChronoUnit.DAYS.between(beginDate,checkout);
+        String availableRoom = roomMapper.getAvailableRoom(order.getHotelId(), order.getRoomType(),order.getRoomPrice());
+        String rooms[] = availableRoom.split(",");
+        String ordered_room[] = new String[checkout_to_begin-checkin_to_begin];
+        availableRoom = "";
+        for (int j=0;j<checkin_to_begin;j++){
+            availableRoom += rooms[j] + ",";
+        }
+        for (int i=checkin_to_begin;i<checkout_to_begin;i++){
+            String room = rooms[i];
+            int num = Integer.parseInt(room.split("\\*")[1])+order.getRoomNum();
+            ordered_room[i-checkin_to_begin] = i + "*" + num;
+            if (i!=checkout_to_begin-1){
+                availableRoom += ordered_room[i-checkin_to_begin] + ",";
+            }else{
+                if (checkout_to_begin!=rooms.length-1){
+                    availableRoom += ordered_room[i-checkin_to_begin] + ",";
+                }else {
+                    availableRoom += ordered_room[i-checkin_to_begin];
+                }
+            }
+        }
+        if (checkout_to_begin!=rooms.length-1){
+            for (int k=checkout_to_begin;k<rooms.length;k++){
+                if (k!=rooms.length-1){
+                    availableRoom += rooms[k] + ",";
+                }else {
+                    availableRoom += rooms[k];
+                }
+            }
+        }*/
+        LocalDate checkin = LocalDate.parse(order.getCheckInDate());
+        LocalDate checkout = LocalDate.parse(order.getCheckOutDate());
+        LocalDate today = LocalDate.now();
+        int diff = (int)ChronoUnit.DAYS.between(today,checkin);
+        accountMapper.updateUserCredit(order.getUserId(),-diff);
+        //roomMapper.updateAvailableRoom(order.getHotelId(),order.getRoomType(),order.getRoomPrice(),availableRoom);
         orderMapper.annulOrder(orderid);
+        updateAvailable.update(order,false);
+        hotelService.updateRoomInfo(order.getHotelId(),order.getRoomType(),order.getRoomNum(),order.getRoomPrice()*(-1));
         return ResponseVO.buildSuccess(true);
     }
 
@@ -166,6 +215,7 @@ public class OrderServiceImpl implements OrderService {
         }
         return all;
     }
+
     @Override
     public ResponseVO delOrder(OrderVO orderVO){
         Order order=new Order();
@@ -196,8 +246,14 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ResponseVO updateOrderState(OrderVO orderVO){
         Order order=new Order();
+        String state = orderVO.getOrderState();
         BeanUtils.copyProperties(orderVO,order);
         orderMapper.updateOrderState(order);
+        if(state.equals("已完成")){
+            hotelService.updateRoomInfo(order.getHotelId(),order.getRoomType(),order.getRoomNum(),order.getRoomPrice()*(-1));
+            updateAvailable.update(order, false);
+            accountMapper.updateUserCredit(order.getUserId(),Integer.parseInt(order.getPrice().toString()));
+        }
         return ResponseVO.buildSuccess(true);
     }
 

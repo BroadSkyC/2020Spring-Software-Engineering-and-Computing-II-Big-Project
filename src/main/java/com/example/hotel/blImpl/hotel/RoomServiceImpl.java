@@ -123,8 +123,8 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public void updateRoomInfo(Integer hotelId, String roomType, Integer rooms) {
-        roomMapper.updateRoomInfo(hotelId,roomType,rooms);
+    public void updateRoomInfo(Integer hotelId, String roomType, Integer rooms, Double price) {
+        roomMapper.updateRoomInfo(hotelId,roomType,rooms,price);
     }
 
     @Override

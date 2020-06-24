@@ -25,7 +25,7 @@ public interface HotelService {
      * @param roomType
      * @param rooms
      */
-    void updateRoomInfo(Integer hotelId, String roomType,Integer rooms);
+    void updateRoomInfo(Integer hotelId, String roomType,Integer rooms, Double price);
 
     /**
      * 列表获取酒店信息
