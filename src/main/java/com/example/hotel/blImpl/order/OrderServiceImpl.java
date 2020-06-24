@@ -178,7 +178,10 @@ public class OrderServiceImpl implements OrderService {
         LocalDate checkout = LocalDate.parse(order.getCheckOutDate());
         LocalDate today = LocalDate.now();
         int diff = (int)ChronoUnit.DAYS.between(today,checkin);
-        accountMapper.updateUserCredit(order.getUserId(),-diff);
+        if (diff>2){
+            accountMapper.updateUserCredit(order.getUserId(),(int)(-order.getPrice()*0.3));
+        }
+        //accountMapper.updateUserCredit(order.getUserId(),-diff);
         //roomMapper.updateAvailableRoom(order.getHotelId(),order.getRoomType(),order.getRoomPrice(),availableRoom);
         orderMapper.annulOrder(orderid);
         this.update(order,false);
