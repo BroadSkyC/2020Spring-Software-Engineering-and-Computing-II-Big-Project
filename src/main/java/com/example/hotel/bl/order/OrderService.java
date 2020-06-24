@@ -72,5 +72,8 @@ public interface OrderService {
     ResponseVO updateOrderState(OrderVO orderVO);
 
 
+    void update(Order order, boolean flag);
+
+    void update(OrderVO order, boolean flag);
 
 }

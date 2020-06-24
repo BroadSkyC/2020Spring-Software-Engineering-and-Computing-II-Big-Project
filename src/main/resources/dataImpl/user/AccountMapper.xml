@@ -27,7 +27,7 @@
     </update>
 
     <update id="updateUserCredit">
-        update User set credit+=#{credit} where id=#{id}
+        update User set credit=credit+#{credit} where id=#{id}
     </update>
 
     <resultMap id="User" type="com.example.hotel.po.User">

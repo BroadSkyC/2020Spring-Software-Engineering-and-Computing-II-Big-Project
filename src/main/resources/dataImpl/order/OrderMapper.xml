@@ -13,7 +13,7 @@
         values(#{userId},#{hotelId},#{hotelName},#{checkInDate},#{checkOutDate},#{roomType},#{roomNum},#{peopleNum},#{haveChild},#{createDate},#{price},#{clientName},#{phoneNumber},#{orderState},#{roomPrice},#{rate},#{feedback},#{creditChange},#{userCredit})
     </insert>
     <select id="getOrderById" resultMap="Order">
-        select * from OrderList where id=#{id}
+        select * from OrderList where id=#{orderid}
     </select>
    <!--取消订单的数据库操作-->
     <update id="annulOrder">
