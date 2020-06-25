@@ -10,6 +10,11 @@
                     :dataSource="hotelList"
                     bordered
                 >
+                     <span slot="hotelStar" slot-scope="text">
+                        <span v-if="text === 'Three'">三星级</span>
+                        <span v-if="text === 'Four'">四星级</span>
+                        <span v-if="text === 'Five'">五星级</span>
+                    </span>
                     <span slot="action" slot-scope="record">
                         <a-button type="primary" size="small" @click="addRoom(record)">录入房间</a-button>
                         <a-divider type="vertical"></a-divider>
@@ -25,6 +30,8 @@
                         </a-popconfirm>
                         <a-divider type="vertical"></a-divider>
                         <a-button type="info" size="small" @click="showReceptionist(record)">酒店前台</a-button>
+                        <a-divider type="vertical"></a-divider>
+                        <a-button type="primary" size="small" @click="jumpToDetails(record.id)">管理房间</a-button>
                     </span>
                 </a-table>
             </a-tab-pane>
@@ -37,6 +44,9 @@
                     <span slot="price" slot-scope="text">
                         <span>￥{{ text }}</span>
                     </span>
+                    <a-tag slot="orderState" color="blue" slot-scope="text">
+                        {{ text }}
+                    </a-tag>
                     <span slot="roomType" slot-scope="text">
                         <span v-if="text == 'BigBed'">大床房</span>
                         <span v-if="text == 'DoubleBed'">双床房</span>
@@ -52,7 +62,7 @@
                             <a-button type="danger" size="small">删除订单</a-button>
                         </a-popconfirm>
                         <a-divider type="vertical"></a-divider>
-                        <a-button type="primary" size="small" @click="showOrder(record)">订单详情</a-button>
+                        <a-button  size="small" @click="showOrder(record)">订单详情</a-button>
                         <a-divider type="vertical"></a-divider>
                         <a-button type="primary" size="small" @click="showchangeState(record)">更改状态</a-button>
                     </span>
@@ -78,24 +88,35 @@ import ChangeState from './components/changeState'
 import Receptionist from "./components/Receptionist";
 const moment = require('moment')
 const columns1 = [
-    {  
+    {
+        title: '酒店ID',
+        sorter:(a,b)=>a.id-b.id,
+        dataIndex: 'id',
+    },
+    {
         title: '酒店名',
+        sorter:(a,b)=>{return a.name.localeCompare(b.name)},
         dataIndex: 'name',
     },
     {
         title: '商圈',
+        sorter:(a,b)=>{return a.bizRegion.localeCompare(b.bizRegion)},
         dataIndex: 'bizRegion',
     },
     {
         title: '地址',
+        sorter:(a,b)=>{return a.address.localeCompare(b.address)},
         dataIndex: 'address',
     },
     {
         title: '酒店星级',
+        filters: [{ text: '三星级', value: 'Three' }, { text: '四星级', value: 'Four' }, { text: '五星级', value: 'Five' }],
+        onFilter: (value, record) => record.hotelStar.includes(value),
         dataIndex: 'hotelStar'
     },
     {
         title: '评分',
+        sorter:(a,b)=>a.rate-b.rate,
         dataIndex: 'rate',
     },
     {
@@ -249,6 +270,9 @@ export default {
             this.set_currentOrder(record)
             this.set_updateOrderStateVisible(true)
         },
+        jumpToDetails(id){
+            this.$router.push({ name: 'hotelDetail', params: { hotelId: id }})
+        }
     }
 }
 </script>

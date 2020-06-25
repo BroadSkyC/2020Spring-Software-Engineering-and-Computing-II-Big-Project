@@ -42,11 +42,11 @@
                 </div>
                 <a-divider></a-divider>
                 <a-tabs>
-                    <a-tab-pane tab="房间信息" key="1">
-                        <RoomList :rooms="currentHotelInfo.rooms"></RoomList>
-                    </a-tab-pane>
                     <a-tab-pane tab="全部房间" key="3" v-if="userInfo.userType==='HotelManager' && currentHotelInfo.managerId===userInfo.id ">
                         <AllRoomInfo :rooms="allRooms"></AllRoomInfo>
+                    </a-tab-pane>
+                    <a-tab-pane tab="房间信息" key="1">
+                        <RoomList :rooms="currentHotelInfo.rooms"></RoomList>
                     </a-tab-pane>
                     <a-tab-pane tab="酒店详情" key="2">
                         <div class="items" v-if="currentHotelInfo.description">
