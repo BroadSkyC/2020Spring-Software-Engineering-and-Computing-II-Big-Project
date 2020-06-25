@@ -80,24 +80,9 @@
                 </a-radio-group>
             </a-form-item>
             <a-form-item v-bind="formItemLayout" label="房间数">
-                <a-select
-                    v-decorator="[
-                        'roomNum',
-                        { rules: [{ required: true, message: '请选择房间数' }] },
-                    ]"
-                    placeholder="请选择房间数"
-                    @change="changeRoomNum"
-                >
-                    <a-select-option :value="1">
-                    1
-                    </a-select-option>
-                    <a-select-option :value="2">
-                    2
-                    </a-select-option>
-                     <a-select-option :value="3">
-                    3
-                    </a-select-option>
-                </a-select>
+                <a-button type="primary" size="small" shape="circle" icon="minus"></a-button>
+                <span>{{roomNums}}</span>
+                <a-button type="primary" size="small" shape="circle" icon="plus"></a-button>
             </a-form-item>
             <a-form-item v-bind="formItemLayout" label="房间单价">
                 <span>{{ currentOrderRoom.price }}</span>
@@ -187,7 +172,8 @@ export default {
             'userId',
             'orderMatchCouponList',
             'checkInDate',
-            'checkOutDate'
+            'checkOutDate',
+            'roomNums',
         ]),
         
     },
@@ -196,7 +182,10 @@ export default {
     },
     methods: {
         ...mapMutations([
-            'set_orderModalVisible'
+            'set_orderModalVisible',
+            'set_roomNums',
+            'add_roomNums',
+            'sub_roomNums'
         ]),
         ...mapActions([
             'addOrder',

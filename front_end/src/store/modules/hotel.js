@@ -42,6 +42,7 @@ const hotel = {
         dateParams:{
 
         },
+        roomNums: 1,
     },
     mutations: {
         set_hotelList: function(state, data) {
@@ -105,6 +106,15 @@ const hotel = {
                 ...data,
             }
         },
+        set_roomNums:function (state) {
+            state.roomNums=1
+        },
+        add_roomNums:function (state){
+            state.roomNums++
+        },
+        sub_roomNums:function (state){
+            state.roomNums--
+        }
     },
 
     actions: {
@@ -145,6 +155,7 @@ const hotel = {
                 commit('set_orderModalVisible', false)
                 //dispatch('updateCurrentHotelInfo',state.dateParams)
                 commit('set_currentHotelInfo', res1)
+                commit('set_roomNums')
             }
         },
         getOrderMatchCoupons: async({ state, commit }, data) => {
