@@ -306,6 +306,7 @@ export default {
                     }
                     else {
                         this.addOrder(data)
+                        this.form.resetFields()
                     }
                 }
             });
