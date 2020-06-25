@@ -23,6 +23,7 @@ public class AccountServiceImpl implements AccountService {
     private final static String UPDATE_ERROR = "修改失败";
     @Autowired
     private AccountMapper accountMapper;
+    @Autowired
     private OrderService orderService;
 
     @Override
