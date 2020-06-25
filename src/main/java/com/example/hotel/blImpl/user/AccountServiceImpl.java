@@ -62,7 +62,7 @@ public class AccountServiceImpl implements AccountService {
         List<Order> UserOrders= orderService.getUserOrders(userId);
         List<Order> finishedOrders=new ArrayList<>();
         for(int i=0;i<UserOrders.size();i++){
-            if(UserOrders.get(i).getOrderState()=="已完成"||UserOrders.get(i).getOrderState()=="已取消")
+            if(UserOrders.get(i).getOrderState().equals("已完成") || UserOrders.get(i).getOrderState().equals("已取消"))
                 finishedOrders.add(UserOrders.get(i));
         }
         List<CreditRecord> creditRecords=new ArrayList<>();
@@ -70,7 +70,7 @@ public class AccountServiceImpl implements AccountService {
             CreditRecord cr=new CreditRecord();
             cr.setId(i);
             cr.setOrderId(finishedOrders.get(i).getId());
-            cr.setAction(finishedOrders.get(i).getOrderState().substring(1,-1));
+            cr.setAction(finishedOrders.get(i).getOrderState().substring(1));
             cr.setUserId(finishedOrders.get(i).getUserId());
             cr.setCreditChange(finishedOrders.get(i).getCreditChange());
             cr.setCurrentCredit(finishedOrders.get(i).getUserCredit());
