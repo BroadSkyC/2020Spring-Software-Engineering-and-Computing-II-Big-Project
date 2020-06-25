@@ -21,7 +21,7 @@
                     <a-form-item label="用户名" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1  }">
                         <a-input
                             placeholder="请填写用户名"
-                            v-decorator="['userName', { rules: [{ required: true, message: '请输入用户名' }] }]"
+                            v-decorator="['userName', { rules: [{ required: true, message: userInfo.userName }] }]"
                             v-if="modify"
                         />
                         <span v-else>{{ userInfo.userName }}</span>
@@ -33,7 +33,7 @@
                     <a-form-item label="手机号" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }">
                         <a-input
                             placeholder="请填写手机号"
-                            v-decorator="['phoneNumber', { rules: [{ required: true, message: '请输入手机号' }] }]"
+                            v-decorator="['phoneNumber', { rules: [{ required: true, message: userInfo.phoneNumber }] }]"
                             v-if="modify"
                         />
                         <span v-else>{{ userInfo.phoneNumber}}</span>
@@ -225,6 +225,8 @@ export default {
     async mounted() {
         await this.getUserInfo()
         await this.getUserOrders()
+        console.log(this.userId)
+        await this.getUserCreditRecord(this.userId)
     },
     methods: {
         ...mapMutations([

@@ -19,20 +19,20 @@
     const columns = [
         {
             title: '订单号',
-            dataIndex: 'hotelName',
+            dataIndex: 'orderId',
         },
         {
             title: '操作',
-            dataIndex: 'roomType',
-            scopedSlots: { customRender: 'roomType' }
+            dataIndex: 'action',
+            scopedSlots: { customRender: 'action' }
         },
         {
             title: '信用值变化',
-            dataIndex: 'checkInDate',
+            dataIndex: 'creditChange',
         },
         {
-            title: '剩余信用值',
-            dataIndex: 'checkOutDate',
+            title: '当前信用值',
+            dataIndex: 'currentCredit',
         },
     ];
 
@@ -47,13 +47,11 @@
             this.form = this.$form.createForm(this, { name: 'creditRecord' });
         },
         async mounted() {
-            await this.getUserCreditRecord(this.userId)
         },
         computed: {
             ...mapGetters([
                 'userId',
                 'creditRecordVisible',
-                'userOrderList',
                 'userCreditRecord',
             ])
         },
@@ -62,8 +60,6 @@
                 'set_creditRecordVisible'
             ]),
             ...mapActions([
-                'getUserCreditRecord',
-                'getUserOrders'
             ]),
             cancel(){
                 this.set_creditRecordVisible(false)
