@@ -85,9 +85,12 @@
                             checkOutDate: this.currentOrder.checkOutDate,
                             peopleNum: this.currentOrder.peopleNum,
                             price: this.currentOrder.price,
+                            roomPrice: this.currentOrder.roomPrice,
                             id: this.currentOrder.id,
                             hotelName: this.currentOrder.hotelName,
                             roomType: this.currentOrder.roomType,
+                            roomNum: this.currentOrder.roomNum,
+                            hotelId:this.currentOrder.hotelId,
                             orderState:this.form.getFieldValue('orderState')
                         }
                         this.updateOrderState(data).then(()=>{
