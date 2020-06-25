@@ -32,3 +32,11 @@ export function delHotelAPI(data) {
     })
 }
 
+export function delRoomAPI(data) {
+    return axios({
+        url:`${api.hotelPre}/delRoom`,
+        method:'POST',
+        data,
+    })
+}
+

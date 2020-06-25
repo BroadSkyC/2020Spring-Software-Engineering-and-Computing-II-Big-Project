@@ -14,7 +14,17 @@
                     <span>￥{{ text }}</span>
                 </span>
                 <span slot="action" slot-scope="record">
-                    <a-button type="primary" @click="showModify(record)" v-if="userInfo.userType==='HotelManager' && currentHotelInfo.managerId===userInfo.id">修改房间信息</a-button>
+                    <a-button type="primary" @click="showModify(record)" v-if="userInfo.userType==='HotelManager' && currentHotelInfo.managerId===userInfo.id">修改房间信息
+                    </a-button>
+                    <a-divider type="vertical"></a-divider>
+                    <a-popconfirm
+                            title="确定想删除该想房间吗？"
+                            @confirm="deleteRoom(record)"
+                            okText="确定"
+                            cancelText="取消"
+                    >
+                            <a-button type="danger">删除房间</a-button>
+                        </a-popconfirm>
                 </span>
             </a-table>
         </div>
@@ -99,11 +109,15 @@
                 'set_modifyRoomVisible',
             ]),
             ...mapActions([
+                'delRoom',
 
             ]),
             showModify(record){
                 this.set_currentOrderRoom(record)
                 this.set_modifyRoomVisible(true)
+            },
+            deleteRoom(record){
+                this.delRoom(record)
             },
         }
     }

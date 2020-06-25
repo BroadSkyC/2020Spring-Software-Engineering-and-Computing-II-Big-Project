@@ -151,6 +151,7 @@ const hotel = {
                 message.error('修改失败')
             }
         },
+
     }
 }
 

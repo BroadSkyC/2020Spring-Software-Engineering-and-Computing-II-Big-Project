@@ -3,6 +3,7 @@ import {
     modifyRoomAPI,
     addHotelAPI,
     delHotelAPI,
+    delRoomAPI,
 } from '@/api/hotelManager'
 import{
     hotelAllReceptionistAPI,
@@ -381,6 +382,16 @@ const hotelManager = {
                 dispatch('getManageOrders',getters.userId)
             } else {
                 message.error('修改失败')
+            }
+        },
+        delRoom: async ({dispatch},data) => {
+            const res = await delRoomAPI(data)
+            if (res) {
+                dispatch('getHotelById')
+                message.success('删除成功')
+
+            } else {
+                message.error('删除失败')
             }
         },
     }

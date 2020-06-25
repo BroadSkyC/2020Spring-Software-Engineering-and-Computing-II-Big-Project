@@ -24,7 +24,7 @@
                             <a-button type="danger" size="small">删除酒店</a-button>
                         </a-popconfirm>
                         <a-divider type="vertical"></a-divider>
-                        <a-button type="primary" size="small" @click="showReceptionist(record)">酒店前台</a-button>
+                        <a-button type="info" size="small" @click="showReceptionist(record)">酒店前台</a-button>
                     </span>
                 </a-table>
             </a-tab-pane>
