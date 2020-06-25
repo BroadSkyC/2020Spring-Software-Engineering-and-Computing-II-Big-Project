@@ -6,6 +6,7 @@ import com.example.hotel.po.HotelRoom;
 import com.example.hotel.util.ServiceException;
 import com.example.hotel.vo.HotelVO;
 import com.example.hotel.vo.ResponseVO;
+import com.example.hotel.vo.RoomVO;
 import com.example.hotel.vo.SearchRoom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -46,6 +47,12 @@ public class HotelController {
     @PostMapping("/delHotel")
     public ResponseVO deleHotel(@RequestBody HotelVO hotelVO) throws ServiceException {
         hotelService.delHotel(hotelVO);
+        return ResponseVO.buildSuccess(true);
+    }
+
+    @PostMapping("/delRoom")
+    public ResponseVO deleRoom(@RequestBody RoomVO roomVO) throws ServiceException {
+        hotelService.delRoom(roomVO);
         return ResponseVO.buildSuccess(true);
     }
 
