@@ -39,8 +39,8 @@
                         <span v-else>{{ userInfo.phoneNumber}}</span>
                     </a-form-item>
                     <a-form-item label="信用值" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }">
-                    <span>{{ userInfo.credit }} </span>
-                        <a-button type="default" @click="showCreditRecord" v-if="userInfo.userType==='Client'">查看记录</a-button>
+                    <span>{{userInfo.credit}} </span>
+                        <a-button type="default" size="small" @click="showCreditRecord" v-if="userInfo.userType==='Client'">查看记录</a-button>
                 </a-form-item>
                     <a-form-item label="密码" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }" v-if="modify">
                         <a-input
@@ -227,6 +227,7 @@ export default {
         await this.getUserOrders()
         console.log(this.userId)
         await this.getUserCreditRecord(this.userId)
+        console.log(this.userCreditRecord)
     },
     methods: {
         ...mapMutations([

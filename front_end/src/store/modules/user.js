@@ -181,10 +181,12 @@ const user = {
                 console.log(getters.userCreditRecord)
             }
         },
-        cancelOrder: async({ state, dispatch }, orderId) => {
+        cancelOrder: async({ state, dispatch,getters }, orderId) => {
             const res = await cancelOrderAPI(orderId)
             if(res) {
                 dispatch('getUserOrders')
+                dispatch('getUserInfo')
+                dispatch('getUserCreditRecord',getters.userId)
                 message.success('撤销成功')
             }else{
                 message.error('撤销失败')
