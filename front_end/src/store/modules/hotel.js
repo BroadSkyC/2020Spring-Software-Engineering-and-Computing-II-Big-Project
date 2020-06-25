@@ -107,7 +107,7 @@ const hotel = {
             }
         },
         set_roomNums:function (state) {
-            state.roomNums=1
+            state.roomNums=0
         },
         add_roomNums:function (state){
             state.roomNums++

@@ -80,9 +80,9 @@
                 </a-radio-group>
             </a-form-item>
             <a-form-item v-bind="formItemLayout" label="房间数">
-                <a-button type="primary" size="small" shape="circle" icon="minus"></a-button>
+                <a-button type="primary" size="small" shape="circle" icon="minus" @click="minusOne" v-if="roomNums>1 && currentOrderRoom.curNum>1"></a-button>
                 <span>{{roomNums}}</span>
-                <a-button type="primary" size="small" shape="circle" icon="plus"></a-button>
+                <a-button type="primary" size="small" shape="circle" icon="plus" @click="plusOne" v-if="roomNums<3 && roomNums<currentOrderRoom.curNum"></a-button>
             </a-form-item>
             <a-form-item v-bind="formItemLayout" label="房间单价">
                 <span>{{ currentOrderRoom.price }}</span>
@@ -116,6 +116,7 @@
 </template>
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex'
+import { message } from 'ant-design-vue'
 const moment = require('moment')
 const columns = [
     {  
@@ -160,8 +161,17 @@ export default {
             totalPrice: '',
             columns,
             checkedList: [],
-            finalPrice: ''
+            finalPrice: '',
+            count: 0,
         }
+    },
+    mounted() {
+        this.set_roomNums()
+        console.log(this.roomNums)
+        console.log(this.userId)
+        this.changeRoomNum(1)
+         this.totalPrice=""
+         this.finalPrice=""
     },
     computed: {
         ...mapGetters([
@@ -191,6 +201,20 @@ export default {
             'addOrder',
             'getOrderMatchCoupons'
         ]),
+        minusOne(){
+            this.sub_roomNums()
+            this.changeRoomNum(this.roomNum-1)
+        },
+        plusOne(){
+            this.add_roomNums()
+            if(this.count==0){
+                this.changeRoomNum(this.roomNum)
+            }
+            else {
+                this.changeRoomNum(this.roomNum + 1)
+            }
+            this.count++
+        },
         cancelOrder() {
             this.set_orderModalVisible(false)
         },
@@ -226,6 +250,11 @@ export default {
 
             //this.onchange();
 
+        },
+        initialRoomNum(){
+            this.totalPrice =  Number(this.currentOrderRoom.price) * moment(this.checkOutDate).diff(moment(this.checkInDate),'day')
+            this.finalPrice = this.totalPrice;
+            this.finalPrice = this.finalPrice.toFixed(2)
         },
         onchange() {
             this.finalPrice = this.totalPrice;
@@ -265,14 +294,19 @@ export default {
                         // checkInDate: moment(this.form.getFieldValue('date')[0]).format('YYYY-MM-DD'),
                         // checkOutDate: moment(this.form.getFieldValue('date')[1]).format('YYYY-MM-DD'),
                         roomType: this.currentOrderRoom.roomType == '大床房' ? 'BigBed' : this.currentOrderRoom.roomType == '双床房' ? 'DoubleBed' : 'Family',
-                        roomNum: this.form.getFieldValue('roomNum'),
+                        roomNum: Number(this.roomNum),
                         peopleNum: this.form.getFieldValue('peopleNum'),
                         haveChild: this.form.getFieldValue('haveChild'),
                         createDate: '',
                         price: this.checkedList.length > 0 ? this.finalPrice: this.totalPrice,
                         roomPrice:this.currentOrderRoom.price
                     }
-                    this.addOrder(data)
+                    if(this.totalPrice==""){
+                        message.error("房间数不能为0")
+                    }
+                    else {
+                        this.addOrder(data)
+                    }
                 }
             });
         },
@@ -283,7 +317,7 @@ export default {
                 userId: this.userId,
                 hotelId: this.currentHotelId,
                 orderPrice: this.totalPrice,
-                roomNum: this.form.getFieldValue('roomNum'),
+                roomNum: Number(this.roomNum),
                 checkIn: this.checkInDate,
                 checkOut: this.checkOutDate,
                 // checkIn: moment(this.form.getFieldValue('date')[0]).format('YYYY-MM-DD'),
