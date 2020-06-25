@@ -36,6 +36,9 @@
         update OrderList set rate=#{rate},feedback=#{feedback} where id=#{id}
     </update>
 
+    <update id="updateCreditChange">
+        update OrderList set creditChange=#{creditChange} where id=#{orderid}
+    </update>
     <resultMap id="Order" type="com.example.hotel.po.Order">
     </resultMap>
 </mapper>

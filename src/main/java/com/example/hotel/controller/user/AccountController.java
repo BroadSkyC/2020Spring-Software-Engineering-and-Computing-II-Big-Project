@@ -46,7 +46,7 @@ public class AccountController {
     }
 
 
-    @GetMapping("/{id}/getUserCreditRecord")
+    @GetMapping("/{userId}/getUserCreditRecord")
     public ResponseVO getUserCreditRecord(@PathVariable int userId) {
         return ResponseVO.buildSuccess(accountService.getUserCreditRecord(userId));
     }

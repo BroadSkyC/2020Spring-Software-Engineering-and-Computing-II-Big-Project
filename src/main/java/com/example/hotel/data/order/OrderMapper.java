@@ -34,4 +34,7 @@ public interface OrderMapper {
     int updateOrderState(Order order);
 
     int updateComment(Order order);
+
+    void updateCreditChange(@Param("orderid") int orderid,
+                            @Param("creditChange")int creditChange);
 }

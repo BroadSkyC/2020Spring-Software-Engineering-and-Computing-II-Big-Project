@@ -180,12 +180,13 @@ public class OrderServiceImpl implements OrderService {
         int diff = (int)ChronoUnit.DAYS.between(today,checkin);
         if (diff<=2&&diff>=0){
             accountMapper.updateUserCredit(order.getUserId(),(int)(-order.getPrice()*0.3));
+            orderMapper.updateCreditChange(orderid,(int)(-order.getPrice()*0.3));
         }
         //accountMapper.updateUserCredit(order.getUserId(),-diff);
         //roomMapper.updateAvailableRoom(order.getHotelId(),order.getRoomType(),order.getRoomPrice(),availableRoom);
         orderMapper.annulOrder(orderid);
         this.update(order,false);
-        hotelService.updateRoomInfo(order.getHotelId(),order.getRoomType(),order.getRoomNum(),order.getRoomPrice()*(-1));
+        hotelService.updateRoomInfo(order.getHotelId(),order.getRoomType(),order.getRoomNum()*-1,order.getRoomPrice());
         return ResponseVO.buildSuccess(true);
     }
 
@@ -250,9 +251,10 @@ public class OrderServiceImpl implements OrderService {
         BeanUtils.copyProperties(orderVO,order);
         orderMapper.updateOrderState(order);
         if(state.equals("已完成")){
-            hotelService.updateRoomInfo(order.getHotelId(),order.getRoomType(),order.getRoomNum(),order.getRoomPrice()*(-1));
+            hotelService.updateRoomInfo(order.getHotelId(),order.getRoomType(),order.getRoomNum()*-1,order.getRoomPrice());
             this.update(order, false);
-            accountMapper.updateUserCredit(order.getUserId(),Integer.parseInt(order.getPrice().toString()));
+            accountMapper.updateUserCredit(order.getUserId(),order.getPrice().intValue());
+            orderMapper.updateCreditChange(order.getId(),order.getPrice().intValue());
         }
         return ResponseVO.buildSuccess(true);
     }

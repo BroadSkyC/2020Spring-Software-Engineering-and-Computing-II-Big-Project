@@ -60,8 +60,8 @@ public class AccountServiceImpl implements AccountService {
     public List<CreditRecord> getUserCreditRecord(Integer userId){
         List<Order> UserOrders= orderService.getUserOrders(userId);
         List<Order> finishedOrders=new ArrayList<>();
-        for(int i=0;i>UserOrders.size();i++){
-            if(UserOrders.get(i).getOrderState()=="已完成"||UserOrders.get(i).getOrderState()=="已撤销")
+        for(int i=0;i<UserOrders.size();i++){
+            if(UserOrders.get(i).getOrderState()=="已完成"||UserOrders.get(i).getOrderState()=="已取消")
                 finishedOrders.add(UserOrders.get(i));
         }
         List<CreditRecord> creditRecords=new ArrayList<>();
