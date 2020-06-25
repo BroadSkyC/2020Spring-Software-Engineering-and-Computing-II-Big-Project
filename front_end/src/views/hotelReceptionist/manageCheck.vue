@@ -5,9 +5,12 @@
                 :dataSource="receptionistOrderList"
                 bordered
         >
-                    <span slot="price" slot-scope="text">
-                        <span>￥{{ text }}</span>
-                    </span>
+            <span slot="price" slot-scope="text">
+                <span>￥{{ text }}</span>
+            </span>
+            <a-tag slot="orderState" color="blue" slot-scope="text">
+                {{ text }}
+            </a-tag>
             <span slot="roomType" slot-scope="text">
                         <span v-if="text == 'BigBed'">大床房</span>
                         <span v-if="text == 'DoubleBed'">双床房</span>
