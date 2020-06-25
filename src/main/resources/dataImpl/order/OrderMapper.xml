@@ -37,7 +37,7 @@
     </update>
 
     <update id="updateCreditChange">
-        update OrderList set creditChange=#{creditChange} where id=#{orderid}
+        update OrderList set creditChange=#{creditChange},userCredit=#{userCredit} where id=#{orderid}
     </update>
     <resultMap id="Order" type="com.example.hotel.po.Order">
     </resultMap>

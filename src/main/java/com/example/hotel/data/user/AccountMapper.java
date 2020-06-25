@@ -45,4 +45,6 @@ public interface AccountMapper {
     int addCompanyVip(User user);
 
     void updateUserCredit(@Param("id") Integer id, @Param("credit") Integer credit);
+
+    int getUserCredit(@Param("id") Integer id);
 }

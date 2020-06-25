@@ -30,6 +30,10 @@
         update User set credit=credit+#{credit} where id=#{id}
     </update>
 
+    <select id="getUserCredit" resultType="int">
+        select credit from User where id=#{id}
+    </select>
+
     <resultMap id="User" type="com.example.hotel.po.User">
         <id column="id" property="id"></id>
         <result column="email" property="email"></result>

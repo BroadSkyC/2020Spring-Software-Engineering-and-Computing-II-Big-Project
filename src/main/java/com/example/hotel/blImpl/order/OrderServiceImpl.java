@@ -180,7 +180,8 @@ public class OrderServiceImpl implements OrderService {
         int diff = (int)ChronoUnit.DAYS.between(today,checkin);
         if (diff<=2&&diff>=0){
             accountMapper.updateUserCredit(order.getUserId(),(int)(-order.getPrice()*0.3));
-            orderMapper.updateCreditChange(orderid,(int)(-order.getPrice()*0.3));
+            orderMapper.updateCreditChange(orderid,(int)(-order.getPrice()*0.3),accountMapper.getUserCredit(order.getUserId()));
+
         }
         //accountMapper.updateUserCredit(order.getUserId(),-diff);
         //roomMapper.updateAvailableRoom(order.getHotelId(),order.getRoomType(),order.getRoomPrice(),availableRoom);
@@ -254,7 +255,7 @@ public class OrderServiceImpl implements OrderService {
             hotelService.updateRoomInfo(order.getHotelId(),order.getRoomType(),order.getRoomNum()*-1,order.getRoomPrice());
             this.update(order, false);
             accountMapper.updateUserCredit(order.getUserId(),order.getPrice().intValue());
-            orderMapper.updateCreditChange(order.getId(),order.getPrice().intValue());
+            orderMapper.updateCreditChange(order.getId(),order.getPrice().intValue(),accountMapper.getUserCredit(order.getUserId()));
         }
         return ResponseVO.buildSuccess(true);
     }
