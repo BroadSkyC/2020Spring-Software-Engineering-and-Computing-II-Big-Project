@@ -149,4 +149,11 @@ public class HotelServiceImpl implements HotelService {
         for(int i=0;i<coupons.size();i++) couponMapper.deleteCoupon(coupons.get(i));
         for(int i=0;i<rooms.size();i++) roomMapper.deleRoom(rooms.get(i));
     }
+
+    @Override
+    public void delRoom(RoomVO roomVO) {
+        HotelRoom hotelRoom=new HotelRoom();
+        hotelRoom.setId(roomVO.getId());
+        roomMapper.deleRoom(hotelRoom);
+    }
 }
