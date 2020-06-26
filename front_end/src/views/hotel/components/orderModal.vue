@@ -81,7 +81,7 @@
             </a-form-item>
             <a-form-item v-bind="formItemLayout" label="房间数">
                 <a-button type="primary" size="small" shape="circle" icon="minus" @click="minusOne" v-if="roomNums>1 && currentOrderRoom.curNum>1"></a-button>
-                <span>{{roomNums}}</span>
+                <span class="nums">{{roomNums}}</span>
                 <a-button type="primary" size="small" shape="circle" icon="plus" @click="plusOne" v-if="(roomNums<3) ||(userInfo.vipType==='Company' && roomNums<10) && roomNums<currentOrderRoom.curNum"></a-button>
             </a-form-item>
             <a-form-item v-bind="formItemLayout" label="房间单价">
@@ -330,3 +330,11 @@ export default {
     }
 }
 </script>
+<style scoped lang="less">
+    .nums {
+        margin-left: 20px;
+        margin-right: 20px;
+        font-size: 15px;
+        /*font-family: "LiSong Pro",serif;*/
+    }
+</style>
