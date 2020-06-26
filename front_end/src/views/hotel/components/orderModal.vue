@@ -82,7 +82,7 @@
             <a-form-item v-bind="formItemLayout" label="房间数">
                 <a-button type="primary" size="small" shape="circle" icon="minus" @click="minusOne" v-if="roomNums>1 && currentOrderRoom.curNum>1"></a-button>
                 <span>{{roomNums}}</span>
-                <a-button type="primary" size="small" shape="circle" icon="plus" @click="plusOne" v-if="roomNums<3 && roomNums<currentOrderRoom.curNum"></a-button>
+                <a-button type="primary" size="small" shape="circle" icon="plus" @click="plusOne" v-if="(roomNums<3) ||(userInfo.vipType==='Company' && roomNums<10) && roomNums<currentOrderRoom.curNum"></a-button>
             </a-form-item>
             <a-form-item v-bind="formItemLayout" label="房间单价">
                 <span>{{ currentOrderRoom.price }}</span>
@@ -180,6 +180,7 @@ export default {
             'currentHotelId',
             'currentHotelInfo',
             'userId',
+            'userInfo',
             'orderMatchCouponList',
             'checkInDate',
             'checkOutDate',
