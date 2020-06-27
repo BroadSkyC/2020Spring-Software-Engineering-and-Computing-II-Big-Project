@@ -180,7 +180,6 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public void deleteRoom(HotelRoom hotelRoom){
-
         roomMapper.deleRoom(hotelRoom);
         int hotel_id = hotelRoom.getHotelId();
         List<HotelRoom> hotelRooms = retrieveHotelRoomInfo(hotelRoom.getHotelId());
