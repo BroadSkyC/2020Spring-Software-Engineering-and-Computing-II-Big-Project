@@ -45,4 +45,6 @@ public interface RoomMapper {
     int getTotalNum(@Param("id") Integer id);
 
     int getCurNum(@Param("id") Integer id);
+
+    HotelRoom getRoomById(@Param("id") Integer id);
 }

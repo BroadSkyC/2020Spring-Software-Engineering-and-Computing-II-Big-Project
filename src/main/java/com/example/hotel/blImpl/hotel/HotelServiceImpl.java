@@ -152,8 +152,28 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public void delRoom(RoomVO roomVO) {
+        HotelRoom hr = roomMapper.getRoomById(roomVO.getId());
+        int hotel_id = hr.getHotelId();
         HotelRoom hotelRoom=new HotelRoom();
         hotelRoom.setId(roomVO.getId());
         roomMapper.deleRoom(hotelRoom);
+        List<HotelRoom> hotelRooms = roomService.retrieveHotelRoomInfo(hotel_id);
+        if (hotelRooms.size()==0){
+            hotelMapper.updateMaxPrice(hotel_id, 0.0);
+            hotelMapper.updateMinPrice(hotel_id,0.0);
+        }else {
+            double maxPrice = hotelRooms.get(0).getPrice();
+            double minPrice = hotelRooms.get(0).getPrice();
+            for (HotelRoom room : hotelRooms) {
+                if (room.getPrice() <= minPrice) {
+                    minPrice = room.getPrice();
+                }
+                if (room.getPrice() >= maxPrice) {
+                    maxPrice = room.getPrice();
+                }
+            }
+            hotelMapper.updateMaxPrice(hotel_id, maxPrice);
+            hotelMapper.updateMinPrice(hotel_id, minPrice);
+        }
     }
 }
