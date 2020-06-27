@@ -180,7 +180,27 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public void deleteRoom(HotelRoom hotelRoom){
+
         roomMapper.deleRoom(hotelRoom);
+        int hotel_id = hotelRoom.getHotelId();
+        List<HotelRoom> hotelRooms = retrieveHotelRoomInfo(hotelRoom.getHotelId());
+        if (hotelRooms.size()==0){
+            hotelMapper.updateMaxPrice(hotel_id, 0.0);
+            hotelMapper.updateMinPrice(hotel_id,0.0);
+        }else {
+            double maxPrice = hotelRooms.get(0).getPrice();
+            double minPrice = hotelRooms.get(0).getPrice();
+            for (HotelRoom room : hotelRooms) {
+                if (room.getPrice() <= minPrice) {
+                    minPrice = room.getPrice();
+                }
+                if (room.getPrice() >= maxPrice) {
+                    maxPrice = room.getPrice();
+                }
+            }
+            hotelMapper.updateMaxPrice(hotel_id, maxPrice);
+            hotelMapper.updateMinPrice(hotel_id, minPrice);
+        }
     }
 
     @Override
