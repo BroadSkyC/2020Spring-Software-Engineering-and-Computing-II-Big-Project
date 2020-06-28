@@ -26,6 +26,13 @@ public interface AccountService {
     User login(UserForm userForm);
 
     /**
+     * 游客模式
+     *
+     * @return
+     */
+    User visitor(UserVO userVO);
+
+    /**
      * 获取用户个人信息
      * @param id
      * @return

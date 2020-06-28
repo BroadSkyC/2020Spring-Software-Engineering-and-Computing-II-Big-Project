@@ -26,26 +26,28 @@
           <a-form-item>
             <a-input
               size="large"
+              id="input-login-email"
               type="text"
               placeholder="邮箱"
               v-decorator="[
                 'username',
-                {rules: [{ required: true, message: '请输入邮箱地址' }], validateTrigger: 'blur'}
+                {rules: [{ required: false, message: '请输入邮箱地址' } ], validateTrigger: 'blur'}
               ]"
             >
               <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }"/>
             </a-input>
           </a-form-item>
 
-          <a-form-item>
+          <a-form-item >
             <a-input
               size="large"
+              id="input-login-pass"
               type="password"
               autocomplete="false"
               placeholder="密码"
               v-decorator="[
                 'password',
-                {rules: [{ required: true, message: '请输入密码' }], validateTrigger: 'blur'}
+                {rules: [{ required:false, message: '请输入密码' } ], validateTrigger: 'blur'}
               ]"
             >
               <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>
@@ -60,6 +62,15 @@
               @click="handlelogin()"
             >确定</a-button>
           </a-form-item>
+          <a-form-item style="margin-top:24px">
+            <a-button
+                    size="large"
+                    type="default"
+                    class="login-button"
+                    :loading="VisitorLoading"
+                    @click="handleVisitor()"
+            >游客模式</a-button>
+          </a-form-item>
         </a-tab-pane>
 
         <a-tab-pane key="tab2" tab="注册新账号">
@@ -69,7 +80,7 @@
               type="email"
               placeholder="邮箱"
               v-decorator="[
-              'registerUserMail', 
+              'registerUserMail',
               {rules: [{ required: true, type: 'email', message: '请输入邮箱' }], validateTrigger: 'blur'}]">
               <a-icon slot="prefix" type="mail" :style="{ color: 'rgba(0,0,0,.25)' }"/>
             </a-input>
@@ -79,7 +90,7 @@
               size="large"
               placeholder="用户名"
               v-decorator="[
-              'registerUsername', 
+              'registerUsername',
               {rules: [{ required: true, message: '请输入用户名' }], validateTrigger: 'blur'}]">
               <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }"/>
             </a-input>
@@ -89,7 +100,7 @@
               size="large"
               placeholder="手机号"
               v-decorator="[
-              'registerPhoneNumber', 
+              'registerPhoneNumber',
               {rules: [{ required: true, message: '请输入手机号' }], validateTrigger: 'blur'}]">
               <a-icon slot="prefix" type="book" :style="{ color: 'rgba(0,0,0,.25)' }"/>
             </a-input>
@@ -100,7 +111,7 @@
               type="password"
               placeholder="密码"
               v-decorator="[
-                'registerPassword', 
+                'registerPassword',
                 {rules: [{ required: true, message: '请输入密码' }, { validator: this.handlePassword }], validateTrigger: 'blur'}]">
               <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>
             </a-input>
@@ -111,7 +122,7 @@
               type="password"
               placeholder="确认密码"
               v-decorator="[
-                'registerPasswordconfirm', 
+                'registerPasswordconfirm',
                 {rules: [{ required: true, message: '请输入密码' }, { validator: this.handlePasswordCheck }], validateTrigger: 'blur'}]">
               <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>
             </a-input>
@@ -138,13 +149,14 @@ import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
   name: 'login',
   components: {
-    
+
   },
   data () {
     return {
       customActiveKey: 'tab1',
       loginLoading: false,
       registerLoading: false,
+      VisitorLoading:false,
       form: this.$form.createForm(this),
     }
   },
@@ -167,7 +179,8 @@ export default {
   methods: {
     ...mapActions([
       'login',
-      'register'
+      'register',
+      'visitor',
       ]),
 
     // handler
@@ -191,8 +204,12 @@ export default {
         callback()
     },
     handlePassword(rule, value, callback) {
-      if (value.length < 6) {
-        callback(new Error('密码长度至少6位'))
+      var zg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]*$/;
+      if(!zg.test(value)){
+        callback(new Error('密码强度低，密码必须同时包含数字和字母！'))
+      }
+      if (value.length < 8) {
+        callback(new Error('密码长度至少8位'))
       }
       callback()
     },
@@ -211,6 +228,7 @@ export default {
       this.customActiveKey = key
     },
     handlelogin() {
+      if(!this.haveEmail){}
       const validateFieldsKey = this.customActiveKey === 'tab1' ? ['username', 'password'] : ['registerUsername', 'registerUserMail','registerPassword','registerPasswordconfirm']
       this.form.validateFields(validateFieldsKey, { force: true }, async (err, values) => {
         if(!err){
@@ -224,7 +242,18 @@ export default {
         }
       })
     },
-
+    handleVisitor(){
+      this.form.validateFields( async (err, values) => {
+        if(!err){
+          this.VisitorLoading = true
+          const data = {
+            id:9
+          }
+          await this.visitor(data)
+          this.VisitorLoading = false
+        }
+      })
+    },
     handleRegister() {
       const { form: { validateFields } } = this
       const validateFieldsKey = this.customActiveKey === 'tab1' ? ['username', 'password'] : ['registerUsername','registerPhoneNumber','registerUserMail','registerPassword','registerPasswordconfirm']

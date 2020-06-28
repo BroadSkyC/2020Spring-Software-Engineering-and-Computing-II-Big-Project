@@ -29,7 +29,7 @@
                     <a-form-item label="邮箱" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }">
                         <span>{{ userInfo.email }}</span>
                     </a-form-item>
-                    
+
                     <a-form-item label="手机号" :label-col="{ span: 3 }" :wrapper-col="{ span: 8, offset: 1 }">
                         <a-input
                             placeholder="请填写手机号"
@@ -76,7 +76,7 @@
                         </a-button>
                     </a-form-item>
                      <a-form-item :wrapper-col="{ span: 12, offset: 5 }" v-else>
-                        <a-button type="primary" @click="modifyInfo">
+                        <a-button type="primary" @click="modifyInfo" v-if="userInfo.userType!='Visitor'">
                             修改信息
                         </a-button>
                          <a-button type="primary" style="margin-left: 30px" @click="showRegisterVip" v-if="userInfo.userType==='Client' && userInfo.vipType==null">
@@ -85,7 +85,7 @@
                     </a-form-item>
                 </a-form>
             </a-tab-pane>
-            <a-tab-pane tab="我的订单" key="2">
+            <a-tab-pane tab="我的订单" key="2" v-if="userInfo.userType!='Visitor'">
                 <a-table
                     :columns="columns"
                     :dataSource="userOrderList"
@@ -136,12 +136,12 @@ import Comment from "./components/comment";
 import CreditRecord from "./components/creditRecord";
 import { client, put, remove } from '../../utils/client';
 const columns = [
-    {  
+    {
         title: '订单号',
         sorter:(a,b)=>a.id-b.id,
         dataIndex: 'id',
     },
-    {  
+    {
         title: '酒店名',
         sorter:(a,b)=>{return a.hotelName.localeCompare(b.hotelName)},
         dataIndex: 'hotelName',
@@ -187,7 +187,7 @@ const columns = [
       key: 'action',
       scopedSlots: { customRender: 'action' },
     },
-    
+
   ];
 export default {
     name: 'info',

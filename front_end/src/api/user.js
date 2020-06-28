@@ -17,6 +17,13 @@ export function registerAPI(data){
         data
     })
 }
+export function visitorAPI(data){
+    return axios({
+        url:`${api.userPre}/visitor`,
+        method: 'POST',
+        data
+    })
+}
 export function getUserInfoAPI(id){
     return axios({
         url: `${api.userPre}/${id}/getUserInfo`,

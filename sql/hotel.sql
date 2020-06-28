@@ -187,7 +187,12 @@ CREATE TABLE `User` (
 
 BEGIN;
 /*!40000 ALTER TABLE `User` DISABLE KEYS */;
-INSERT INTO `User` VALUES (4,'1012681@qq.com','123456','客户一号','12345678919',100,'Client','2000-05-26',NULL,NULL,NULL,"https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.jpg"),(5,'123@qq.com','123456','客户二号','12345678911',100,'Client','2000-05-27',NULL,NULL,NULL,"https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.jpg"),(6,'333@qq.com','123456',"经理一号",NULL,NULL,'HotelManager','2000-05-28',NULL,NULL,NULL,"https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.jpg"),(7,'789@qq.com','123456',"前台一号",NULL,NULL,'HotelReceptionist','2000-05-28',NULL,NULL,1,"https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.jpg"),(8,'456@qq.com','123456',"管理员一号",NULL,NULL,'Admin','2000-05-28',NULL,NULL,NULL,"https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.jpg");
+INSERT INTO `User` VALUES (4,'1012681@qq.com','123456','客户一号','12345678919',100,'Client','2000-05-26',NULL,NULL,NULL,"https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.jpg"),
+(5,'123@qq.com','123456','客户二号','12345678911',100,'Client','2000-05-27',NULL,NULL,NULL,"https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.jpg"),
+(6,'333@qq.com','123456',"经理一号",NULL,NULL,'HotelManager','2000-05-28',NULL,NULL,NULL,"https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.jpg"),
+(7,'789@qq.com','123456',"前台一号",NULL,NULL,'HotelReceptionist','2000-05-28',NULL,NULL,1,"https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.jpg"),
+(8,'456@qq.com','123456',"管理员一号",NULL,NULL,'Admin','2000-05-28',NULL,NULL,NULL,"https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.jpg"),
+(9,'','',"游客",NULL,NULL,'Visitor',NULL,NULL,NULL,NULL,"https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.jpg");
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
 COMMIT;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

@@ -6,6 +6,7 @@ import { message } from 'ant-design-vue'
 import {
     loginAPI,
     registerAPI,
+    visitorAPI,
     getUserInfoAPI,
     updateUserInfoAPI,
     addCommonVipAPI,
@@ -46,7 +47,7 @@ const user = {
             state.token = '',
             state.userId = '',
             state.userInfo = {
-                
+
             },
             state.userOrderList = [],
             state.userCreditRecord=[]
@@ -92,6 +93,16 @@ const user = {
     actions: {
         login: async ({ dispatch, commit,state }, userData) => {
             const res = await loginAPI(userData)
+            if(res){
+                setToken(res.id)
+                commit('set_userId', res.id)
+                dispatch('getUserInfo')
+                // sessionStorage.setItem('uif',state.userInfo)
+                router.push('/hotel/hotelList')
+            }
+        },
+        visitor: async ({ dispatch, commit,state }, userData) => {
+            const res = await visitorAPI(userData)
             if(res){
                 setToken(res.id)
                 commit('set_userId', res.id)

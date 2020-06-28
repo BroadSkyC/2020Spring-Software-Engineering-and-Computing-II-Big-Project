@@ -53,7 +53,8 @@
                         <span v-if="text == 'Five'">五星级</span>
                     </span>
                 <span slot="action" slot-scope="record">
-                        <a-button type="primary" size="small" @click="jumpToDetails(record.id)">预定</a-button>
+                        <a-button type="primary" size="small" @click="jumpToDetails(record.id)" v-if="userInfo.userType!='Visitor'">预定</a-button>
+                    <a-button type="primary" size="small" @click="jumpToDetails(record.id)" v-if="userInfo.userType=='Visitor'">查看</a-button>
                     </span>
             </a-table>
                 </a-layout-content>

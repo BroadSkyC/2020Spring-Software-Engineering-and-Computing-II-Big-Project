@@ -49,6 +49,12 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public User visitor(UserVO userVO){
+        User user=accountMapper.getAccountById(userVO.getId());
+        return user;
+    }
+
+    @Override
     public User getUserInfo(int id) {
         User user = accountMapper.getAccountById(id);
         if (user == null) {

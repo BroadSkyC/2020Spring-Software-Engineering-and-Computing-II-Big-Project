@@ -42,7 +42,7 @@
                     <a-icon type="home"></a-icon>
                     首页
                 </a-menu-item>
-                <a-menu-item @click="jumpToUserInfo()">
+                <a-menu-item @click="jumpToUserInfo()" v-if="userInfo.userType!='Visitor'">
                     <a-icon type="profile"></a-icon>
                     我的信息
                 </a-menu-item>
