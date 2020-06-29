@@ -6,6 +6,7 @@ import com.example.hotel.po.User;
 import com.example.hotel.vo.ReceptionistForm;
 import com.example.hotel.vo.ResponseVO;
 import com.example.hotel.vo.UserForm;
+import com.example.hotel.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,9 +21,9 @@ public class AdminController {
     AdminService adminService;
 
     @PostMapping("/addManager")
-    public ResponseVO addManager(@RequestBody UserForm userForm){
+    public ResponseVO addManager(@RequestBody UserVO userVO){
 
-        return adminService.addManager(userForm);
+        return adminService.addManager(userVO);
     }
 
     @GetMapping("/getManagerList")

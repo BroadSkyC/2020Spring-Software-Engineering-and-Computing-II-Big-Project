@@ -4,6 +4,7 @@ import com.example.hotel.po.User;
 import com.example.hotel.vo.ReceptionistForm;
 import com.example.hotel.vo.ResponseVO;
 import com.example.hotel.vo.UserForm;
+import com.example.hotel.vo.UserVO;
 
 import java.util.List;
 
@@ -15,10 +16,10 @@ public interface AdminService {
 
     /**
      * 添加酒店管理人员账号
-     * @param userForm
+     * @param userVO
      * @return
      */
-    ResponseVO addManager(UserForm userForm);
+    ResponseVO addManager(UserVO userVO);
 
     /**
      * 获得所有酒店管理人员信息

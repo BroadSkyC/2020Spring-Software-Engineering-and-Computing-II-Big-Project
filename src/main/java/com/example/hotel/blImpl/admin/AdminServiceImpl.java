@@ -7,6 +7,7 @@ import com.example.hotel.po.User;
 import com.example.hotel.vo.ReceptionistForm;
 import com.example.hotel.vo.ResponseVO;
 import com.example.hotel.vo.UserForm;
+import com.example.hotel.vo.UserVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,11 +24,14 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     AdminMapper adminMapper;
     @Override
-    public ResponseVO addManager(UserForm userForm) {
+    public ResponseVO addManager(UserVO userVO) {
         User user = new User();
-        user.setEmail(userForm.getEmail());
-        user.setPassword(userForm.getPassword());
+        user.setEmail(userVO.getEmail());
+        user.setPassword(userVO.getPassword());
+        user.setPhoneNumber(userVO.getPhoneNumber());
+        user.setUserName(userVO.getUserName());
         user.setUserType(UserType.HotelManager);
+        user.setImgUrl("https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.jpg");
         try {
             adminMapper.addManager(user);
         } catch (Exception e) {
