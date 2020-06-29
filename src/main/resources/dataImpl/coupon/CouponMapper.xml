@@ -28,5 +28,6 @@
         <result column="discount_money" property="discountMoney"></result>
         <result column="start_time" property="startTime"></result>
         <result column="end_time" property="endTime"></result>
+        <result column="company" property="company"></result>
     </resultMap>
 </mapper>
