@@ -192,14 +192,14 @@ public class HotelServiceImpl implements HotelService {
             comment.setRate(order.getRate());
             comment.setCheckInDate(order.getCheckInDate());
             comment.setCheckOutDate(order.getCheckOutDate());
-            int k=order.getUserCredit();
+            User user = accountService.getUserInfo(order.getUserId());
+            double k=user.getCredit();
             if(k<=100)
                 comment.setCreditGrade("信用一般");
             else if(k<=500)
                 comment.setCreditGrade("信用良好");
             else
                 comment.setCreditGrade("信用极佳");
-            User user = accountService.getUserInfo(order.getUserId());
             comment.setImgUrl(user.getImgUrl());
             String name=user.getUserName();
             StringBuilder s= new StringBuilder(name.substring(0, 1));
