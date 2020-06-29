@@ -77,4 +77,10 @@ public class HotelController {
         //HotelVO hotelVO= hotelService.retrieveHotelDetails_setDate(searchRoom);
         return ResponseVO.buildSuccess(hotelService.retrieveHotelDetails_setDate(searchRoom));
     }
+
+    @GetMapping("/{hotelId}/getComments")
+    public ResponseVO retrieveHotelComments(@PathVariable Integer hotelId){
+
+        return ResponseVO.buildSuccess(hotelService.retrieveHotelsComments(hotelId));
+    }
 }

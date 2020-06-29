@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,6 +42,9 @@ public class HotelServiceImpl implements HotelService {
 
     @Autowired
     private RoomMapper roomMapper;
+
+    @Autowired
+    private OrderService orderService;
 
     public HotelServiceImpl() {
     }
@@ -175,5 +179,21 @@ public class HotelServiceImpl implements HotelService {
             hotelMapper.updateMaxPrice(hotel_id, maxPrice);
             hotelMapper.updateMinPrice(hotel_id, minPrice);
         }
+    }
+
+    @Override
+    public List<Comment> retrieveHotelsComments(Integer hotelId){
+        List<Comment> comments =new ArrayList<Comment>();
+        List<Order> orders=orderService.getHotelOrders(hotelId);
+        for (Order order : orders) {
+            Comment comment = new Comment();
+            comment.setFeedback(order.getFeedback());
+            comment.setRate(order.getRate());
+            User user = accountService.getUserInfo(order.getUserId());
+            comment.setImgUrl(user.getImgUrl());
+            comment.setUserName(user.getUserName());
+            comments.add(comment);
+        }
+        return comments;
     }
 }

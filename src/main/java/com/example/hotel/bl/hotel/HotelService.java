@@ -1,5 +1,6 @@
 package com.example.hotel.bl.hotel;
 
+import com.example.hotel.po.Comment;
 import com.example.hotel.po.HotelRoom;
 import com.example.hotel.po.Order;
 import com.example.hotel.util.ServiceException;
@@ -58,4 +59,6 @@ public interface HotelService {
     HotelVO retrieveHotelDetails_setDate(SearchRoom searchRoom);
 
     void delRoom(RoomVO roomVO);
+
+    List<Comment> retrieveHotelsComments(Integer hotelId);
 }

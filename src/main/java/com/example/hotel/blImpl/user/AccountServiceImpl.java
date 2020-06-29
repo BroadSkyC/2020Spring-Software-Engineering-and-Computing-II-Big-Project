@@ -30,6 +30,7 @@ public class AccountServiceImpl implements AccountService {
     public ResponseVO registerAccount(UserVO userVO) {
         User user = new User();
         BeanUtils.copyProperties(userVO,user);
+        user.setImgUrl("https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.jpg");
         try {
             accountMapper.createNewAccount(user);
         } catch (Exception e) {
