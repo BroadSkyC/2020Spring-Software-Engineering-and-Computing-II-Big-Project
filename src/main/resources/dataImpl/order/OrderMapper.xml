@@ -33,7 +33,7 @@
     </update>
 
     <update id="updateComment" parameterType="com.example.hotel.po.Order">
-        update OrderList set rate=#{rate},feedback=#{feedback} where id=#{id}
+        update OrderList set rate=#{rate},feedback=#{feedback},orderState='已评价' where id=#{id}
     </update>
 
     <update id="updateCreditChange">

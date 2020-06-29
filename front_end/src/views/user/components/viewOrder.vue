@@ -28,16 +28,23 @@
                 <a-form-item  label="入住人数" v-bind="formItemLayout" >
                     <span >{{ currentOrder.peopleNum}}</span>
                 </a-form-item>
-                <a-form-item  label="房价" v-bind="formItemLayout" >
+                <a-form-item  label="是否有儿童" v-bind="formItemLayout" >
+                    <span v-if="currentOrder.haveChild==true">是</span>
+                    <span v-if="currentOrder.haveChild == false">否</span>
+                </a-form-item>
+                <a-form-item  label="房间数" v-bind="formItemLayout" >
+                    <span >{{ currentOrder.roomNum}}</span>
+                </a-form-item>
+                <a-form-item  label="总房价" v-bind="formItemLayout" >
                     <span >{{ currentOrder.price}}</span>
                 </a-form-item>
                 <a-form-item  label="订单状态" v-bind="formItemLayout" >
                     <span >{{ currentOrder.orderState}}</span>
                 </a-form-item>
-                <a-form-item label="我的评分" v-bind="formItemLayout" v-if="currentOrder.orderState==='已完成'">
+                <a-form-item label="我的评分" v-bind="formItemLayout" v-if="currentOrder.orderState==='已评价'">
                     <span>{{currentOrder.rate}}</span>
                 </a-form-item>
-                <a-form-item label="我的评价" v-bind="formItemLayout" v-if="currentOrder.orderState==='已完成'">
+                <a-form-item label="我的评价" v-bind="formItemLayout" v-if="currentOrder.orderState==='已评价'">
                     <span>{{currentOrder.feedback}}</span>
                 </a-form-item>
 <!--                <a-form-item :wrapper-col="{ span: 8, offset: 4 }" >-->
@@ -79,7 +86,7 @@
             ])
         },
         mounted() {
-
+            console.log(this.currentOrder)
         },
         methods: {
             ...mapMutations([
