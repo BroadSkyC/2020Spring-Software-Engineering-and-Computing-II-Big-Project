@@ -28,11 +28,13 @@
                             <span class="value" v-if="currentHotelInfo.hotelStar=='Five'">五星级</span>
                             <span class="value" v-if="currentHotelInfo.hotelStar=='Four'">四星级</span>
                             <span class="value" v-if="currentHotelInfo.hotelStar=='Three'">三星级</span>
+                            <a-rate style="font-size: 15px" :value="5" disabled allowHalf count="5" v-if="currentHotelInfo.hotelStar=='Five'"/>
+                            <a-rate style="font-size: 15px" :value="4" disabled allowHalf count="4" v-if="currentHotelInfo.hotelStar=='Four'"/>
+                            <a-rate style="font-size: 15px" :value="3" disabled allowHalf count="3" v-if="currentHotelInfo.hotelStar=='Three'"/>
                         </div>
                         <div class="items" v-if="currentHotelInfo.rate">
                             <span class="label">评分:</span>
                             <span class="value">{{ currentHotelInfo.rate }}</span>
-                            <a-rate style="font-size: 15px" :value="currentHotelInfo.rate" disabled allowHalf/>
                         </div>
                         <div class="items" v-if="currentHotelInfo.description">
                             <span class="label">酒店简介:</span> 
@@ -78,6 +80,7 @@ export default {
     data() {
         return {
             count:0,
+            rateValue:0,
         }
     },
     computed: {
@@ -94,6 +97,7 @@ export default {
         this.set_currentHotelId(Number(this.$route.params.hotelId))
         this.getHotelById()
         this.clear_rooms()
+        this.set_rateValue(this.currentHotelInfo.rate)
         this.count++;
         /*const data=[{
             imgUrl:'https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.jpg',
@@ -128,7 +132,15 @@ export default {
         ...mapActions([
             'getHotelById',
             'getHotelComments'
-        ])
+        ]),
+        set_rateValue(data){
+            if(data-parseInt(data)>=0.5){
+                this.rateValue=parseInt(data)+0.5
+            }
+            else{
+                this.rateValue=data
+            }
+        }
     }
 }
 </script>

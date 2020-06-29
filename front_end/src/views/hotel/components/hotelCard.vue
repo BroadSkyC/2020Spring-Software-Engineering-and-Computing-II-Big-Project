@@ -10,7 +10,7 @@
       <a-card-meta :title="hotel.name">
       <template slot="description">
               <a style="font-size: 15px" /> {{hotel.address}}<br/>
-              <a-rate style="font-size: 15px" :value="hotel.rate" disabled allowHalf /> {{hotel.rate}}分<br/>
+              <a-rate style="font-size: 15px" :value="rateValue" disabled allowHalf /> {{hotel.rate}}分<br/>
               <a style="font-size: 15px" /> 价格区间:{{hotel.minPrice}} ~ {{hotel.maxPrice}}元
             </template>
     </a-card-meta>
@@ -19,15 +19,28 @@
 </template>
 <script>
 export default {
-  name:'',
-  props: {
-    hotel: {}
-  },
-  data() {
-    return{
-
+    name: '',
+    props: {
+        hotel: {}
+    },
+    data() {
+        return {
+            rateValue: 0,
+        }
+    },
+    mounted() {
+        this.set_rateValue(this.hotel.rate)
+    },
+    methods:{
+        set_rateValue(data){
+            if(data-parseInt(data)>=0.5){
+                this.rateValue=parseInt(data)+0.5
+            }
+            else{
+                this.rateValue=data
+            }
+        }
     }
-  },
 }
 </script>
 <style scoped lang="less">
