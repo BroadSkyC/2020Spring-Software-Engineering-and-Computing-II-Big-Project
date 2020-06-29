@@ -15,6 +15,7 @@
                     <a-select-option value="2">多间特惠</a-select-option>
                     <a-select-option value="3">满减特惠</a-select-option>
                     <a-select-option value="4">限时特惠</a-select-option>
+                    <a-select-option value="5">企业特惠</a-select-option>
                 </a-select>
             </a-form-item>
             <a-form-item label="券名" v-bind="formItemLayout">
@@ -55,6 +56,12 @@
                 <a-input placeholder="请填写每间优惠金额" v-decorator="['discountMoney',{rules:[{required:true,message:'请填写每间优惠金额'}]}]"/>
             </a-form-item>
 
+            <a-form-item label="企业名称" v-bind="formItemLayout" v-if="this.form.getFieldValue('type')==='5'">
+                <a-input placeholder="请填写企业名称" v-decorator="['company',{rules:[{required:true,message:'请填写企业名称'}]}]"/>
+            </a-form-item>
+            <a-form-item label="折扣" v-bind="formItemLayout" v-if="this.form.getFieldValue('type')==='5'">
+                <a-input placeholder="请填写折扣" v-decorator="['discount',{rules:[{required:true,message:'请填写折扣'}]}]"/>
+            </a-form-item>
 
             <a-form-item label="优惠简介" v-bind="formItemLayout">
                 <a-input type="textarea" :rows="4" placeholder="请填写优惠简介"
@@ -115,7 +122,8 @@ export default {
             'addHotelTargetMoneyCoupon',
             'addHotelTimeCoupon',
             'addHotelTargetRoomNumCoupon',
-            'addBirthdayCoupon'
+            'addBirthdayCoupon',
+            'addCompanyCoupon'
         ]),
         cancel() {
             this.set_addCouponVisible(false)
@@ -174,7 +182,7 @@ export default {
                         this.addHotelTimeCoupon(data)
                         this.form.resetFields()
                     }
-                    else{
+                    else if(this.form.getFieldValue('type')==='1'){
                         const data={
                             name: this.form.getFieldValue('name'),
                             description: this.form.getFieldValue('description'),
@@ -184,6 +192,19 @@ export default {
                             status: 1
                         }
                         this.addBirthdayCoupon(data)
+                        this.form.resetFields()
+                    }
+                    else{
+                        const data={
+                            name: this.form.getFieldValue('name'),
+                            description: this.form.getFieldValue('description'),
+                            type: Number(this.form.getFieldValue('type')),
+                            discount: Number(this.form.getFieldValue('discount')),
+                            hotelId: Number(this.activeHotelId),
+                            company:this.form.getFieldValue('company'),
+                            status: 1
+                        }
+                        this.addCompanyCoupon(data)
                         this.form.resetFields()
                     }
                 }
