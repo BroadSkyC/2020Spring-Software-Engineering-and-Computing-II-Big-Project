@@ -56,8 +56,7 @@ public class CouponController {
                                            @RequestParam Double orderPrice,
                                            @RequestParam Integer roomNum,
                                            @RequestParam String checkIn,
-                                           @RequestParam String checkOut,
-                                           @RequestParam String company) {
+                                           @RequestParam String checkOut) {
         OrderVO requestOrderVO = new OrderVO();
         requestOrderVO.setUserId(userId);
         requestOrderVO.setHotelId(hotelId);
@@ -65,9 +64,9 @@ public class CouponController {
         requestOrderVO.setRoomNum(roomNum);
         requestOrderVO.setCheckInDate(checkIn);
         requestOrderVO.setCheckOutDate(checkOut);
-        requestOrderVO.setCompany(company);
         return ResponseVO.buildSuccess(couponService.getMatchOrderCoupon(requestOrderVO));
     }
+
     @PostMapping("/delCoupon")
     public ResponseVO deleCoupon(@RequestBody CouponVO couponVO){
         couponService.delCoupon(couponVO);
