@@ -5,9 +5,18 @@
         </div>
         <div class="right-comment">
             <div class="username-rate">
-                <div class="username">{{comment.userName}}{{comment.rate}}</div>
+                <div class="username">{{comment.userName}}</div>
+<!--                <div class="rate">{{comment.rate}}分</div>-->
+                <div class="rate" >
+                    <span class="label">评分:</span>
+                    <span class="value">{{ comment.rate }}</span>
+                    <a-rate style="font-size: 15px" :value="comment.rate" disabled allowHalf/>
+                </div>
             </div>
-            <div class="content">
+            <div class="content" v-if="comment.feedback===''">
+                该用户未填写评价
+            </div>
+            <div class="content" v-else>
                 {{comment.feedback}}
             </div>
         </div>
@@ -49,15 +58,16 @@
         justify-content: flex-start;
         padding-top: 40px;
     }
-    .comment-group .left-comment {
-        width: 70px;
-        height: 70px;
-        margin-right: 20px;
+    .left-comment {
+        width: 40px;
+        height: 40px;
+        margin-right: 0px;
     }
     .left-comment .avatar {
-        width: 70px;
-        height: 70px;
+        width: 120px;
+        height: 120px;
         border-radius: 50%;
+        margin-left: 45px;
     }
     /* 右块 */
     .comment-group .right-comment {
@@ -71,8 +81,12 @@
     }
     /* 用户名 */
     .username-rate .username {
-        font-size: 30px;
+        font-size: 15px;
         margin-right: 20px;
+    }
+    .username-rate.rate{
+        font-size: 8px;
+        color: #666666;
     }
     /* 评论时间 */
     .right-comment .release-time {
@@ -80,9 +94,16 @@
         font-size: 30px;
         margin-top: 10px;
     }
+    .label{
+        color: #999999;
+    }
+    .value{
+        color: #999999;
+        margin-right: 10px;
+    }
     /* 评论内容 */
     .right-comment .content {
-        font-size: 30px;
+        font-size: 17px;
         color: #353535;
         margin-top: 10px;
     }
