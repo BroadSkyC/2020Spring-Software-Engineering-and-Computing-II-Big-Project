@@ -311,19 +311,21 @@ export default {
         },
     },
     watch:{
-        totalPrice(val) {
-            let data = {
-                userId: this.userId,
-                hotelId: this.currentHotelId,
-                orderPrice: this.totalPrice,
-                roomNum: Number(this.roomNum),
-                checkIn: this.checkInDate,
-                checkOut: this.checkOutDate,
-                // checkIn: moment(this.form.getFieldValue('date')[0]).format('YYYY-MM-DD'),
-                // checkOut: moment(this.form.getFieldValue('date')[1]).format('YYYY-MM-DD'),
+        totalPrice:{
+            handler(val){
+                let data = {
+                    userId: this.userId,
+                    hotelId: this.currentHotelId,
+                    orderPrice: this.totalPrice,
+                    roomNum: Number(this.roomNum),
+                    checkIn: this.checkInDate,
+                    checkOut: this.checkOutDate,
+                    // checkIn: moment(this.form.getFieldValue('date')[0]).format('YYYY-MM-DD'),
+                    // checkOut: moment(this.form.getFieldValue('date')[1]).format('YYYY-MM-DD'),
+                }
+                this.getOrderMatchCoupons(data)
             }
-            this.getOrderMatchCoupons(data)
-        }
+        },
     }
 }
 </script>
