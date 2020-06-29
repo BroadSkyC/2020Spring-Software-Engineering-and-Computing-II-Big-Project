@@ -1,9 +1,9 @@
 <template>
     <div class="manageUser-wrapper">
         <a-tabs>
-            <a-tab-pane tab="账户管理" key="1">
+            <a-tab-pane tab="酒店经理" key="1">
                 <div style="width: 100%; text-align: right; margin:20px 0">
-                    <a-button type="primary" @click="addManagerModal"><a-icon type="plus" />添加用户</a-button>
+                    <a-button type="primary" @click="addManagerModal"><a-icon type="plus" />添加经理</a-button>
                 </div>
                 <a-table
                     :columns="columns"
@@ -14,19 +14,34 @@
                         <span>￥{{ text }}</span>
                     </span>
                     <span slot="action" slot-scope="record">
-                        <a-button type="danger" @click="deleteManager(record)">删除用户</a-button>
+                        <a-button type="primary" size="small" @click="showManagerHotelList(record.id)">查看旗下酒店</a-button>
+                        <a-divider type="vertical"></a-divider>
+                        <a-popconfirm
+                                title="确定想删除该经理吗？"
+                                @confirm="deleteManager(record)"
+                                okText="确定"
+                                cancelText="取消"
+                        >
+                        <a-button type="danger" size="small">删除经理</a-button>
+                        </a-popconfirm>
                     </span>
                 </a-table>
             </a-tab-pane>
         </a-tabs>
         <AddManagerModal></AddManagerModal>
+        <ManagerAllHotels></ManagerAllHotels>
     </div>
 </template>
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 import AddManagerModal from './components/addManagerModal'
+import ManagerAllHotels from './components/managerAllHotels'
 const columns = [
-    {  
+    {
+        title: '用户ID',
+        dataIndex: 'id',
+    },
+    {
         title: '用户邮箱',
         dataIndex: 'email',
     },
@@ -41,10 +56,6 @@ const columns = [
     {
         title: '用户手机号',
         dataIndex: 'phoneNumber',
-    },
-    {
-        title: '信用值',
-        dataIndex: 'credit',
     },
     {
       title: '操作',
@@ -64,12 +75,14 @@ export default {
         }
     },
     components: {
-        AddManagerModal
+        AddManagerModal,
+        ManagerAllHotels,
     },
     computed: {
         ...mapGetters([
             'addManagerModalVisible',
-            'managerList'
+            'managerList',
+            'hotelList'
         ])
     },
     async mounted() {
@@ -77,17 +90,24 @@ export default {
     },
     methods: {
         ...mapMutations([
-            'set_addManagerModalVisible'
+            'set_addManagerModalVisible',
+            'set_managerAllHotelsVisible'
         ]),
         ...mapActions([
             'getManagerList',
-            'delManager'
+            'delManager',
+            'getManagerHotelList'
         ]),
         addManagerModal(){
             this.set_addManagerModalVisible(true)
+
         },
         deleteManager(record){
             this.delManager(record)
+        },
+        showManagerHotelList(id){
+            this.set_managerAllHotelsVisible(true)
+            this.getManagerHotelList(id)
         }
     }
 }

@@ -11,9 +11,12 @@ const admin = {
 
         ],
         addManagerModalVisible: false,
+        managerAllHotelsVisible:false,
         addManagerParams: {
             email:'',
-            password:''
+            password:'',
+            userName:'',
+            phoneNumber:''
         }
     },
     mutations: {
@@ -28,7 +31,10 @@ const admin = {
                 ...state.addManagerParams,
                 ...data,
             }
-        }
+        },
+        set_managerAllHotelsVisible: function(state, data) {
+            state.managerAllHotelsVisible = data
+        },
     },
     actions: {
         getManagerList: async ({commit}) => {
@@ -42,7 +48,9 @@ const admin = {
             if (res) {
                 commit('set_addManagerParams', {
                     email: '',
-                    password: ''
+                    password: '',
+                    userName:'',
+                    phoneNumber:''
                 })
                 commit('set_addManagerModalVisible', false)
                 message.success('添加成功')
@@ -51,12 +59,11 @@ const admin = {
                 message.error('添加失败')
             }
         },
-        delManager: async (dispatch, data) => {
+        delManager: async ({dispatch}, data) => {
             const res = await delManagerAPI(data)
             if (res) {
                 //dispatch('getHotelList')
                 message.success('删除成功')
-                window.location.reload();
                 dispatch('getManagerList')
             } else {
                 message.error('删除失败')

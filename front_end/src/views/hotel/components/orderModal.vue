@@ -11,11 +11,11 @@
             <a-form-item v-bind="formItemLayout" label="房型信息">
                 <span>{{ currentOrderRoom.roomType }}</span>
             </a-form-item>
-            <a-form-item v-bind="formItemLayout" label="入住人姓名">
+            <a-form-item v-bind="formItemLayout" label="预定人姓名">
                 <a-input
                     v-decorator="[
                         'clientName',
-                        { rules: [{required: true, message: '请填写入住人姓名', }] }
+                        { rules: [{required: true, message: '请填写预定人姓名', }] }
                     ]"
                 />
             </a-form-item>
@@ -23,28 +23,23 @@
                 <a-input
                     v-decorator="[
                         'phoneNumber',
-                        { rules: [{required: true, message: '请填写入住人联系手机', }] }
+                        { rules: [{required: true, message: '请填写预定人联系手机', }] }
                     ]"
                 />
             </a-form-item>
             
             <a-form-item v-bind="formItemLayout" label="入住日期">
-<!--                <a-range-picker-->
-<!--                    format="YYYY-MM-DD"-->
-<!--                    @change="changeDate"-->
-<!--                    v-decorator="[-->
-<!--                        'date', -->
-<!--                        {-->
-<!--                            rules: [{ required: true, message: '请选择入住时间' }]   -->
-<!--                        }-->
-<!--                    ]"-->
-<!--                    :placeholder="['入住日期','退房日期']"-->
-<!--                />-->
                 <span>{{ checkInDate }}</span>
             </a-form-item>
+
             <a-form-item v-bind="formItemLayout" label="退房日期">
                 <span>{{ checkOutDate }}</span>
             </a-form-item>
+            <a-form-item v-bind="formItemLayout" label="房间数">
+            <a-button type="primary" size="small" shape="circle" icon="minus" @click="minusOne" v-if="roomNums>1 && currentOrderRoom.curNum>1"></a-button>
+            <span class="nums">{{roomNums}}</span>
+            <a-button type="primary" size="small" shape="circle" icon="plus" @click="plusOne" v-if="(roomNums<3) ||(userInfo.vipType==='Company' && roomNums<10) && roomNums<currentOrderRoom.curNum"></a-button>
+        </a-form-item>
             <a-form-item v-bind="formItemLayout" label="入住人数">
                 <a-select
                     v-decorator="[
@@ -60,11 +55,17 @@
                     <a-select-option :value="2">
                     2
                     </a-select-option>
-                     <a-select-option :value="3">
+                     <a-select-option :value="3" v-if="roomNums>1">
                     3
                     </a-select-option>
-                    <a-select-option :value="4">
+                    <a-select-option :value="4" v-if="roomNums>1">
                     4
+                    </a-select-option>
+                    <a-select-option :value="5" v-if="roomNums>2">
+                        5
+                    </a-select-option>
+                    <a-select-option :value="6" v-if="roomNums>2">
+                        6
                     </a-select-option>
                 </a-select>
             </a-form-item>
@@ -79,11 +80,7 @@
                     <a-radio :value="0">无</a-radio>
                 </a-radio-group>
             </a-form-item>
-            <a-form-item v-bind="formItemLayout" label="房间数">
-                <a-button type="primary" size="small" shape="circle" icon="minus" @click="minusOne" v-if="roomNums>1 && currentOrderRoom.curNum>1"></a-button>
-                <span class="nums">{{roomNums}}</span>
-                <a-button type="primary" size="small" shape="circle" icon="plus" @click="plusOne" v-if="(roomNums<3) ||(userInfo.vipType==='Company' && roomNums<10) && roomNums<currentOrderRoom.curNum"></a-button>
-            </a-form-item>
+
             <a-form-item v-bind="formItemLayout" label="房间单价">
                 <span>{{ currentOrderRoom.price }}</span>
             </a-form-item>

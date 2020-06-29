@@ -24,6 +24,22 @@
                     ]"
                 />
             </a-form-item >
+        <a-form-item v-bind="formItemLayout" label="用户名">
+            <a-input
+                    v-decorator="[
+                        'userName',
+                        { rules: [{required: true, message: '请输入用户名', }] }
+                    ]"
+            />
+        </a-form-item >
+        <a-form-item v-bind="formItemLayout" label="手机号">
+            <a-input
+                    v-decorator="[
+                        'phoneNumber',
+                        { rules: [{required: true, message: '请输入手机号码', }] }
+                    ]"
+            />
+        </a-form-item >
     </a-Form>
     </a-modal>
 </template>
@@ -75,7 +91,9 @@ export default {
                 if (!err) {
                     const data = {
                         email: this.form.getFieldValue('email'),
-                        password: this.form.getFieldValue('password')
+                        password: this.form.getFieldValue('password'),
+                        userName:this.form.getFieldValue('userName'),
+                        phoneNumber:this.form.getFieldValue('phoneNumber')
                     }
                     this.set_addManagerParams(data)
                     this.addManager()
