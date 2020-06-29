@@ -5,6 +5,34 @@ public class Comment {
     private Double rate;
     private String feedback;
     private String imgUrl;
+    private String creditGrade;
+    private String checkInDate;
+    private String checkOutDate;
+    public String getCreditGrade() {
+        return creditGrade;
+    }
+
+    public void setCreditGrade(String creditGrade) {
+        this.creditGrade = creditGrade;
+    }
+
+    public String getCheckInDate() {
+        return checkInDate;
+    }
+
+    public void setCheckInDate(String checkInDate) {
+        this.checkInDate = checkInDate;
+    }
+
+    public String getCheckOutDate() {
+        return checkOutDate;
+    }
+
+    public void setCheckOutDate(String checkOutDate) {
+        this.checkOutDate = checkOutDate;
+    }
+
+
 
     public String getUserName() {
         return userName;

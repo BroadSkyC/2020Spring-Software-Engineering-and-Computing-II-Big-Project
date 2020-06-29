@@ -185,13 +185,33 @@ public class HotelServiceImpl implements HotelService {
     public List<Comment> retrieveHotelsComments(Integer hotelId){
         List<Comment> comments =new ArrayList<Comment>();
         List<Order> orders=orderService.getHotelOrders(hotelId);
+        orders=orders.stream().filter(order -> !order.getFeedback().equals("")).collect(Collectors.toList());
         for (Order order : orders) {
             Comment comment = new Comment();
             comment.setFeedback(order.getFeedback());
             comment.setRate(order.getRate());
+            comment.setCheckInDate(order.getCheckInDate());
+            comment.setCheckOutDate(order.getCheckOutDate());
+            int k=order.getUserCredit();
+            if(k<=100)
+                comment.setCreditGrade("信用一般");
+            else if(k<=500)
+                comment.setCreditGrade("信用良好");
+            else
+                comment.setCreditGrade("信用极佳");
             User user = accountService.getUserInfo(order.getUserId());
             comment.setImgUrl(user.getImgUrl());
-            comment.setUserName(user.getUserName());
+            String name=user.getUserName();
+            StringBuilder s= new StringBuilder(name.substring(0, 1));
+            if(name.length()==2)
+                s.append('*');
+            else if(name.length()>2){
+                for(int i=0;i<name.length()-2;i++){
+                    s.append('*');
+                }
+                s.append(name.substring(name.length()-1));
+            }
+            comment.setUserName(s.toString());
             comments.add(comment);
         }
         return comments;
