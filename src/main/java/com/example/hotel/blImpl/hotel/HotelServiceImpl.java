@@ -185,7 +185,7 @@ public class HotelServiceImpl implements HotelService {
     public List<Comment> retrieveHotelsComments(Integer hotelId){
         List<Comment> comments =new ArrayList<Comment>();
         List<Order> orders=orderService.getHotelOrders(hotelId);
-        orders=orders.stream().filter(order -> !order.getFeedback().equals("")).collect(Collectors.toList());
+        orders=orders.stream().filter(order -> order.getOrderState().equals("已评价")).collect(Collectors.toList());
         for (Order order : orders) {
             Comment comment = new Comment();
             comment.setFeedback(order.getFeedback());
