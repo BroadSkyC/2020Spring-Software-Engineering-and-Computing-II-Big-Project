@@ -7,6 +7,15 @@
             <div class="username-rate">
                 <div class="username">{{comment.userName}}</div>
 <!--                <div class="rate">{{comment.rate}}分</div>-->
+                <a-tag  color="green" v-if="comment.creditGrade==='信用极佳'">
+                    信用极佳
+                </a-tag>
+                <a-tag  color="blue" v-if="comment.creditGrade==='信用良好'">
+                    信用良好
+                </a-tag>
+                <a-tag  color="dimgrey" v-if="comment.creditGrade==='信用一般'">
+                    信用一般
+                </a-tag>
                 <div class="rate" >
                     <span class="label">评分:</span>
                     <span class="value">{{ comment.rate }}</span>
@@ -18,6 +27,9 @@
             </div>
             <div class="content" v-else>
                 {{comment.feedback}}
+            </div>
+            <div class="end">
+               入住于：{{comment.checkInDate}}-{{comment.checkOutDate}}
             </div>
         </div>
     </div>
@@ -104,6 +116,11 @@
     /* 评论内容 */
     .right-comment .content {
         font-size: 17px;
+        color: #353535;
+        margin-top: 10px;
+    }
+    .right-comment .end {
+        font-size: 10px;
         color: #353535;
         margin-top: 10px;
     }

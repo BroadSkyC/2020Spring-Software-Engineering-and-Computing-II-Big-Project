@@ -100,8 +100,8 @@
                         <span v-if="text == 'Family'">家庭房</span>
                     </span>
                     <a-tag slot="orderState" color="blue" slot-scope="text">
-                        {{ text }}
-                    </a-tag>
+                    {{ text }}
+                </a-tag>
                     <span slot="action" slot-scope="record">
                         <a-button type="primary" size="small" @click="showViewOrder(record)">查看</a-button>
                         <a-divider type="vertical" v-if="record.orderState == '已预订'"></a-divider>
