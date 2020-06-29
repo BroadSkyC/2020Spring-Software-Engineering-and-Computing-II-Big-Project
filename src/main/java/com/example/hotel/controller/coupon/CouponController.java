@@ -1,6 +1,7 @@
 package com.example.hotel.controller.coupon;
 
 import com.example.hotel.bl.coupon.CouponService;
+import com.example.hotel.po.Coupon;
 import com.example.hotel.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +39,12 @@ public class CouponController {
         return ResponseVO.buildSuccess(couponVO);
     }
 
+    @PostMapping("/CompanyCoupon")
+    public ResponseVO addCompanyCoupon(@RequestBody CompanyCouponVO companyCouponVO){
+        CouponVO couponVO = couponService.addCompanyCoupon(companyCouponVO);
+        return ResponseVO.buildSuccess(couponVO);
+    }
+
     @GetMapping("/hotelAllCoupons")
     public ResponseVO getHotelAllCoupons(@RequestParam Integer hotelId) {
         return ResponseVO.buildSuccess(couponService.getHotelAllCoupon(hotelId));
@@ -49,7 +56,8 @@ public class CouponController {
                                            @RequestParam Double orderPrice,
                                            @RequestParam Integer roomNum,
                                            @RequestParam String checkIn,
-                                           @RequestParam String checkOut) {
+                                           @RequestParam String checkOut,
+                                           @RequestParam String company) {
         OrderVO requestOrderVO = new OrderVO();
         requestOrderVO.setUserId(userId);
         requestOrderVO.setHotelId(hotelId);
@@ -57,6 +65,7 @@ public class CouponController {
         requestOrderVO.setRoomNum(roomNum);
         requestOrderVO.setCheckInDate(checkIn);
         requestOrderVO.setCheckOutDate(checkOut);
+        requestOrderVO.setCompany(company);
         return ResponseVO.buildSuccess(couponService.getMatchOrderCoupon(requestOrderVO));
     }
     @PostMapping("/delCoupon")

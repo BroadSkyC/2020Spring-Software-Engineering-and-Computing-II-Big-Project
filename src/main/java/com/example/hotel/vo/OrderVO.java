@@ -27,7 +27,15 @@ public class OrderVO {
     private String feedback;
     private Integer creditChange;
     private Integer userCredit;
+    private String company;
 
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
     public Integer getId() {
         return id;
     }

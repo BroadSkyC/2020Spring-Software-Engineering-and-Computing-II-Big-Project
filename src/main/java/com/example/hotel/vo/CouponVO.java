@@ -6,6 +6,7 @@ public class CouponVO {
     private Integer status;
     private String name;
     private Integer type;
+    private String company;
 
     public Integer getId() {
         return id;

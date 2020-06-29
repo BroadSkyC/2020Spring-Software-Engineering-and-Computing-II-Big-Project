@@ -21,6 +21,7 @@ public class CouponServiceImpl implements CouponService {
     private final RoomNumCouponStrategyImpl roomNumCouponStrategy;
     private final TimeCouponStrategyImpl timeCouponStrategy;
     private final BirthdayCouponStrategyImpl birthdayCouponStrategy;
+    private final CompanyCouponStrategyImpl companyCouponStrategy;
     private final CouponMapper couponMapper;
 
     private static List<CouponMatchStrategy> strategyList = new ArrayList<>();
@@ -29,16 +30,20 @@ public class CouponServiceImpl implements CouponService {
     public CouponServiceImpl(TargetMoneyCouponStrategyImpl targetMoneyCouponStrategy,
                              TimeCouponStrategyImpl timeCouponStrategy,
                              RoomNumCouponStrategyImpl roomNumCouponStrategy,
-                             BirthdayCouponStrategyImpl birthdayCouponStrategy, CouponMapper couponMapper) {
+                             BirthdayCouponStrategyImpl birthdayCouponStrategy,
+                             CompanyCouponStrategyImpl companyCouponStrategy,
+                             CouponMapper couponMapper) {
         this.couponMapper = couponMapper;
         this.targetMoneyCouponStrategy = targetMoneyCouponStrategy;
         this.timeCouponStrategy = timeCouponStrategy;
         this.roomNumCouponStrategy=roomNumCouponStrategy;
         this.birthdayCouponStrategy = birthdayCouponStrategy;
+        this.companyCouponStrategy = companyCouponStrategy;
         strategyList.add(roomNumCouponStrategy);
         strategyList.add(targetMoneyCouponStrategy);
         strategyList.add(timeCouponStrategy);
         strategyList.add(birthdayCouponStrategy);
+        strategyList.add(companyCouponStrategy);
     }
 
 
@@ -124,6 +129,20 @@ public class CouponServiceImpl implements CouponService {
         coupon.setHotelId(couponVO.getHotelId());
         coupon.setDiscount(couponVO.getDiscount());
         coupon.setStatus(1);
+        int result = couponMapper.insertCoupon(coupon);
+        couponVO.setId(result);
+        return couponVO;
+    }
+
+    public CouponVO addCompanyCoupon(CompanyCouponVO couponVO){
+        Coupon coupon = new Coupon();
+        coupon.setCouponName(couponVO.getName());
+        coupon.setDiscount(couponVO.getDiscount());
+        coupon.setHotelId(couponVO.getHotelId());
+        coupon.setCompany(couponVO.getCompany());
+        coupon.setStatus(1);
+        coupon.setCouponType(couponVO.getType());
+        coupon.setDescription(couponVO.getDescription());
         int result = couponMapper.insertCoupon(coupon);
         couponVO.setId(result);
         return couponVO;

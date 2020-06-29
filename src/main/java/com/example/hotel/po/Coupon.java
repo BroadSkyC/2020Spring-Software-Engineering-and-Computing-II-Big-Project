@@ -54,6 +54,16 @@ public class Coupon {
      */
     private Integer status;
 
+    private String company;
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
     public Integer getTargetRoomNum() {
         return targetRoomNum;
     }

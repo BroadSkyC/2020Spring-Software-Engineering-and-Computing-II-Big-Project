@@ -47,4 +47,5 @@ public interface AccountMapper {
     void updateUserCredit(@Param("id") Integer id, @Param("credit") Integer credit);
 
     int getUserCredit(@Param("id") Integer id);
+    String getCompany(@Param("id") Integer id);
 }
