@@ -29,7 +29,7 @@
                 {{comment.feedback}}
             </div>
             <div class="end">
-               入住于：{{comment.checkInDate}}-{{comment.checkOutDate}}
+               入住于：{{comment.checkInDate}}~{{comment.checkOutDate}}
             </div>
         </div>
     </div>

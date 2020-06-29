@@ -32,6 +32,13 @@ export function hotelBirthdayAPI(data) {
         data,
     })
 }
+export function hotelCompanyAPI(data) {
+    return axios({
+        url: `${api.couponPre}/CompanyCoupon`,
+        method: 'POST',
+        data,
+    })
+}
 export function hotelAllCouponsAPI(hotelId) {
     return axios({
         url: `${api.couponPre}/hotelAllCoupons`,
