@@ -87,6 +87,7 @@
                             price: this.currentOrder.price,
                             roomPrice: this.currentOrder.roomPrice,
                             id: this.currentOrder.id,
+                            userId: this.currentOrder.userId,
                             hotelName: this.currentOrder.hotelName,
                             roomType: this.currentOrder.roomType,
                             roomNum: this.currentOrder.roomNum,
