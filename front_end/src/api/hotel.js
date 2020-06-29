@@ -27,3 +27,9 @@ export function updateCurrentHotelInfoAPI(data) {
         data,
     })
 }
+export function getCommentsAPI(hotelId) {
+    return axios({
+        url: `${api.hotelPre}/${hotelId}/getComments`,
+        method: 'GET',
+    })
+}

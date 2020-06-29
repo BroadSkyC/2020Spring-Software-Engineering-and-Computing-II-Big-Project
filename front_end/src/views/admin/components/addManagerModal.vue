@@ -45,7 +45,7 @@
 </template>
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex'
-export default {
+export default  {
     name: 'addManagerModal',
     data() {
         return {

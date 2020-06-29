@@ -23,6 +23,7 @@ const getters = {
   checkOutDate:state=>state.hotel.checkOutDate,
   allRooms:state=>state.hotel.allRooms,
   roomNums:state=>state.hotel.roomNums,
+  hotelComments: state=>state.hotel.hotelComments,
   //admin
   managerList: state => state.admin.managerList,
   addManagerModalVisible: state => state.admin.addManagerModalVisible,

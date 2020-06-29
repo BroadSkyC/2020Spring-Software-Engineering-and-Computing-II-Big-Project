@@ -5,6 +5,7 @@ import {
     getHotelByIdAPI,
     getManagerHotelsAPI,
     updateCurrentHotelInfoAPI,
+    getCommentsAPI
 } from '@/api/hotel'
 import {
     reserveHotelAPI
@@ -43,8 +44,12 @@ const hotel = {
 
         },
         roomNums: 1,
+        hotelComments:[]
     },
     mutations: {
+        set_hotelComments:function(state, data){
+            state.hotelComments = data
+        },
         set_hotelList: function(state, data) {
             state.hotelList = data
         },
@@ -118,6 +123,12 @@ const hotel = {
     },
 
     actions: {
+        getHotelComments: async({commit, state},hotelId)=>{
+            const res=await getCommentsAPI(hotelId)
+            if(res){
+                commit('set_hotelComments',res)
+            }
+        },
         getHotelList: async({commit, state}) => {
             const res = await getHotelsAPI()
             if(res){

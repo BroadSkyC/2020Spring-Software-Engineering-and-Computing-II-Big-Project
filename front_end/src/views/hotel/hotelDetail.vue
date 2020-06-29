@@ -54,7 +54,11 @@
                             <span class="value">{{ currentHotelInfo.description }}</span>
                         </div>
                     </a-tab-pane>
+                    <a-tab-pane tab="酒店评价" key="4">
+                        <ShowComments v-for="hotelComment in hotelComments" v-bind:key="hotelComment.feedback" :comment="hotelComment"></ShowComments>
+                    </a-tab-pane>
                 </a-tabs>
+
             </div>
         </a-layout-content>
     </a-layout>
@@ -63,11 +67,13 @@
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 import RoomList from './components/roomList'
 import AllRoomInfo from "./components/allRoomInfo";
+import ShowComments from "./components/showComments";
 export default {
     name: 'hotelDetail',
     components: {
         AllRoomInfo,
         RoomList,
+        ShowComments,
     },
     data() {
         return {
@@ -78,7 +84,9 @@ export default {
         ...mapGetters([
             'currentHotelInfo',
             'allRooms',
-            'userInfo'
+            'userInfo',
+            'hotelComments',
+            'currentHotelId'
         ])
     },
     mounted() {
@@ -87,8 +95,25 @@ export default {
         this.getHotelById()
         this.clear_rooms()
         this.count++;
+        /*const data=[{
+            imgUrl:'https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.jpg',
+            userName:'傻逼',
+            feedback:'这酒店真好啊',
+            rate:4.5,
+        },{
+            imgUrl:'https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.jpg',
+            userName:'傻',
+            feedback:'这酒店真好啊',
+            rate:4.5,
+        }]
+        this.set_hotelComments(data)*/
+        console.log(this.currentHotelId)
+        this.getHotelComments(this.currentHotelId)
+        console.log(this.hotelComments)
+        console.log(this.userInfo)
     },
     beforeRouteUpdate(to, from, next) {
+
         this.set_currentHotelId(Number(to.params.hotelId))
         this.getHotelById()
         next()
@@ -97,10 +122,12 @@ export default {
         ...mapMutations([
             'set_currentHotelId',
             'set_visitCount',
-            'clear_rooms'
+            'clear_rooms',
+            'set_hotelComments'
         ]),
         ...mapActions([
-            'getHotelById'
+            'getHotelById',
+            'getHotelComments'
         ])
     }
 }
