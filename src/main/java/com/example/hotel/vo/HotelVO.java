@@ -20,6 +20,7 @@ public class HotelVO {
     private double minPrice;
     private double maxPrice;
     private Integer commentTime;
+    private String imgUrl;
     private String imgUrl1;
     private String imgUrl2;
     private String imgUrl3;
@@ -127,6 +128,10 @@ public class HotelVO {
     }
 
     public Integer getCommentTime() { return this.commentTime; }
+
+    public String getImgUrl(){return this.imgUrl;}
+
+    public void setImgUrl(String url){this.imgUrl=url;}
 
     public String getImgUrl1(){return this.imgUrl1;}
 

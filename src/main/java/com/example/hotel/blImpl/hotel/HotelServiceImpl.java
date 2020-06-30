@@ -70,9 +70,10 @@ public class HotelServiceImpl implements HotelService {
         hotel.setImgUrl1(hotelVO.getImgUrl1());
         hotel.setImgUrl2(hotelVO.getImgUrl2());
         hotel.setImgUrl3(hotelVO.getImgUrl3());
-        if(hotelVO.getImgUrl1()==null)  hotel.setImgUrl1("https://farsky-seec-homework1.oss-accelerate.aliyuncs.com/%E9%BB%98%E8%AE%A4%E9%85%92%E5%BA%97.jpeg");
-        if(hotelVO.getImgUrl2()==null)  hotel.setImgUrl2("https://farsky-seec-homework1.oss-accelerate.aliyuncs.com/%E9%BB%98%E8%AE%A4%E9%85%92%E5%BA%97.jpeg");
-        if(hotelVO.getImgUrl3()==null)  hotel.setImgUrl3("https://farsky-seec-homework1.oss-accelerate.aliyuncs.com/%E9%BB%98%E8%AE%A4%E9%85%92%E5%BA%97.jpeg");
+        if(hotelVO.getImgUrl()==null)  hotel.setImgUrl("https://farsky-seec-homework1.oss-accelerate.aliyuncs.com/%E9%BB%98%E8%AE%A4%E9%85%92%E5%BA%97.jpeg");
+        if(hotelVO.getImgUrl1()==null)  hotel.setImgUrl1("https://seec67.oss-cn-shanghai.aliyuncs.com/1.jpg");
+        if(hotelVO.getImgUrl2()==null)  hotel.setImgUrl2("https://seec67.oss-cn-shanghai.aliyuncs.com/2.jpg");
+        if(hotelVO.getImgUrl3()==null)  hotel.setImgUrl3("https://seec67.oss-cn-shanghai.aliyuncs.com/3.jpg");
         //hotel.setBizRegion(BizRegion.valueOf(hotelVO.getBizRegion()));
         hotel.setHotelStar(HotelStar.valueOf(hotelVO.getHotelStar()));
         hotelMapper.insertHotel(hotel);

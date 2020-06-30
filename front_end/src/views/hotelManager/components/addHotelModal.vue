@@ -58,7 +58,18 @@
                     v-decorator="['description', { rules: [{ required: true, message: '请填写酒店简介' }] }]"
                 />
             </a-form-item>
-            <a-form-item label="酒店图片" v-bind="formItemLayout" class="abc">
+            <a-form-item label="酒店封面图片" v-bind="formItemLayout" class="abc">
+                <p class="row" id="imgbox" v-if="this.imgLocalUrl">
+                    <img id="image" v-bind:src=this.imgLocalUrl>
+                </p>
+                <div class="file-input">
+                    <p class="input-container" >
+                        <a-icon type="plus-square" style="font-size: 70px" class="plus" />
+                        <input type="file" @change="Upload1" accept="image/*"/>
+                    </p>
+                </div>
+            </a-form-item>
+            <a-form-item label="酒店展示图片" v-bind="formItemLayout" class="abc">
                 <p class="row" id="imgbox1" v-if="this.imgLocalUrl1">
                     <img id="image1" v-bind:src=this.imgLocalUrl1>
                 </p>
@@ -87,12 +98,15 @@ export default {
     name: 'addHotelModal',
     data() {
         return {
+            imgUrl:'',
             imgUrl1: '',
             imgUrl2: '',
             imgUrl3: '',
+            imgLocalUrl:'',
             imgLocalUrl1:'',
             imgLocalUrl2:'',
             imgLocalUrl3:'',
+            filePath:'',
             filePath1:'',
             filePath2:'',
             filePath3:'',
@@ -131,15 +145,19 @@ export default {
             'addHotel'
         ]),
         cancel() {
+            if(this.filePath)remove(this.filePath);
             if(this.filePath1)remove(this.filePath1);
             if(this.filePath2)remove(this.filePath2);
             if(this.filePath3)remove(this.filePath3);
+            this.imgUrl=''
             this.imgUrl1=''
             this.imgUrl2=''
             this.imgUrl3=''
+            this.imgLocalUrl=''
             this.imgLocalUrl1=''
             this.imgLocalUrl2=''
             this.imgLocalUrl3=''
+            this.filePath=''
             this.filePath1=''
             this.filePath2=''
             this.filePath3=''
@@ -168,6 +186,39 @@ export default {
                 u8arr[n] = bytes.charCodeAt(n);
             }
             return new Blob([u8arr], { type: fileType });
+        },
+        Upload1:function(e) {
+            var file=e.target.files[0];
+            const reader = new FileReader();
+            this.imgLocalUrl = this.getObjectURL(file);
+            reader.readAsDataURL(file);
+            var urlData = "";
+            reader.onload = () => {
+                var url = reader.result;
+                urlData = url;
+                const base64 = urlData.split(',').pop();
+                const fileType = urlData.split(';').shift().split(':').pop();
+                // base64转blob
+                const blob = this.toBlob(base64, fileType);
+                reader.readAsArrayBuffer(blob);
+                reader.onload = (event) => {
+                    const OSS = require('ali-oss');
+                    // arrayBuffer转Buffer
+                    const buffer = new OSS.Buffer(event.target.result);
+                    // 上传
+                    var fileName = `${Date.parse(new Date())}` + '.jpg';  //定义唯一的文件
+                    this.filePath=fileName
+                    put(fileName, buffer).then((result) => {
+                        this.imgUrl = result.url;
+                    }).catch(function (err) {
+                        console.log(err);
+                    });
+
+                }
+                reader.onerror = function (error) {
+                    console.log('Error: ', error);
+                };
+            };
         },
         Upload:function(e) {
             if(e.target.files.length>3 ){
@@ -282,17 +333,23 @@ export default {
                         rate: this.form.getFieldValue('rate'),
                         bizRegion:this.form.getFieldValue('bizRegion'),
                         managerId: Number(this.userId),
+                        imgUrl:this.imgUrl,
                         imgUrl1:this.imgUrl1,
                         imgUrl2:this.imgUrl2,
                         imgUrl3:this.imgUrl3,
                     }
+                    this.imgUrl=''
                     this.imgUrl1=''
                     this.imgUrl2=''
                     this.imgUrl3=''
+                    this.imgLocalUrl=''
                     this.imgLocalUrl1=''
                     this.imgLocalUrl2=''
                     this.imgLocalUrl3=''
                     this.filePath=''
+                    this.filePath1=''
+                    this.filePath2=''
+                    this.filePath3=''
                     this.set_addHotelParams(data)
                     this.addHotel()
                 }
@@ -344,6 +401,19 @@ export default {
         left:0;
         top:0;
         opacity:0;
+    }
+    #imgbox{
+
+        max-width:100%;
+        max-height: 400px;
+        vertical-align: center;
+    }
+    #image{
+        width: auto;/*图片长宽自适应*/
+        height: auto;
+        max-width:100%;
+        max-height: 400px;
+        vertical-align: center;
     }
     #imgbox1{
 
