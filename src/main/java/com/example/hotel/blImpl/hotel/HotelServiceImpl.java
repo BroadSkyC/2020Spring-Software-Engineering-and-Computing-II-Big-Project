@@ -67,6 +67,7 @@ public class HotelServiceImpl implements HotelService {
         hotel.setMinPrice(0);
         hotel.setMaxPrice(0);
         hotel.setCommentTime(1);
+        hotel.setImgUrl(hotelVO.getImgUrl());
         hotel.setImgUrl1(hotelVO.getImgUrl1());
         hotel.setImgUrl2(hotelVO.getImgUrl2());
         hotel.setImgUrl3(hotelVO.getImgUrl3());

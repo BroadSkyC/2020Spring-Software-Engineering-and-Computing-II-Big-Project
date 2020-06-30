@@ -43,7 +43,10 @@ const hotelManager = {
             description:'',
             phoneNum:'',
             managerId:'',
-            imgUrl: ''
+            imgUrl: '',
+            imgUrl1:'',
+            imgUrl2:'',
+            imgUrl3:''
         },
         currentOrder:{
 
@@ -182,6 +185,9 @@ const hotelManager = {
                     phoneNum: '',
                     managerId: '',
                     imgUrl: '',
+                    imgUrl1: '',
+                    imgUrl2:'',
+                    imgUrl3:'',
                 })
                 commit('set_addHotelModalVisible', false)
                 message.success('添加成功')

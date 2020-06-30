@@ -28,9 +28,9 @@
                             <span class="value" v-if="currentHotelInfo.hotelStar=='Five'">五星级</span>
                             <span class="value" v-if="currentHotelInfo.hotelStar=='Four'">四星级</span>
                             <span class="value" v-if="currentHotelInfo.hotelStar=='Three'">三星级</span>
-                            <a-rate style="font-size: 15px" :value="5" disabled allowHalf count="5" v-if="currentHotelInfo.hotelStar=='Five'"/>
-                            <a-rate style="font-size: 15px" :value="4" disabled allowHalf count="4" v-if="currentHotelInfo.hotelStar=='Four'"/>
-                            <a-rate style="font-size: 15px" :value="3" disabled allowHalf count="3" v-if="currentHotelInfo.hotelStar=='Three'"/>
+                            <a-rate style="font-size: 15px" :value=5 disabled allowHalf count=5 v-if="currentHotelInfo.hotelStar=='Five'"/>
+                            <a-rate style="font-size: 15px" :value=4 disabled allowHalf count=4 v-if="currentHotelInfo.hotelStar=='Four'"/>
+                            <a-rate style="font-size: 15px" :value=3 disabled allowHalf count=3 v-if="currentHotelInfo.hotelStar=='Three'"/>
                         </div>
                         <div class="items" v-if="currentHotelInfo.rate">
                             <span class="label">评分:</span>
@@ -50,11 +50,10 @@
                     <a-tab-pane tab="房间信息" key="1">
                         <RoomList :rooms="currentHotelInfo.rooms"></RoomList>
                     </a-tab-pane>
-                    <a-tab-pane tab="酒店详情" key="2">
-                        <div class="items" v-if="currentHotelInfo.description">
-                            <span class="label">酒店简介:</span>
-                            <span class="value">{{ currentHotelInfo.description }}</span>
-                        </div>
+                    <a-tab-pane tab="酒店环境" key="2">
+<!--                            <span class="label">酒店简介:</span>-->
+<!--                            <span class="value">{{ currentHotelInfo.description }}</span>-->
+                        <swiper-display ></swiper-display>
                     </a-tab-pane>
                     <a-tab-pane tab="酒店评价" key="4">
                         <ShowComments v-for="hotelComment in hotelComments" v-bind:key="hotelComment.feedback" :comment="hotelComment"></ShowComments>
@@ -70,9 +69,11 @@ import { mapGetters, mapActions, mapMutations } from 'vuex'
 import RoomList from './components/roomList'
 import AllRoomInfo from "./components/allRoomInfo";
 import ShowComments from "./components/showComments";
+import SwiperDisplay from "./components/swiperDisplay";
 export default {
     name: 'hotelDetail',
     components: {
+        SwiperDisplay,
         AllRoomInfo,
         RoomList,
         ShowComments,
@@ -111,10 +112,8 @@ export default {
             rate:4.5,
         }]
         this.set_hotelComments(data)*/
-        console.log(this.currentHotelId)
         this.getHotelComments(this.currentHotelId)
-        console.log(this.hotelComments)
-        console.log(this.userInfo)
+        console.log(this.currentHotelInfo.imgUrl)
     },
     beforeRouteUpdate(to, from, next) {
 

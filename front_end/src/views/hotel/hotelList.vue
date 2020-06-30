@@ -148,6 +148,8 @@ export default {
   },
   async mounted() {
     await this.getHotelList()
+      console.log("HotelList is")
+      console.log(this.hotelList)
   },
   computed: {
     ...mapGetters([
