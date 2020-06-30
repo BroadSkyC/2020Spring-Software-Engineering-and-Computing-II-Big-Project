@@ -52,9 +52,9 @@
         <result column="manager_id" property="managerId"></result>
         <result column="commentTime" property="commentTime"></result>
         <result column="imgUrl" property="imgUrl"></result>
-        <result column="imgUrl1" property="imgUrl"></result>
-        <result column="imgUrl2" property="imgUrl"></result>
-        <result column="imgUrl3" property="imgUrl"></result>
+        <result column="imgUrl1" property="imgUrl1"></result>
+        <result column="imgUrl2" property="imgUrl2"></result>
+        <result column="imgUrl3" property="imgUrl3"></result>
     </resultMap>
 
 
