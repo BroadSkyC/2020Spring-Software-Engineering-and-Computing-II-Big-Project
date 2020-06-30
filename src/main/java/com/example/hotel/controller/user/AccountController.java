@@ -31,7 +31,6 @@ public class AccountController {
             return ResponseVO.buildFailure(ACCOUNT_INFO_ERROR);
         }
         return ResponseVO.buildSuccess(user);
-
     }
 
     @PostMapping("/register")

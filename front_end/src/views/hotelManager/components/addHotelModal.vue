@@ -59,13 +59,21 @@
                 />
             </a-form-item>
             <a-form-item label="酒店图片" v-bind="formItemLayout" class="abc">
-                <p class="row" id="imgbox" v-if="this.imgLocalUrl">
-                    <img id="image" v-bind:src=this.imgLocalUrl>
+                <p class="row" id="imgbox1" v-if="this.imgLocalUrl1">
+                    <img id="image1" v-bind:src=this.imgLocalUrl1>
+                </p>
+                <a-divider v-if="this.imgLocalUrl2"/>
+                <p class="row" id="imgbox2" v-if="this.imgLocalUrl2">
+                    <img id="image2" v-bind:src=this.imgLocalUrl2>
+                </p>
+                <a-divider v-if="this.imgLocalUrl3"/>
+                <p class="row" id="imgbox3" v-if="this.imgLocalUrl3">
+                    <img id="image3" v-bind:src=this.imgLocalUrl3>
                 </p>
                 <div class="file-input">
                     <p class="input-container" >
                         <a-icon type="plus-square" style="font-size: 70px" class="plus" />
-                        <input type="file" @change="Upload" accept="image/*"/>
+                        <input type="file" @change="Upload" accept="image/*"  multiple="multiple"/>
                     </p>
                 </div>
             </a-form-item>
@@ -79,10 +87,15 @@ export default {
     name: 'addHotelModal',
     data() {
         return {
-            imgUrl: '',
-            imgLocalUrl:'',
-            uploadClickTime:0,
-            filePath:'',
+            imgUrl1: '',
+            imgUrl2: '',
+            imgUrl3: '',
+            imgLocalUrl1:'',
+            imgLocalUrl2:'',
+            imgLocalUrl3:'',
+            filePath1:'',
+            filePath2:'',
+            filePath3:'',
             formItemLayout: {
                 labelCol: {
                     xs: { span: 12 },
@@ -118,11 +131,18 @@ export default {
             'addHotel'
         ]),
         cancel() {
-            if(this.filePath)remove(this.filePath);
-            this.imgUrl=''
-            this.imgLocalUrl=''
-            this.filePath=''
-            this.uploadClickTime=0
+            if(this.filePath1)remove(this.filePath1);
+            if(this.filePath2)remove(this.filePath2);
+            if(this.filePath3)remove(this.filePath3);
+            this.imgUrl1=''
+            this.imgUrl2=''
+            this.imgUrl3=''
+            this.imgLocalUrl1=''
+            this.imgLocalUrl2=''
+            this.imgLocalUrl3=''
+            this.filePath1=''
+            this.filePath2=''
+            this.filePath3=''
             this.set_addHotelModalVisible(false)
         },
         changeStar(v){
@@ -150,38 +170,104 @@ export default {
             return new Blob([u8arr], { type: fileType });
         },
         Upload:function(e) {
-            var file = e.target.files[0];
-            const reader = new FileReader();
-            this.imgLocalUrl=this.getObjectURL(file);
-            reader.readAsDataURL(file);
-            var urlData="";
-            reader.onload = () => {
-                this.uploadClickTime+=1;
-                var url = reader.result;
-                urlData = url;
-                const base64 = urlData.split(',').pop();
-                const fileType = urlData.split(';').shift().split(':').pop();
-                // base64转blob
-                const blob = this.toBlob(base64, fileType);
-                reader.readAsArrayBuffer(blob);
-                reader.onload =  (event) => {
-                    const OSS = require('ali-oss');
-                    // arrayBuffer转Buffer
-                    const buffer = new OSS.Buffer(event.target.result);
-                    // 上传
-                    var fileName =`${Date.parse(new Date())}`+'.jpg';  //定义唯一的文件
-                    put(fileName, buffer).then((result) => {
-                        this.imgUrl = result.url;
-                    }).catch(function (err) {
-                        console.log(err);
-                    });
-                    if(this.uploadClickTime>1) remove(this.filePath);
-                    this.filePath=fileName;
-                }
-                reader.onerror = function (error) {
-                    console.log('Error: ', error);
+            if(e.target.files.length>3 ){
+                alert('只能上传3张图片，不得多于3张！');
+            }else if(e.target.files.length<3 ){
+                alert('必须上传3张图片，不得少于3张！');
+            }
+            else {
+                var file1 = e.target.files[0];
+                var file2 = e.target.files[1];
+                var file3 = e.target.files[2];
+                const reader = new FileReader();
+                this.imgLocalUrl1 = this.getObjectURL(file1);
+                this.imgLocalUrl2 = this.getObjectURL(file2);
+                this.imgLocalUrl3 = this.getObjectURL(file3);
+                reader.readAsDataURL(file1);
+                var urlData = "";
+                reader.onload = () => {
+                    var url = reader.result;
+                    urlData = url;
+                    const base64 = urlData.split(',').pop();
+                    const fileType = urlData.split(';').shift().split(':').pop();
+                    // base64转blob
+                    const blob = this.toBlob(base64, fileType);
+                    reader.readAsArrayBuffer(blob);
+                    reader.onload = (event) => {
+                        const OSS = require('ali-oss');
+                        // arrayBuffer转Buffer
+                        const buffer = new OSS.Buffer(event.target.result);
+                        // 上传
+                        var fileName = `${Date.parse(new Date())}` + '.jpg';  //定义唯一的文件
+                        this.filePath1=fileName
+                        put(fileName, buffer).then((result) => {
+                            this.imgUrl1 = result.url;
+                        }).catch(function (err) {
+                            console.log(err);
+                        });
+
+                    }
+                    reader.onerror = function (error) {
+                        console.log('Error: ', error);
+                    };
                 };
-            };
+                reader.readAsDataURL(file2);
+                urlData = "";
+                reader.onload = () => {
+                    var url = reader.result;
+                    urlData = url;
+                    const base64 = urlData.split(',').pop();
+                    const fileType = urlData.split(';').shift().split(':').pop();
+                    // base64转blob
+                    const blob = this.toBlob(base64, fileType);
+                    reader.readAsArrayBuffer(blob);
+                    reader.onload = (event) => {
+                        const OSS = require('ali-oss');
+                        // arrayBuffer转Buffer
+                        const buffer = new OSS.Buffer(event.target.result);
+                        // 上传
+                        var fileName = `${Date.parse(new Date())}` + '.jpg';  //定义唯一的文件
+                        this.filePath2=fileName
+                        put(fileName, buffer).then((result) => {
+                            this.imgUrl2 = result.url;
+                        }).catch(function (err) {
+                            console.log(err);
+                        });
+
+                    }
+                    reader.onerror = function (error) {
+                        console.log('Error: ', error);
+                    };
+                };
+                reader.readAsDataURL(file3);
+                urlData = "";
+                reader.onload = () => {
+                    var url = reader.result;
+                    urlData = url;
+                    const base64 = urlData.split(',').pop();
+                    const fileType = urlData.split(';').shift().split(':').pop();
+                    // base64转blob
+                    const blob = this.toBlob(base64, fileType);
+                    reader.readAsArrayBuffer(blob);
+                    reader.onload = (event) => {
+                        const OSS = require('ali-oss');
+                        // arrayBuffer转Buffer
+                        const buffer = new OSS.Buffer(event.target.result);
+                        // 上传
+                        var fileName = `${Date.parse(new Date())}` + '.jpg';  //定义唯一的文件
+                        this.filePath3=fileName
+                        put(fileName, buffer).then((result) => {
+                            this.imgUrl3 = result.url;
+                        }).catch(function (err) {
+                            console.log(err);
+                        });
+
+                    }
+                    reader.onerror = function (error) {
+                        console.log('Error: ', error);
+                    };
+                };
+            }
         },
         handleSubmit(e) {
             e.preventDefault();
@@ -196,12 +282,17 @@ export default {
                         rate: this.form.getFieldValue('rate'),
                         bizRegion:this.form.getFieldValue('bizRegion'),
                         managerId: Number(this.userId),
-                        imgUrl:this.imgUrl
+                        imgUrl1:this.imgUrl1,
+                        imgUrl2:this.imgUrl2,
+                        imgUrl3:this.imgUrl3,
                     }
-                    this.imgUrl=''
-                    this.imgLocalUrl=''
+                    this.imgUrl1=''
+                    this.imgUrl2=''
+                    this.imgUrl3=''
+                    this.imgLocalUrl1=''
+                    this.imgLocalUrl2=''
+                    this.imgLocalUrl3=''
                     this.filePath=''
-                    this.uploadClickTime=0
                     this.set_addHotelParams(data)
                     this.addHotel()
                 }
@@ -254,13 +345,39 @@ export default {
         top:0;
         opacity:0;
     }
-    #imgbox{
-        margin-top: -30px;
+    #imgbox1{
+
         max-width:100%;
         max-height: 400px;
         vertical-align: center;
     }
-    #image{
+    #image1{
+        width: auto;/*图片长宽自适应*/
+        height: auto;
+        max-width:100%;
+        max-height: 400px;
+        vertical-align: center;
+    }
+    #imgbox2{
+
+        max-width:100%;
+        max-height: 400px;
+        vertical-align: center;
+    }
+    #image2{
+        width: auto;/*图片长宽自适应*/
+        height: auto;
+        max-width:100%;
+        max-height: 400px;
+        vertical-align: center;
+    }
+    #imgbox3{
+
+        max-width:100%;
+        max-height: 400px;
+        vertical-align: center;
+    }
+    #image3{
         width: auto;/*图片长宽自适应*/
         height: auto;
         max-width:100%;

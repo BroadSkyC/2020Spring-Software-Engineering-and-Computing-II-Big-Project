@@ -3,8 +3,8 @@
 <mapper namespace="com.example.hotel.data.hotel.HotelMapper">
     <insert id="insertHotel" parameterType="com.example.hotel.po.Hotel"
     useGeneratedKeys="true" keyProperty="id">
-        insert into Hotel(address,bizRegion,hotelDescription,hotelStar,hotelName,phoneNum,rate,manager_id,commentTime,minPrice,maxPrice,imgUrl)
-        values (#{address},#{bizRegion},#{description},#{hotelStar},#{hotelName},#{phoneNum},#{rate},#{managerId},#{commentTime},#{minPrice},#{maxPrice},#{imgUrl})
+        insert into Hotel(address,bizRegion,hotelDescription,hotelStar,hotelName,phoneNum,rate,manager_id,commentTime,minPrice,maxPrice,imgUrl1,imgUrl2,imgUrl3)
+        values (#{address},#{bizRegion},#{description},#{hotelStar},#{hotelName},#{phoneNum},#{rate},#{managerId},#{commentTime},#{minPrice},#{maxPrice},#{imgUrl1},#{imgUrl2},#{imgUrl3})
     </insert>
 
     <select id="selectAllHotel" resultMap="Hotel">
@@ -51,7 +51,9 @@
         <result column="maxPrice" property="maxPrice"></result>
         <result column="manager_id" property="managerId"></result>
         <result column="commentTime" property="commentTime"></result>
-        <result column="imgUrl" property="imgUrl"></result>
+        <result column="imgUrl1" property="imgUrl"></result>
+        <result column="imgUrl2" property="imgUrl"></result>
+        <result column="imgUrl3" property="imgUrl"></result>
     </resultMap>
 
 

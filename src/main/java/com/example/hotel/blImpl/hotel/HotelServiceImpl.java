@@ -67,7 +67,12 @@ public class HotelServiceImpl implements HotelService {
         hotel.setMinPrice(0);
         hotel.setMaxPrice(0);
         hotel.setCommentTime(1);
-        hotel.setImgUrl(hotelVO.getImgUrl());
+        hotel.setImgUrl1(hotelVO.getImgUrl1());
+        hotel.setImgUrl2(hotelVO.getImgUrl2());
+        hotel.setImgUrl3(hotelVO.getImgUrl3());
+        if(hotelVO.getImgUrl1()==null)  hotel.setImgUrl1("https://farsky-seec-homework1.oss-accelerate.aliyuncs.com/%E9%BB%98%E8%AE%A4%E9%85%92%E5%BA%97.jpeg");
+        if(hotelVO.getImgUrl2()==null)  hotel.setImgUrl2("https://farsky-seec-homework1.oss-accelerate.aliyuncs.com/%E9%BB%98%E8%AE%A4%E9%85%92%E5%BA%97.jpeg");
+        if(hotelVO.getImgUrl3()==null)  hotel.setImgUrl3("https://farsky-seec-homework1.oss-accelerate.aliyuncs.com/%E9%BB%98%E8%AE%A4%E9%85%92%E5%BA%97.jpeg");
         //hotel.setBizRegion(BizRegion.valueOf(hotelVO.getBizRegion()));
         hotel.setHotelStar(HotelStar.valueOf(hotelVO.getHotelStar()));
         hotelMapper.insertHotel(hotel);

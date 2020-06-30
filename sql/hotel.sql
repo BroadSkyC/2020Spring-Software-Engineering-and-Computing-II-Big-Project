@@ -72,7 +72,9 @@ CREATE TABLE `Hotel` (
   `minPrice` double DEFAULT 0,
   `maxPrice` double DEFAULT 0,
   `commentTime` bigint(11) DEFAULT NULL,
-  `imgUrl` varchar(255) NOT NULL,
+  `imgUrl1` varchar(255) NOT NULL,
+  `imgUrl2` varchar(255) NOT NULL,
+  `imgUrl3` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -83,7 +85,9 @@ CREATE TABLE `Hotel` (
 
 BEGIN;
 /*!40000 ALTER TABLE `Hotel` DISABLE KEYS */;
-INSERT INTO `Hotel` VALUES (1,'汉庭酒店','欢迎您入住','南京市新街口258号','XiDan','Four',1829373819,4.8,1,199,399,1,"https://farsky-seec-homework1.oss-accelerate.aliyuncs.com/%E9%BB%98%E8%AE%A4%E9%85%92%E5%BA%97.jpeg"),(2,'儒家酒店','欢迎您入住','南京市鼓楼区珠江路268号','XiDan','Four',1829373819,4.8,2,122,399,1,"https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E9%85%92%E5%BA%97.jpeg"),(3,'桂圆酒店','欢迎您入住','南京市栖霞区珠江路268号','XiDan','Four',1829553719,4.8,6,0,0,1,"https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E9%85%92%E5%BA%97.jpeg");
+INSERT INTO `Hotel` VALUES (1,'汉庭酒店','欢迎您入住','南京市新街口258号','XiDan','Four',1829373819,4.8,1,199,399,1,"https://farsky-seec-homework1.oss-accelerate.aliyuncs.com/%E9%BB%98%E8%AE%A4%E9%85%92%E5%BA%97.jpeg","https://farsky-seec-homework1.oss-accelerate.aliyuncs.com/%E9%BB%98%E8%AE%A4%E9%85%92%E5%BA%97.jpeg","https://farsky-seec-homework1.oss-accelerate.aliyuncs.com/%E9%BB%98%E8%AE%A4%E9%85%92%E5%BA%97.jpeg"),
+(2,'儒家酒店','欢迎您入住','南京市鼓楼区珠江路268号','XiDan','Four',1829373819,4.8,2,122,399,1,"https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E9%85%92%E5%BA%97.jpeg","https://farsky-seec-homework1.oss-accelerate.aliyuncs.com/%E9%BB%98%E8%AE%A4%E9%85%92%E5%BA%97.jpeg","https://farsky-seec-homework1.oss-accelerate.aliyuncs.com/%E9%BB%98%E8%AE%A4%E9%85%92%E5%BA%97.jpeg"),
+(3,'桂圆酒店','欢迎您入住','南京市栖霞区珠江路268号','XiDan','Four',1829553719,4.8,6,0,0,1,"https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E9%85%92%E5%BA%97.jpeg","https://farsky-seec-homework1.oss-accelerate.aliyuncs.com/%E9%BB%98%E8%AE%A4%E9%85%92%E5%BA%97.jpeg","https://farsky-seec-homework1.oss-accelerate.aliyuncs.com/%E9%BB%98%E8%AE%A4%E9%85%92%E5%BA%97.jpeg");
 /*!40000 ALTER TABLE `Hotel` ENABLE KEYS */;
 COMMIT;
 

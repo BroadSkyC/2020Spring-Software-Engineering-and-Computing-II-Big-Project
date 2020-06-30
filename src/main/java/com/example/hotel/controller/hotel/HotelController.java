@@ -23,7 +23,6 @@ public class HotelController {
 
     @PostMapping("/addHotel")
     public ResponseVO createHotel(@RequestBody HotelVO hotelVO) throws ServiceException {
-        System.out.println(hotelVO.getImgUrl());
         hotelService.addHotel(hotelVO);
         return ResponseVO.buildSuccess(true);
     }
