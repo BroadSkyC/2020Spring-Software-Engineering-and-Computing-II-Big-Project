@@ -53,7 +53,8 @@
                     <a-tab-pane tab="酒店环境" key="2">
 <!--                            <span class="label">酒店简介:</span>-->
 <!--                            <span class="value">{{ currentHotelInfo.description }}</span>-->
-                        <swiper-display ></swiper-display>
+<!--                        <swiper-display ></swiper-display>-->
+                        <dynamic-swipe></dynamic-swipe>
                     </a-tab-pane>
                     <a-tab-pane tab="酒店评价" key="4">
                         <ShowComments v-for="hotelComment in hotelComments" v-bind:key="hotelComment.feedback" :comment="hotelComment"></ShowComments>
@@ -70,10 +71,12 @@ import RoomList from './components/roomList'
 import AllRoomInfo from "./components/allRoomInfo";
 import ShowComments from "./components/showComments";
 import SwiperDisplay from "./components/swiperDisplay";
+import DynamicSwipe from "./components/DynamicSwipe";
 export default {
     name: 'hotelDetail',
     components: {
-        SwiperDisplay,
+        DynamicSwipe,
+        // SwiperDisplay,
         AllRoomInfo,
         RoomList,
         ShowComments,
@@ -113,7 +116,7 @@ export default {
         }]
         this.set_hotelComments(data)*/
         this.getHotelComments(this.currentHotelId)
-        console.log(this.currentHotelInfo.imgUrl)
+        console.log(this.currentHotelInfo)
     },
     beforeRouteUpdate(to, from, next) {
 

@@ -133,7 +133,7 @@ const hotel = {
             const res = await getHotelsAPI()
             if(res){
                 commit('set_hotelList', res)
-                console.log("set_hotelis")
+                console.log("set_hotelist")
                 console.log(state.hotelList)
                 commit('set_hotelListLoading', false)
             }
