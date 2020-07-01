@@ -53,6 +53,11 @@ const routes = [
         name: 'manageCheck',
         component: () => import('@/views/hotelReceptionist/manageCheck')
       },
+      {
+        path: '/user/components/Cake',
+        name: 'cake',
+        component: () => import('@/views/user/components/Cake')
+      },
     ]
   },
 ]

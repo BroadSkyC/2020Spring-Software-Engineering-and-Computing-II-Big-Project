@@ -93,12 +93,28 @@ const user = {
     actions: {
         login: async ({ dispatch, commit,state }, userData) => {
             const res = await loginAPI(userData)
-            if(res){
+            if(res) {
                 setToken(res.id)
                 commit('set_userId', res.id)
                 dispatch('getUserInfo')
                 // sessionStorage.setItem('uif',state.userInfo)
-                router.push('/hotel/hotelList')
+                if (res.userType === 'Client' && res.vipType === 'Common') {
+                    var date = new Date();
+                    var userMonth = res.birthday.substring(5, 7);
+                    var userDate = res.birthday.substring(8, 10);
+                    var curMonth = parseInt(date.getMonth() + 1);
+                    var today = date.getDate();
+                    if (curMonth < 10) curMonth = "0" + curMonth;
+                    if (today < 10) today = "0" + today;
+                    if (userMonth === curMonth && userDate === today) {
+                        router.push('/user/components/Cake')
+                        setTimeout(function(){
+                            router.push('/hotel/hotelList')
+                        },4000);
+                    }
+                } else {
+                    router.push('/hotel/hotelList')
+                }
             }
         },
         visitor: async ({ dispatch, commit,state }, userData) => {

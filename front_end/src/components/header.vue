@@ -53,12 +53,11 @@
                 </a-menu>
             </a-dropdown>
         </div>
-        
     </div>
     
 </template>
 <script>
-import { mapGetters, mapActions, mapMutations } from 'vuex'
+    import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
     name: '',
     created() {
@@ -76,7 +75,7 @@ export default {
         window.addEventListener('beforeunload', () => {
             sessionStorage.setItem('store', JSON.stringify(this.$store.state))
         })
-         if(this.userInfo.userType=='Client' && this.userInfo.vipType=='Common') {
+         if(this.userInfo.userType==='Client' && this.userInfo.vipType==='Common') {
                     var date = new Date();
                     var userMonth = this.userInfo.birthday.substring(5, 7);
                     var userDate = this.userInfo.birthday.substring(8, 10);
@@ -84,7 +83,7 @@ export default {
                     var today = date.getDate();
                     if (curMonth < 10) curMonth = "0" + curMonth;
                     if (today < 10) today = "0" + today;
-                    if (userMonth == curMonth && userDate == today) {
+                    if (userMonth === curMonth && userDate === today) {
                         alert("尊敬的VIP用户"+this.userInfo.userName+",今天是您的生日，生日快乐！\n今天我们为您准备了生日优惠哦~");
                     }
          }
