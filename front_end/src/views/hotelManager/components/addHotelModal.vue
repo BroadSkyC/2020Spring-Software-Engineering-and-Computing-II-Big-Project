@@ -230,26 +230,28 @@ export default {
                 var file1 = e.target.files[0];
                 var file2 = e.target.files[1];
                 var file3 = e.target.files[2];
-                const reader = new FileReader();
+                const reader1 = new FileReader();
+                const reader2 = new FileReader();
+                const reader3 = new FileReader();
                 this.imgLocalUrl1 = this.getObjectURL(file1);
                 this.imgLocalUrl2 = this.getObjectURL(file2);
                 this.imgLocalUrl3 = this.getObjectURL(file3);
-                reader.readAsDataURL(file1);
+                reader1.readAsDataURL(file1);
                 var urlData = "";
-                reader.onload = () => {
-                    var url = reader.result;
+                reader1.onload = () => {
+                    var url = reader1.result;
                     urlData = url;
                     const base64 = urlData.split(',').pop();
                     const fileType = urlData.split(';').shift().split(':').pop();
                     // base64转blob
                     const blob = this.toBlob(base64, fileType);
-                    reader.readAsArrayBuffer(blob);
-                    reader.onload = (event) => {
+                    reader1.readAsArrayBuffer(blob);
+                    reader1.onload = (event) => {
                         const OSS = require('ali-oss');
                         // arrayBuffer转Buffer
                         const buffer = new OSS.Buffer(event.target.result);
                         // 上传
-                        var fileName = `${Date.parse(new Date())}` + '.jpg';  //定义唯一的文件
+                        var fileName = `${Date.parse(new Date())}` + '1.jpg';  //定义唯一的文件
                         this.filePath1=fileName
                         put(fileName, buffer).then((result) => {
                             this.imgUrl1 = result.url;
@@ -258,26 +260,26 @@ export default {
                         });
 
                     }
-                    reader.onerror = function (error) {
+                    reader1.onerror = function (error) {
                         console.log('Error: ', error);
                     };
                 };
-                reader.readAsDataURL(file2);
+                reader2.readAsDataURL(file2);
                 urlData = "";
-                reader.onload = () => {
-                    var url = reader.result;
+                reader2.onload = () => {
+                    var url = reader2.result;
                     urlData = url;
                     const base64 = urlData.split(',').pop();
                     const fileType = urlData.split(';').shift().split(':').pop();
                     // base64转blob
                     const blob = this.toBlob(base64, fileType);
-                    reader.readAsArrayBuffer(blob);
-                    reader.onload = (event) => {
+                    reader2.readAsArrayBuffer(blob);
+                    reader2.onload = (event) => {
                         const OSS = require('ali-oss');
                         // arrayBuffer转Buffer
                         const buffer = new OSS.Buffer(event.target.result);
                         // 上传
-                        var fileName = `${Date.parse(new Date())}` + '.jpg';  //定义唯一的文件
+                        var fileName = `${Date.parse(new Date())}` + '2.jpg';  //定义唯一的文件
                         this.filePath2=fileName
                         put(fileName, buffer).then((result) => {
                             this.imgUrl2 = result.url;
@@ -286,26 +288,26 @@ export default {
                         });
 
                     }
-                    reader.onerror = function (error) {
+                    reader2.onerror = function (error) {
                         console.log('Error: ', error);
                     };
                 };
-                reader.readAsDataURL(file3);
+                reader3.readAsDataURL(file3);
                 urlData = "";
-                reader.onload = () => {
-                    var url = reader.result;
+                reader3.onload = () => {
+                    var url = reader3.result;
                     urlData = url;
                     const base64 = urlData.split(',').pop();
                     const fileType = urlData.split(';').shift().split(':').pop();
                     // base64转blob
                     const blob = this.toBlob(base64, fileType);
-                    reader.readAsArrayBuffer(blob);
-                    reader.onload = (event) => {
+                    reader3.readAsArrayBuffer(blob);
+                    reader3.onload = (event) => {
                         const OSS = require('ali-oss');
                         // arrayBuffer转Buffer
                         const buffer = new OSS.Buffer(event.target.result);
                         // 上传
-                        var fileName = `${Date.parse(new Date())}` + '.jpg';  //定义唯一的文件
+                        var fileName = `${Date.parse(new Date())}` + '3.jpg';  //定义唯一的文件
                         this.filePath3=fileName
                         put(fileName, buffer).then((result) => {
                             this.imgUrl3 = result.url;
@@ -314,7 +316,7 @@ export default {
                         });
 
                     }
-                    reader.onerror = function (error) {
+                    reader3.onerror = function (error) {
                         console.log('Error: ', error);
                     };
                 };
