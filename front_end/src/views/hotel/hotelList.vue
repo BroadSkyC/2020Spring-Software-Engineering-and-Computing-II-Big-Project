@@ -21,6 +21,7 @@
                       @click="turnBack">显示所有酒店</a-button>
           </div>
       </div>
+      <GallerySwiper></GallerySwiper>
       <a-tabs>
         <a-tab-pane tab="卡片" key="1">
             <a-layout>
@@ -69,6 +70,7 @@ import HotelCard from './components/hotelCard'
 import Filters from './components/filter'
 import { message } from 'ant-design-vue'
 import { mapGetters, mapActions, mapMutations } from 'vuex'
+import GallerySwiper from "./components/GallerySwiper";
 const columns1 = [
     {
         title: '酒店名',
@@ -118,6 +120,7 @@ const columns1 = [
 export default {
   name: 'home',
   components: {
+      GallerySwiper,
     HotelCard,
       Filters
   },
