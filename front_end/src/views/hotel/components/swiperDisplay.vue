@@ -27,7 +27,7 @@
         height: 400px;
         width: 400px;
         line-height: 180px;
-        background: honeydew;
+        background: #ffffff;
         overflow: hidden;
     }
 
@@ -38,9 +38,7 @@
         border: 5px solid #fff;
         display: block;
         margin: auto;
-        margin-top: 0px;
-        width: 400px;
-        height: 400px;
+        max-width: 75%;
         /*object-fit: cover;*/
     }
 </style>

@@ -53,19 +53,19 @@
 <style lang="scss" scoped>
     .example-3d {
         width: 100%;
-        height: 400px;
+        height: 500px;
         padding-top: 50px;
         padding-bottom: 50px;
     }
     .swiper {
         height: 100%;
-        width: 100%;
+        width: 90%;
         .swiper-slide {
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 300px;
-            height: 300px;
+            width: 400px;
+            height: 400px;
             text-align: center;
             font-weight: bold;
             font-size: 30px;
