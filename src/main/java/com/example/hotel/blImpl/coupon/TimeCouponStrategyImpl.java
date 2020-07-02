@@ -21,8 +21,8 @@ public class TimeCouponStrategyImpl implements CouponMatchStrategy {
         if(coupon.getCouponType()!=4) return false;
         LocalDate checkIn= LocalDate.parse(orderVO.getCheckInDate());
         LocalDate checkOut=LocalDate.parse(orderVO.getCheckOutDate());
-        LocalDate startDate=coupon.getStartTime().toLocalDate();
-        LocalDate endDate=coupon.getEndTime().toLocalDate();
+        LocalDate startDate=LocalDate.parse(coupon.getStartTime());
+        LocalDate endDate=LocalDate.parse(coupon.getEndTime());
         if(checkIn.isAfter(startDate)&&endDate.isAfter(checkOut)) return true;
         return false;
     }

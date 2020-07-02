@@ -200,7 +200,7 @@ public class HotelServiceImpl implements HotelService {
             comment.setCheckInDate(order.getCheckInDate());
             comment.setCheckOutDate(order.getCheckOutDate());
             User user = accountService.getUserInfo(order.getUserId());
-            double k=user.getCredit();
+            double k=order.getUserCredit();
             if(k<=100)
                 comment.setCreditGrade("信用一般");
             else if(k<=500)
