@@ -1,5 +1,6 @@
 <template>
   <div class="hotelList">
+      <GallerySwiper></GallerySwiper>
       <div class="search-bar">
           <div class="search-cont"
           >
@@ -21,7 +22,7 @@
                       @click="turnBack">显示所有酒店</a-button>
           </div>
       </div>
-      <GallerySwiper></GallerySwiper>
+
       <a-tabs>
         <a-tab-pane tab="卡片" key="1">
             <a-layout>
@@ -246,6 +247,7 @@ export default {
       .search-bar{
           display: flex;
           flex-wrap: wrap;
+          margin-top: 40px;
       }
       .search-cont{
           display: flex;

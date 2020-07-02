@@ -35,11 +35,11 @@
                 <a-input placeholder="请填写折扣" v-decorator="['discount',{rules:[{required:true,message:'请填写折扣'}]}]"/>
             </a-form-item>
             <a-form-item label="起始-失效时间" v-if="this.form.getFieldValue('type')==='4'">
-                <ARangePicker
-                        :format="format"
-                        showTime
-                        onChange={onChange}
-                        v-decorator="['time',{rules: [{required:true,message: '请选择时间'}]}]"
+                <a-range-picker
+                        format="YYYY-MM-DD"
+
+                        v-decorator="['time',{rules: [{required:true,message: '请选择优惠时间区间'}]}]"
+                        :placeholder="['入住日期','退房日期']"
                 />
             </a-form-item>
 
@@ -169,12 +169,13 @@ export default {
 
                     }
                     else if(this.form.getFieldValue('type')==='4'){
+                        console.log(this.form.getFieldValue('time')[0].format('YYYY-MM-DD'))
                         const data = {
                             name: this.form.getFieldValue('name'),
                             description: this.form.getFieldValue('description'),
                             type: Number(this.form.getFieldValue('type')),
-                            startTime: this.form.getFieldValue('time')[0],
-                            endTime: this.form.getFieldValue('time')[1],
+                            startTime: this.form.getFieldValue('time')[0].format('YYYY-MM-DD'),
+                            endTime: this.form.getFieldValue('time')[1].format('YYYY-MM-DD'),
                             discount: Number(this.form.getFieldValue('discount')),
                             hotelId: Number(this.activeHotelId),
                             status: 1

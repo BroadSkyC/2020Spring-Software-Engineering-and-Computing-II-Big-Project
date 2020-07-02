@@ -67,8 +67,7 @@
 <style lang="scss" scoped>
     .thumb-example {
         height: 480px;
-        background-color: black;
-        margin-top: 50px;
+        background-color: transparent;
     }
     .swiper {
         .swiper-slide {
@@ -92,9 +91,11 @@
         }
         &.gallery-top {
             height: 80%;
-            width: 100%;
+            width: 80%;
         }
         &.gallery-thumbs {
+            margin-top:10px;
+            width: 90%;
             height: 20%;
             box-sizing: border-box;
             padding:  0;

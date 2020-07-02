@@ -56,6 +56,9 @@
 <!--                        <swiper-display ></swiper-display>-->
                         <dynamic-swipe></dynamic-swipe>
                     </a-tab-pane>
+                    <a-tab-pane tab="酒店优惠" key="5">
+
+                    </a-tab-pane>
                     <a-tab-pane tab="酒店评价" key="4">
                         <ShowComments v-for="hotelComment in hotelComments" v-bind:key="hotelComment.feedback" :comment="hotelComment"></ShowComments>
                     </a-tab-pane>
@@ -70,7 +73,6 @@ import { mapGetters, mapActions, mapMutations } from 'vuex'
 import RoomList from './components/roomList'
 import AllRoomInfo from "./components/allRoomInfo";
 import ShowComments from "./components/showComments";
-import SwiperDisplay from "./components/swiperDisplay";
 import DynamicSwipe from "./components/DynamicSwipe";
 export default {
     name: 'hotelDetail',
