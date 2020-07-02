@@ -6,6 +6,7 @@ import com.example.hotel.vo.OrderVO;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 @Service
 public class TimeCouponStrategyImpl implements CouponMatchStrategy {
@@ -23,7 +24,9 @@ public class TimeCouponStrategyImpl implements CouponMatchStrategy {
         LocalDate checkOut=LocalDate.parse(orderVO.getCheckOutDate());
         LocalDate startDate=coupon.getStartTime().toLocalDate();
         LocalDate endDate=coupon.getEndTime().toLocalDate();
-        if(checkIn.isAfter(startDate)&&endDate.isAfter(checkOut)) return true;
+        int start_to_checkin = (int) ChronoUnit.DAYS.between(startDate,checkIn);
+        int checkout_to_end = (int) ChronoUnit.DAYS.between(checkOut,endDate);
+        if(start_to_checkin>=0 && checkout_to_end>=0) return true;
         return false;
     }
 }
