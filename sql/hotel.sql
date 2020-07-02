@@ -120,6 +120,7 @@ CREATE TABLE `OrderList` (
   `feedback` varchar(255) DEFAULT NULL,
   `creditChange` int(11) DEFAULT NULL,
   `userCredit` int(11) DEFAULT NULL,
+  `tip` varchar(255) DEFAULT NULL
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
