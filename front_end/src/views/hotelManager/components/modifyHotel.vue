@@ -10,27 +10,30 @@
         <a-form :form="form" style="margin-top: 30px" v-bind="formItemLayout">
             <a-form-item label="酒店名称" v-bind="formItemLayout">
                 <a-input
-                        v-decorator="['name', { rules: [{ required: true, message: currentHotelInfo.name}] }]"
+                        v-decorator="['name', { rules: [{ required: true, message: '酒店名称不为空'}] ,initialValue: currentHotelInfo.name}]"
                 />
             </a-form-item>
             <a-form-item label="商圈" v-bind="formItemLayout">
                 <a-input
-                        v-decorator="['bizRegion', { rules: [{ required: true, message: currentHotelInfo.bizRegion }] }]"
+                        v-decorator="['bizRegion', { rules: [{ required: true, message: '酒店商圈不能为空' }] ,initialValue: currentHotelInfo.bizRegion}]"
                 />
             </a-form-item>
             <a-form-item label="地址" v-bind="formItemLayout">
                 <a-input
-                        v-decorator="['address', { rules: [{ required: true, message: currentHotelInfo.address }] }]"
+                        v-decorator="['address', { rules: [{ required: true, message: '酒店地址不能为空' }] ,initialValue: currentHotelInfo.address}]"
                 />
             </a-form-item>
             <a-form-item label="电话" v-bind="formItemLayout">
                 <a-input
-                        v-decorator="['phoneNum', { rules: [{ required: true, message: currentHotelInfo.phoneNum }] }]"
+                        v-decorator="['phoneNum', { rules: [{ required: true, message: '酒店电话不能为空' }] ,initialValue: currentHotelInfo.phoneNum}]"
                 />
             </a-form-item>
             <a-form-item label="简介" v-bind="formItemLayout">
                 <a-input
-                        v-decorator="['description', { rules: [{ required: true, message: currentHotelInfo.description }] }]"
+                        type="textarea"
+                        :rows="4"
+                        placeholder="请填写酒店简介"
+                        v-decorator="['description', { rules: [{ required: true, message: '酒店简介不能为空' }] ,initialValue: currentHotelInfo.description}]"
                 />
             </a-form-item>
         </a-form>
