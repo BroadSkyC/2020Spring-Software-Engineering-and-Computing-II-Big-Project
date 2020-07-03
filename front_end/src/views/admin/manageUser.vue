@@ -11,7 +11,9 @@
                     bordered
                 >
                     <span slot="action" slot-scope="record">
-                        <a-button type="primary" size="small" @click="showManagerHotelList(record.id)">查看旗下酒店</a-button>
+                        <a-button size="small" @click="showManagerHotelList(record.id)">查看旗下酒店</a-button>
+                        <a-divider type="vertical"></a-divider>
+                        <a-button type="primary" size="small" @click="modifyPassword(record.id)">修改密码</a-button>
                         <a-divider type="vertical"></a-divider>
                         <a-popconfirm
                                 title="确定想删除该经理吗？"
@@ -31,15 +33,15 @@
                         bordered
                 >
                     <span slot="action" slot-scope="record">
-                        <a-button type="primary" size="small" @click="showManagerHotelList(record.id)">查看旗下酒店</a-button>
+                        <a-button type="primary" size="small" @click="modifyPassword(record.id)">修改密码</a-button>
                         <a-divider type="vertical"></a-divider>
                         <a-popconfirm
-                                title="确定想删除该经理吗？"
+                                title="确定想删除该用户吗？"
                                 @confirm="deleteManager(record)"
                                 okText="确定"
                                 cancelText="取消"
                         >
-                        <a-button type="danger" size="small">删除经理</a-button>
+                        <a-button type="danger" size="small">删除用户</a-button>
                         </a-popconfirm>
                     </span>
                 </a-table>
@@ -47,12 +49,14 @@
         </a-tabs>
         <AddManagerModal></AddManagerModal>
         <ManagerAllHotels></ManagerAllHotels>
+        <ModifyPassword></ModifyPassword>
     </div>
 </template>
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 import AddManagerModal from './components/addManagerModal'
 import ManagerAllHotels from './components/managerAllHotels'
+import ModifyPassword from "./components/modifyPassword";
 const columns = [
     {
         title: '用户ID',
@@ -120,6 +124,7 @@ export default {
         }
     },
     components: {
+        ModifyPassword,
         AddManagerModal,
         ManagerAllHotels,
     },
@@ -140,7 +145,9 @@ export default {
     methods: {
         ...mapMutations([
             'set_addManagerModalVisible',
-            'set_managerAllHotelsVisible'
+            'set_managerAllHotelsVisible',
+            'set_modifyPasswordVisible',
+            'set_activeUserId',
         ]),
         ...mapActions([
             'getManagerList',
@@ -158,6 +165,10 @@ export default {
         showManagerHotelList(id){
             this.set_managerAllHotelsVisible(true)
             this.getManagerHotelList(id)
+        },
+        modifyPassword(id){
+            this.set_modifyPasswordVisible(true)
+            this.set_activeUserId(id)
         }
     }
 }
