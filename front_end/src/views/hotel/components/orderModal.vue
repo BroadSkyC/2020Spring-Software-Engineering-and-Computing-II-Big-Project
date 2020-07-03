@@ -38,7 +38,7 @@
             <a-form-item v-bind="formItemLayout" label="房间数">
             <a-button type="primary" size="small" shape="circle" icon="minus" @click="minusOne" v-if="roomNums>1 && currentOrderRoom.curNum>1"></a-button>
             <span class="nums">{{roomNums}}</span>
-            <a-button type="primary" size="small" shape="circle" icon="plus" @click="plusOne" v-if="(roomNums<3) ||(userInfo.vipType==='Company' && roomNums<10) && roomNums<currentOrderRoom.curNum"></a-button>
+            <a-button type="primary" size="small" shape="circle" icon="plus" @click="plusOne" v-if="(roomNums<5) && roomNums<currentOrderRoom.curNum"></a-button>
         </a-form-item>
             <a-form-item v-bind="formItemLayout" label="入住人数">
                 <a-select
@@ -55,7 +55,7 @@
                     <a-select-option :value="2">
                     2
                     </a-select-option>
-                     <a-select-option :value="3" v-if="roomNums>1">
+                    <a-select-option :value="3" v-if="roomNums>1">
                     3
                     </a-select-option>
                     <a-select-option :value="4" v-if="roomNums>1">
@@ -66,6 +66,18 @@
                     </a-select-option>
                     <a-select-option :value="6" v-if="roomNums>2">
                         6
+                    </a-select-option>
+                    <a-select-option :value="7" v-if="roomNums>3">
+                        7
+                    </a-select-option>
+                    <a-select-option :value="8" v-if="roomNums>3">
+                        8
+                    </a-select-option>
+                    <a-select-option :value="9" v-if="roomNums>4">
+                        9
+                    </a-select-option>
+                    <a-select-option :value="10" v-if="roomNums>4">
+                        10
                     </a-select-option>
                 </a-select>
             </a-form-item>
@@ -80,7 +92,14 @@
                     <a-radio :value="0">无</a-radio>
                 </a-radio-group>
             </a-form-item>
-
+            <a-form-item label="备注" v-bind="formItemLayout">
+                <a-input
+                        type="textarea"
+                        :rows="4"
+                        placeholder="如有特殊需求，请备注"
+                        v-decorator="['tip', { rules: [{ required: false, message: '请填写订单备注' }] }]"
+                />
+            </a-form-item>
             <a-form-item v-bind="formItemLayout" label="房间单价">
                 <span>{{ currentOrderRoom.price }}</span>
             </a-form-item>
@@ -93,7 +112,7 @@
                 <a-table
                     :columns="columns"
                     :dataSource="orderMatchCouponList"
-                    :showHeader="false"
+                    :showHeader="true"
                     bordered
                     v-if="orderMatchCouponList.length>0"
                 >
@@ -297,7 +316,8 @@ export default {
                         haveChild: this.form.getFieldValue('haveChild'),
                         createDate: '',
                         price: this.checkedList.length > 0 ? this.finalPrice: this.totalPrice,
-                        roomPrice:this.currentOrderRoom.price
+                        roomPrice:this.currentOrderRoom.price,
+                        tip:this.form.getFieldValue('tip')
                     }
                     if(this.totalPrice==""){
                         message.error("房间数不能为0")

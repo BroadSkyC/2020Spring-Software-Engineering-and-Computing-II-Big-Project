@@ -57,7 +57,7 @@
                         <dynamic-swipe></dynamic-swipe>
                     </a-tab-pane>
                     <a-tab-pane tab="酒店优惠" key="5">
-
+                        <CouponCard v-for="coupon in couponList" v-bind:key="coupon.id" :coupon="coupon"></CouponCard>
                     </a-tab-pane>
                     <a-tab-pane tab="酒店评价" key="4">
                         <ShowComments v-for="hotelComment in hotelComments" v-bind:key="hotelComment.feedback" :comment="hotelComment"></ShowComments>
@@ -74,6 +74,7 @@ import RoomList from './components/roomList'
 import AllRoomInfo from "./components/allRoomInfo";
 import ShowComments from "./components/showComments";
 import DynamicSwipe from "./components/DynamicSwipe";
+import CouponCard from "./components/couponCard";
 export default {
     name: 'hotelDetail',
     components: {
@@ -82,6 +83,7 @@ export default {
         AllRoomInfo,
         RoomList,
         ShowComments,
+        CouponCard,
     },
     data() {
         return {
@@ -95,28 +97,19 @@ export default {
             'allRooms',
             'userInfo',
             'hotelComments',
-            'currentHotelId'
+            'currentHotelId',
+            'couponList'
         ])
     },
     mounted() {
         this.set_visitCount(this.count)
         this.set_currentHotelId(Number(this.$route.params.hotelId))
+        this.set_activeHotelId(Number(this.$route.params.hotelId))
+        this.getHotelCoupon()
         this.getHotelById()
         this.clear_rooms()
         this.set_rateValue(this.currentHotelInfo.rate)
         this.count++;
-        /*const data=[{
-            imgUrl:'https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.jpg',
-            userName:'傻逼',
-            feedback:'这酒店真好啊',
-            rate:4.5,
-        },{
-            imgUrl:'https://farsky-seec-homework1.oss-cn-shanghai.aliyuncs.com/%E9%BB%98%E8%AE%A4%E5%A4%B4%E5%83%8F.jpg',
-            userName:'傻',
-            feedback:'这酒店真好啊',
-            rate:4.5,
-        }]
-        this.set_hotelComments(data)*/
         this.getHotelComments(this.currentHotelId)
         console.log(this.currentHotelInfo)
     },
@@ -131,11 +124,13 @@ export default {
             'set_currentHotelId',
             'set_visitCount',
             'clear_rooms',
-            'set_hotelComments'
+            'set_hotelComments',
+            'set_activeHotelId',
         ]),
         ...mapActions([
             'getHotelById',
-            'getHotelComments'
+            'getHotelComments',
+            'getHotelCoupon',
         ]),
         set_rateValue(data){
             if(data-parseInt(data)>=0.5){
@@ -176,4 +171,5 @@ export default {
             }
         }
     }
+
 </style>

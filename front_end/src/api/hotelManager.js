@@ -39,4 +39,10 @@ export function delRoomAPI(data) {
         data,
     })
 }
-
+export function modifyHotelAPI(data) {
+    return axios({
+        url: `${api.hotelPre}/updateHotelInfo`,
+        method: 'POST',
+        data,
+    })
+}

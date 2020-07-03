@@ -20,60 +20,31 @@
                         <span v-if="currentOrder.roomType == 'Family'">家庭房</span>
         </a-form-item>
             <a-form-item label="入住时间" v-bind="formItemLayout" >
-                <AWeekPicker  :format="format"
-                              showTime
-                              onChange={onChange}
-                              v-decorator="['checkInDate',{rules: [{required:true,message: '请修改入住时间'}]}]"
-                              v-if="modify"
-                />
-                <span v-else>{{ currentOrder.checkInDate}}</span>
+                <span >{{ currentOrder.checkInDate}}</span>
             </a-form-item>
             <a-form-item label="离店时间" v-bind="formItemLayout" >
-                <AWeekPicker  :format="format"
-                              showTime
-                              onChange={onChange}
-                              v-decorator="['checkOutDate',{rules: [{required:true,message: '请修改入住时间'}]}]"
-                              v-if="modify"
-                />
-                <span v-else>{{ currentOrder.checkOutDate}}</span>
+                <span>{{ currentOrder.checkOutDate}}</span>
             </a-form-item>
             <a-form-item  label="入住人数" v-bind="formItemLayout" >
-                <a-input
-                        placeholder="请修改入住人数"
-                        v-decorator="['peopleNum', { rules: [{ required: true, message: '请修改入住人数' }] }]"
-                        v-if="modify"
-                />
-                <span v-else>{{ currentOrder.peopleNum}}</span>
+                <span>{{ currentOrder.peopleNum}}</span>
+            </a-form-item>
+            <a-form-item  label="房间数" v-bind="formItemLayout" >
+                <span>{{ currentOrder.roomNum}}</span>
             </a-form-item>
             <a-form-item  label="房价" v-bind="formItemLayout" >
-                <a-input
-                        placeholder="请修改房价"
-                        v-decorator="['price', { rules: [{ required: true, message: '请修改房价' }] }]"
-                        v-if="modify"
-                />
-                <span v-else>{{ currentOrder.price}}</span>
+                <span>{{ currentOrder.price}}</span>
             </a-form-item>
             <a-form-item label="订单状态" v-bind="formItemLayout">
                 <span>{{currentOrder.orderState}}</span>
             </a-form-item>
-            <a-form-item label="用户评分" v-bind="formItemLayout" v-if="currentOrder.orderState==='已完成'">
+            <a-form-item label="订单备注" v-bind="formItemLayout">
+                <span>{{currentOrder.tip}}</span>
+            </a-form-item>
+            <a-form-item label="用户评分" v-bind="formItemLayout" v-if="currentOrder.orderState==='已评价'">
                 <span>{{currentOrder.rate}}</span>
             </a-form-item>
-            <a-form-item label="用户反馈" v-bind="formItemLayout" v-if="currentOrder.orderState==='已完成'">
+            <a-form-item label="用户反馈" v-bind="formItemLayout" v-if="currentOrder.orderState==='已评价'">
                 <span>{{currentOrder.feedback}}</span>
-            </a-form-item>
-            <a-form-item :wrapper-col="{ span: 8, offset: 4 }" v-if="modify">
-                <a-button type="primary" @click="saveModify">
-                    保存
-                </a-button>
-                <a-button type="default" style="margin-left: 30px" @click="cancelModify">
-                    取消
-                </a-button>
-            </a-form-item>
-            <a-form-item :wrapper-col="{ span: 8, offset: 4 }" v-else>
-                <a-button type="primary" @click="modifyInfo">
-                    修改信息
-                </a-button>
             </a-form-item>
         </a-form>
     </div>
@@ -86,7 +57,6 @@
         data() {
             const format = "YYYY-MM-DD"
             return {
-                modify: false,
                 formItemLayout: {
                     labelCol: {
                         xs: { span: 12 },
@@ -124,35 +94,6 @@
             cancel(){
                 this.set_orderVisible(false)
             },
-            saveModify() {
-                this.form.validateFields((err, values) => {
-                    if (!err) {
-                        const data = {
-                            checkInDate: this.form.getFieldValue('checkInDate'),
-                            checkOutDate: this.form.getFieldValue('checkOutDate'),
-                            peopleNum: Number(this.form.getFieldValue('peopleNum')),
-                            price: Number(this.form.getFieldValue('price')),
-                            id: this.currentOrder.id,
-                            hotelName: this.currentOrder.hotelName,
-                            roomType: this.currentOrder.roomType
-                        }
-                        this.updateOrderInfo(data).then(()=>{
-                            this.modify = false
-                        })
-                        location.reload()
-                    }
-                });
-            },
-            modifyInfo() {
-                setTimeout(() => {
-                    this.form.setFieldsValue({
-                    })
-                }, 0)
-                this.modify = true
-            },
-            cancelModify() {
-                this.modify = false
-            }
         }
     }
 </script>
