@@ -52,7 +52,37 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public void addHotel(HotelVO hotelVO) throws ServiceException {
-        User manager = accountService.getUserInfo(hotelVO.getManagerId());
+        try {
+            User manager = accountService.getUserInfo(hotelVO.getManagerId());
+            if(manager == null || !manager.getUserType().equals(UserType.HotelManager)){
+                throw new ServiceException("管理员不存在或者无权限！创建酒店失败！");
+            }
+            Hotel hotel = new Hotel();
+            hotel.setDescription(hotelVO.getDescription());
+            hotel.setAddress(hotelVO.getAddress());
+            hotel.setHotelName(hotelVO.getName());
+            hotel.setPhoneNum(hotelVO.getPhoneNum());
+            hotel.setManagerId(hotelVO.getManagerId());
+            hotel.setRate(hotelVO.getRate());
+            hotel.setBizRegion(hotelVO.getBizRegion());
+            hotel.setMinPrice(0);
+            hotel.setMaxPrice(0);
+            hotel.setCommentTime(1);
+            hotel.setImgUrl(hotelVO.getImgUrl());
+            hotel.setImgUrl1(hotelVO.getImgUrl1());
+            hotel.setImgUrl2(hotelVO.getImgUrl2());
+            hotel.setImgUrl3(hotelVO.getImgUrl3());
+            if(hotelVO.getImgUrl()==null)  hotel.setImgUrl("https://farsky-seec-homework1.oss-accelerate.aliyuncs.com/%E9%BB%98%E8%AE%A4%E9%85%92%E5%BA%97.jpeg");
+            if(hotelVO.getImgUrl1()==null)  hotel.setImgUrl1("https://seec67.oss-cn-shanghai.aliyuncs.com/1.jpg");
+            if(hotelVO.getImgUrl2()==null)  hotel.setImgUrl2("https://seec67.oss-cn-shanghai.aliyuncs.com/2.jpg");
+            if(hotelVO.getImgUrl3()==null)  hotel.setImgUrl3("https://seec67.oss-cn-shanghai.aliyuncs.com/3.jpg");
+            //hotel.setBizRegion(BizRegion.valueOf(hotelVO.getBizRegion()));
+            hotel.setHotelStar(HotelStar.valueOf(hotelVO.getHotelStar()));
+            hotelMapper.insertHotel(hotel);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        /*User manager = accountService.getUserInfo(hotelVO.getManagerId());
         if(manager == null || !manager.getUserType().equals(UserType.HotelManager)){
             throw new ServiceException("管理员不存在或者无权限！创建酒店失败！");
         }
@@ -77,7 +107,7 @@ public class HotelServiceImpl implements HotelService {
         if(hotelVO.getImgUrl3()==null)  hotel.setImgUrl3("https://seec67.oss-cn-shanghai.aliyuncs.com/3.jpg");
         //hotel.setBizRegion(BizRegion.valueOf(hotelVO.getBizRegion()));
         hotel.setHotelStar(HotelStar.valueOf(hotelVO.getHotelStar()));
-        hotelMapper.insertHotel(hotel);
+        hotelMapper.insertHotel(hotel);*/
     }
 
     @Override
