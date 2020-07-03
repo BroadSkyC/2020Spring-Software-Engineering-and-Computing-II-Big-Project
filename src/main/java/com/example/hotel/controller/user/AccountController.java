@@ -84,7 +84,7 @@ public class AccountController {
         return accountService.changePassword(userVO);
     }
 
-    @GetMapping("/getAllClientInfo")
+    @GetMapping("/getAlllClientInfo")
     public ResponseVO getAllClientInfo(){
         return ResponseVO.buildSuccess(accountService.getAllClientInfo());
     }
