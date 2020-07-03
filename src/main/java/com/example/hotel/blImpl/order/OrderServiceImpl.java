@@ -257,6 +257,10 @@ public class OrderServiceImpl implements OrderService {
             accountMapper.updateUserCredit(order.getUserId(),order.getPrice().intValue());
             orderMapper.updateCreditChange(order.getId(),order.getPrice().intValue(),accountMapper.getUserCredit(order.getUserId()));
         }
+        if (state.equals("已撤销")){
+            hotelService.updateRoomInfo(order.getHotelId(),order.getRoomType(),order.getRoomNum()*-1,order.getRoomPrice());
+            this.update(order, false);
+        }
         return ResponseVO.buildSuccess(true);
     }
 

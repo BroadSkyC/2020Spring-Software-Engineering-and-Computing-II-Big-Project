@@ -29,4 +29,11 @@ public interface HotelMapper {
     double getMaxPrice(@Param("id") Integer id);
 
     void updateRate(@Param("id") Integer id,@Param("rate") Double rate,@Param("commentTime") Integer commentTime);
+
+    void updateHotelInfo(@Param("id") Integer id,
+                         @Param("hotelName") String hotelName,
+                         @Param("hotelDescription") String hotelDescription,
+                         @Param("address") String address,
+                         @Param("bizRegion") String bizRegion,
+                         @Param("phoneNum") String phoneNum);
 }

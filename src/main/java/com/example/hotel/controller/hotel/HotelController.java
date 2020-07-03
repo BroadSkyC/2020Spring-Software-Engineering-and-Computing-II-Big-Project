@@ -2,6 +2,7 @@ package com.example.hotel.controller.hotel;
 
 import com.example.hotel.bl.hotel.HotelService;
 import com.example.hotel.bl.hotel.RoomService;
+import com.example.hotel.po.Hotel;
 import com.example.hotel.po.HotelRoom;
 import com.example.hotel.util.ServiceException;
 import com.example.hotel.vo.HotelVO;
@@ -81,5 +82,11 @@ public class HotelController {
     public ResponseVO retrieveHotelComments(@PathVariable Integer hotelId){
 
         return ResponseVO.buildSuccess(hotelService.retrieveHotelsComments(hotelId));
+    }
+
+    @PostMapping("/updateHotelInfo")
+    public ResponseVO updateHotel(@RequestBody HotelVO hotelVO){
+        hotelService.updateHotelInfo(hotelVO);
+        return ResponseVO.buildSuccess(true);
     }
 }

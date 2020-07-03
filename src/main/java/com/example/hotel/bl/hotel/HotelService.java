@@ -61,4 +61,6 @@ public interface HotelService {
     void delRoom(RoomVO roomVO);
 
     List<Comment> retrieveHotelsComments(Integer hotelId);
+
+    void updateHotelInfo(HotelVO hotelVO);
 }

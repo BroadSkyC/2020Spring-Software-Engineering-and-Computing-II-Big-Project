@@ -38,6 +38,10 @@
         select maxPrice from hotel where id=#{id}
     </select>
 
+    <update id="updateHotelInfo">
+        update Hotel set hotelName=#{hotelName},hotelDescription=#{hotelDescription},address=#{address},bizRegion=#{bizRegion},phoneNum=#{phoneNum} where id=#{id}
+    </update>
+
     <resultMap id="Hotel" type="com.example.hotel.vo.HotelVO">
         <id column="id" property="id"></id>
         <result column="address" property="address"></result>

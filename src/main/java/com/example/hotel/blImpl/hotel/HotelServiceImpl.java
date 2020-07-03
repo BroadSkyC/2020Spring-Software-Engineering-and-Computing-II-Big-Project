@@ -223,4 +223,14 @@ public class HotelServiceImpl implements HotelService {
         }
         return comments;
     }
+
+    @Override
+    public void updateHotelInfo(HotelVO hotelVO) {
+        hotelMapper.updateHotelInfo(hotelVO.getId(),
+                hotelVO.getName(),
+                hotelVO.getDescription(),
+                hotelVO.getAddress(),
+                hotelVO.getBizRegion(),
+                hotelVO.getPhoneNum());
+    }
 }
