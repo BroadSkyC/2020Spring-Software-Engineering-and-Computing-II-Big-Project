@@ -79,7 +79,47 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public void insertRoomInfo(HotelRoom hotelRoom) {
-        List<HotelRoom> hotelRooms = retrieveHotelRoomInfo(hotelRoom.getHotelId());
+        try {
+            List<HotelRoom> hotelRooms = retrieveHotelRoomInfo(hotelRoom.getHotelId());
+            int hotel_id = hotelRoom.getHotelId();
+            double minPrice = hotelMapper.getMinPrice(hotel_id); //获取该hotel的最低价格
+            double maxPrice = hotelMapper.getMaxPrice(hotel_id); //获取该hotel的最高价格
+            //如果最低价格为0，说明该hotel没有room信息，直接设为要添加房间的价格
+            if (minPrice==0){
+                minPrice=hotelRoom.getPrice();
+            }
+            //修改最低价格/最高价格
+            if (hotelRoom.getPrice()<=minPrice){
+                minPrice = hotelRoom.getPrice();
+            }
+            if (hotelRoom.getPrice()>=maxPrice){
+                maxPrice = hotelRoom.getPrice();
+            }
+            LocalDate beginDate = LocalDate.parse(hotelRoom.getBeginDate());
+            LocalDate endDate = LocalDate.parse(hotelRoom.getEndDate());
+            int days = 0;
+            if (beginDate.getMonth()==endDate.getMonth()){
+                days = endDate.getDayOfMonth()-beginDate.getDayOfMonth();
+            }else {
+                days = endDate.getDayOfMonth() + beginDate.lengthOfMonth() - beginDate.getDayOfMonth();
+            }
+            days++;
+            hotelRoom.setAlldays(days);
+            //设置availableRoom字符串 格式为1*roomNum，2*roomNum，3*roomNum，4*roomNum···
+            String availableRoom = "";
+            for (int i=1;i<days;i++){
+                availableRoom += i + "*" + hotelRoom.getTotal() + ",";
+            }
+            availableRoom += days+"*"+hotelRoom.getTotal();
+            hotelRoom.setAvailableRoom(availableRoom);
+            hotelMapper.updateMinPrice(hotel_id, minPrice);
+            hotelMapper.updateMaxPrice(hotel_id, maxPrice);
+            roomMapper.insertRoom(hotelRoom);
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
+        /*List<HotelRoom> hotelRooms = retrieveHotelRoomInfo(hotelRoom.getHotelId());
         int hotel_id = hotelRoom.getHotelId();
         double minPrice = hotelMapper.getMinPrice(hotel_id);
         double maxPrice = hotelMapper.getMaxPrice(hotel_id);
@@ -92,14 +132,14 @@ public class RoomServiceImpl implements RoomService {
         if (hotelRoom.getPrice()>=maxPrice){
             maxPrice = hotelRoom.getPrice();
         }
-/*        for (HotelRoom room: hotelRooms){
+*//*        for (HotelRoom room: hotelRooms){
             if (room.getPrice()<=minPrice){
                 minPrice = room.getPrice();
             }
             if (room.getPrice()>=maxPrice){
                 maxPrice = room.getPrice();
             }
-        }*/
+        }*//*
         LocalDate beginDate = LocalDate.parse(hotelRoom.getBeginDate());
         LocalDate endDate = LocalDate.parse(hotelRoom.getEndDate());
         int days = 0;
@@ -119,7 +159,7 @@ public class RoomServiceImpl implements RoomService {
         hotelMapper.updateMinPrice(hotel_id, minPrice);
         hotelMapper.updateMaxPrice(hotel_id, maxPrice);
         roomMapper.insertRoom(hotelRoom);
-
+*/
     }
 
     @Override

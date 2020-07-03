@@ -178,7 +178,7 @@ public class OrderServiceImpl implements OrderService {
         LocalDate checkout = LocalDate.parse(order.getCheckOutDate());
         LocalDate today = LocalDate.now();
         int diff = (int)ChronoUnit.DAYS.between(today,checkin);
-        if (diff<=2&&diff>=0){
+        if (diff<=2&&diff>=0){ //取消订单是，如果距离入住时间为2天内，会减少信用值，减少值为订单价格*0.3
             accountMapper.updateUserCredit(order.getUserId(),(int)(-order.getPrice()*0.3));
             orderMapper.updateCreditChange(orderid,(int)(-order.getPrice()*0.3),accountMapper.getUserCredit(order.getUserId()));
 
@@ -251,19 +251,40 @@ public class OrderServiceImpl implements OrderService {
         String state = orderVO.getOrderState();
         BeanUtils.copyProperties(orderVO,order);
         orderMapper.updateOrderState(order);
+/*        //修改订单状态为已完成时，availableRoom加回去，并更新creditChange
         if(state.equals("已完成")){
             hotelService.updateRoomInfo(order.getHotelId(),order.getRoomType(),order.getRoomNum()*-1,order.getRoomPrice());
             this.update(order, false);
             accountMapper.updateUserCredit(order.getUserId(),order.getPrice().intValue());
             orderMapper.updateCreditChange(order.getId(),order.getPrice().intValue(),accountMapper.getUserCredit(order.getUserId()));
         }
+        //修改订单状态为已撤销时，availableRoom加回去
         if (state.equals("已撤销")){
             hotelService.updateRoomInfo(order.getHotelId(),order.getRoomType(),order.getRoomNum()*-1,order.getRoomPrice());
             this.update(order, false);
+        }*/
+        try {
+            //修改订单状态为已完成时，availableRoom加回去，并更新creditChange
+            if(state.equals("已完成")){
+                hotelService.updateRoomInfo(order.getHotelId(),order.getRoomType(),order.getRoomNum()*-1,order.getRoomPrice());
+                this.update(order, false);
+                accountMapper.updateUserCredit(order.getUserId(),order.getPrice().intValue());
+                orderMapper.updateCreditChange(order.getId(),order.getPrice().intValue(),accountMapper.getUserCredit(order.getUserId()));
+            }
+            //修改订单状态为已撤销时，availableRoom加回去
+            if (state.equals("已撤销")){
+                hotelService.updateRoomInfo(order.getHotelId(),order.getRoomType(),order.getRoomNum()*-1,order.getRoomPrice());
+                this.update(order, false);
+            }
+        }catch (Exception e){
+            System.out.println(e);
         }
         return ResponseVO.buildSuccess(true);
     }
 
+    //更新room中availableRoom
+    //flag为true：availableRoom中的数字减
+    //flag为false：availableRoom中的数字加
     @Override
     public void update(Order order, boolean flag){
         int f = 1;
@@ -279,9 +300,11 @@ public class OrderServiceImpl implements OrderService {
         int checkout_to_begin = (int)ChronoUnit.DAYS.between(beginDate,checkout);
         String ordered_room[] = new String[checkout_to_begin-checkin_to_begin];
         availableRoom = "";
+        //预定时间段前的数据不变
         for (int j=0;j<checkin_to_begin;j++){
             availableRoom += rooms[j] + ",";
         }
+        //预定时间段的数据修改
         for (int i=checkin_to_begin;i<checkout_to_begin;i++){
             String room = rooms[i];
             int num = Integer.parseInt(room.split("\\*")[1])-order.getRoomNum()*f;
@@ -296,6 +319,7 @@ public class OrderServiceImpl implements OrderService {
                 }
             }
         }
+        //预定时间段后的数据不变
         if (checkout_to_begin!=rooms.length-1){
             for (int k=checkout_to_begin;k<rooms.length;k++){
                 if (k!=rooms.length-1){
@@ -308,6 +332,7 @@ public class OrderServiceImpl implements OrderService {
         roomMapper.updateAvailableRoom(order.getHotelId(),order.getRoomType(),order.getRoomPrice(),availableRoom);
     }
 
+    //同上
     @Override
     public void update(OrderVO order, boolean flag){
         int f = 1;
@@ -323,9 +348,11 @@ public class OrderServiceImpl implements OrderService {
         int checkout_to_begin = (int)ChronoUnit.DAYS.between(beginDate,checkout);
         String ordered_room[] = new String[checkout_to_begin-checkin_to_begin];
         availableRoom = "";
+        //预定时间段前的不变
         for (int j=0;j<checkin_to_begin;j++){
             availableRoom += rooms[j] + ",";
         }
+        //预定时间段的数据修改
         for (int i=checkin_to_begin;i<checkout_to_begin;i++){
             String room = rooms[i];
             int num = Integer.parseInt(room.split("\\*")[1])-order.getRoomNum();
@@ -340,6 +367,7 @@ public class OrderServiceImpl implements OrderService {
                 }
             }
         }
+        //预定时间段后的数据不变
         if (checkout_to_begin!=rooms.length-1){
             for (int k=checkout_to_begin;k<rooms.length;k++){
                 if (k!=rooms.length-1){
@@ -349,6 +377,7 @@ public class OrderServiceImpl implements OrderService {
                 }
             }
         }
+        //更新
         roomMapper.updateAvailableRoom(order.getHotelId(),order.getRoomType(),order.getRoomPrice(),availableRoom);
     }
 }
