@@ -69,6 +69,24 @@ public class CouponServiceImpl implements CouponService {
     @Override
     public List<Coupon> getHotelAllCoupon(Integer hotelId) {
         List<Coupon> hotelCoupons = couponMapper.selectByHotelId(hotelId);
+        for (Coupon hotelCoupon : hotelCoupons) {
+            switch (hotelCoupon.getCouponType()) {
+                case 1:
+                    hotelCoupon.setImgUrl("https://pic-67666.oss-cn-hangzhou.aliyuncs.com/coupon/birthday.png");
+                    break;
+                case 2:
+                    hotelCoupon.setImgUrl("https://pic-67666.oss-cn-hangzhou.aliyuncs.com/coupon/room.png");
+                    break;
+                case 3:
+                    hotelCoupon.setImgUrl("https://pic-67666.oss-cn-hangzhou.aliyuncs.com/coupon/manjian.png");
+                    break;
+                case 4:
+                    hotelCoupon.setImgUrl("https://pic-67666.oss-cn-hangzhou.aliyuncs.com/coupon/time.png");
+                    break;
+                default:
+                    hotelCoupon.setImgUrl("https://pic-67666.oss-cn-hangzhou.aliyuncs.com/coupon/company.png");
+            }
+        }
         return hotelCoupons;
     }
 
