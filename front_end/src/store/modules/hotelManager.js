@@ -4,6 +4,7 @@ import {
     addHotelAPI,
     delHotelAPI,
     delRoomAPI,
+    modifyHotelAPI,
 } from '@/api/hotelManager'
 import{
     hotelAllReceptionistAPI,
@@ -69,6 +70,14 @@ const hotelManager = {
             curNum: 0,
             id:'',
         },
+        updateHotelParams:{
+            name: '',
+            id: '',
+            address: '',
+            bizRegion: '',
+            description: '',
+            phoneNum:''
+        },
         addReceptionistParams: {
             email:'',
             password:'',
@@ -78,6 +87,7 @@ const hotelManager = {
         couponVisible: false,
         receptionistVisible:false,
         modifyRoomVisible:false,
+        modifyHotelVisible:false,
         addCouponVisible: false,
         addReceptionistVisible:false,
         orderVisible:false,
@@ -120,6 +130,12 @@ const hotelManager = {
                 ...data,
             }
         },
+        set_updateHotelParams:function(state, data) {
+            state.updateHotelParams = {
+                ...state.updateHotelParams,
+                ...data,
+            }
+        },
         set_couponVisible: function(state, data) {
             state.couponVisible = data
         },
@@ -137,6 +153,9 @@ const hotelManager = {
         },
         set_modifyRoomVisible:function(state,data){
             state.modifyRoomVisible=data
+        },
+        set_modifyHotelVisible:function(state,data){
+            state.modifyHotelVisible=data
         },
         set_currentOrder:function(state,data){
             state.currentOrder=data
@@ -241,6 +260,23 @@ const hotelManager = {
                     total: 0,
                     curNum: 0,
                     id:'',
+                })
+                message.success('修改成功')
+            } else {
+                message.error('修改失败')
+            }
+        },
+        updateHotelInfo: async ({state, dispatch, commit}) => {
+            const res = await modifyHotelAPI(state.updateHotelParams)
+            if (res) {
+                commit('set_modifyHotelVisible', false)
+                commit('set_updateHotelParams', {
+                    name: '',
+                    id: '',
+                    address: '',
+                    bizRegion: '',
+                    description: '',
+                    phoneNum:''
                 })
                 message.success('修改成功')
             } else {
@@ -361,7 +397,6 @@ const hotelManager = {
             const res = await delCouponAPI(data)
             if (res) {
                 message.success('删除成功')
-                commit('set_couponVisible', false)
                 // window.location.reload();
                 dispatch('getHotelCoupon')
             } else {

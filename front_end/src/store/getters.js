@@ -39,6 +39,7 @@ const getters = {
   receptionistVisible:state => state.hotelManager.receptionistVisible,
   //currentRoom: state=> state.hotelManager.currentRoom,
   modifyRoomVisible:state => state.hotelManager.modifyRoomVisible,
+  modifyHotelVisible:state => state.hotelManager.modifyHotelVisible,
   addCouponVisible: state => state.hotelManager.addCouponVisible,
   addReceptionistVisible: state => state.hotelManager.addReceptionistVisible,
   activeHotelId: state => state.hotelManager.activeHotelId,

@@ -32,6 +32,8 @@
                         <a-button type="info" size="small" @click="showReceptionist(record)">酒店前台</a-button>
                         <a-divider type="vertical"></a-divider>
                         <a-button type="primary" size="small" @click="jumpToDetails(record.id)">管理房间</a-button>
+                        <a-divider type="vertical"></a-divider>
+                        <a-button type="primary" size="small" @click="showModify(record)">修改酒店信息</a-button>
                     </span>
                 </a-table>
             </a-tab-pane>
@@ -76,6 +78,7 @@
         <Order></Order>
         <Receptionist></Receptionist>
         <ChangeState></ChangeState>
+        <ModifyHotel></ModifyHotel>
     </div>
 </template>
 <script>
@@ -85,7 +88,8 @@ import AddRoomModal from './components/addRoomModal'
 import Order from './components/Order'
 import Coupon from './components/coupon'
 import ChangeState from './components/changeState'
-import Receptionist from "./components/Receptionist";
+import Receptionist from "./components/Receptionist"
+import ModifyHotel from "./components/modifyHotel"
 const moment = require('moment')
 const columns1 = [
     {
@@ -165,6 +169,11 @@ const columns2 = [
         dataIndex: 'peopleNum',
     },
     {
+        title: '房间数',
+        sorter:(a,b)=>a.roomNum-b.roomNum,
+        dataIndex: 'roomNum',
+    },
+    {
         title: '房价',
         sorter:(a,b)=>a.price-b.price,
         dataIndex: 'price',
@@ -194,6 +203,7 @@ export default {
         }
     },
     components: {
+        ModifyHotel,
         Receptionist,
         AddHotelModal,
         AddRoomModal,
@@ -227,7 +237,9 @@ export default {
             'set_activeHotelId',
             'set_currentOrder',
             'set_updateOrderStateVisible',
-            'set_receptionistVisible'
+            'set_receptionistVisible',
+            'set_currentHotelInfo',
+            'set_modifyHotelVisible',
         ]),
         ...mapActions([
             'getHotelList',
@@ -238,6 +250,7 @@ export default {
             'getManagerHotelList',
             'getReceptionistList',
             'getManageOrders',
+            'currentHotelInfo'
         ]),
         addHotel() {
             this.set_addHotelModalVisible(true)
@@ -272,6 +285,10 @@ export default {
         },
         jumpToDetails(id){
             this.$router.push({ name: 'hotelDetail', params: { hotelId: id }})
+        },
+        showModify(record){
+            this.set_currentHotelInfo(record)
+            this.set_modifyHotelVisible(true)
         }
     }
 }

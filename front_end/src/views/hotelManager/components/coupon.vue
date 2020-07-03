@@ -59,12 +59,12 @@ const columns = [
         dataIndex: 'discount'
     },
     {
-        title: '优惠简介',
-        dataIndex: 'description'
-    },
-    {
         title: '优惠金额',
         dataIndex: 'discountMoney'
+    },
+    {
+        title: '优惠简介',
+        dataIndex: 'description'
     },
     {
         title: '操作',

@@ -38,7 +38,8 @@
     import ModifyRoom from "./modifyRoom";
     const columns = [
         {
-            title: '房间id',
+            title: '房间号',
+            sorter:(a,b)=>a.id-b.id,
             key: 'id',
             dataIndex: 'id',
         },
@@ -56,11 +57,6 @@
             key: 'price',
             dataIndex: 'price',
             scopedSlots: { customRender: 'price'}
-        },
-        {
-            title: '剩余数量',
-            key: 'curNum',
-            dataIndex: 'curNum',
         },
         {
             title: '总数量',
