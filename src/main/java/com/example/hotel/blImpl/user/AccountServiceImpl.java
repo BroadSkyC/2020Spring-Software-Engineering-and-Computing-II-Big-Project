@@ -3,6 +3,7 @@ package com.example.hotel.blImpl.user;
 import com.example.hotel.bl.order.OrderService;
 import com.example.hotel.bl.user.AccountService;
 import com.example.hotel.data.user.AccountMapper;
+import com.example.hotel.enums.UserType;
 import com.example.hotel.po.CreditRecord;
 import com.example.hotel.po.Order;
 import com.example.hotel.po.User;
@@ -123,9 +124,9 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public List<User> getAllClientInfo() {
         List<User> users = accountMapper.getAllUserInfo();
-        List<User> clients = null;
+        List<User> clients = new ArrayList<User>();
         for (User user:users){
-            if (user.getUserType().equals("Client"))
+            if (user.getUserType().equals(UserType.Client))
                 clients.add(user);
         }
         return clients;

@@ -1,6 +1,7 @@
 package com.example.hotel.controller.admin;
 
 import com.example.hotel.bl.admin.AdminService;
+import com.example.hotel.bl.user.AccountService;
 import com.example.hotel.blImpl.admin.AdminServiceImpl;
 import com.example.hotel.po.User;
 import com.example.hotel.vo.ReceptionistForm;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 public class AdminController {
     @Autowired
     AdminService adminService;
+    @Autowired
+    AccountService accountService;
 
     @PostMapping("/addManager")
     public ResponseVO addManager(@RequestBody UserVO userVO){
@@ -49,5 +52,10 @@ public class AdminController {
     @PostMapping("/delReceptionist")
     public ResponseVO delReceptionistAPI(@RequestBody User user){
         return adminService.delReceptionist(user);
+    }
+
+    @GetMapping("/getAllClientInfo")
+    public ResponseVO getAllClientInfo(){
+        return ResponseVO.buildSuccess(accountService.getAllClientInfo());
     }
 }

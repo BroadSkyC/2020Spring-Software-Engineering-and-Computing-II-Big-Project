@@ -58,9 +58,6 @@ public class OrderServiceImpl implements OrderService {
 
             */
             int curNum = hotelService.getRoomCurNum(orderVO.getHotelId(),orderVO.getRoomType(),orderVO.getRoomPrice());
-            if(reserveRoomNum>curNum){
-                return ResponseVO.buildFailure(ROOMNUM_LACK);
-            }
             try {
                 SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
                 Date date = new Date(System.currentTimeMillis());
