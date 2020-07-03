@@ -42,3 +42,9 @@ export function addReceptionistAPI(data) {
         data
     })
 }
+export function getClientListAPI(){
+    return axios({
+        url: `${api.adminPre}/getAllClientInfo`,
+        method: 'GET'
+    })
+}

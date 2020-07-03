@@ -10,9 +10,26 @@
                     :dataSource="managerList"
                     bordered
                 >
-                    <span slot="price" slot-scope="text">
-                        <span>￥{{ text }}</span>
+                    <span slot="action" slot-scope="record">
+                        <a-button type="primary" size="small" @click="showManagerHotelList(record.id)">查看旗下酒店</a-button>
+                        <a-divider type="vertical"></a-divider>
+                        <a-popconfirm
+                                title="确定想删除该经理吗？"
+                                @confirm="deleteManager(record)"
+                                okText="确定"
+                                cancelText="取消"
+                        >
+                        <a-button type="danger" size="small">删除经理</a-button>
+                        </a-popconfirm>
                     </span>
+                </a-table>
+            </a-tab-pane>
+            <a-tab-pane tab="住房用户" key="2">
+                <a-table
+                        :columns="columns1"
+                        :dataSource="userList"
+                        bordered
+                >
                     <span slot="action" slot-scope="record">
                         <a-button type="primary" size="small" @click="showManagerHotelList(record.id)">查看旗下酒店</a-button>
                         <a-divider type="vertical"></a-divider>
@@ -63,6 +80,33 @@ const columns = [
       scopedSlots: { customRender: 'action' },
     },
   ];
+const columns1 = [
+    {
+        title: '用户ID',
+        dataIndex: 'id',
+    },
+    {
+        title: '用户邮箱',
+        dataIndex: 'email',
+    },
+    {
+        title: '用户名',
+        dataIndex: 'userName',
+    },
+    {
+        title: '用户信用值',
+        dataIndex: 'credit',
+    },
+    {
+        title: '用户手机号',
+        dataIndex: 'phoneNumber',
+    },
+    {
+        title: '操作',
+        key: 'action',
+        scopedSlots: { customRender: 'action' },
+    },
+];
 export default {
     name: 'manageUser',
     data(){
@@ -70,6 +114,7 @@ export default {
             formLayout: 'horizontal',
             pagination: {},
             columns,
+            columns1,
             data: [],
             form: this.$form.createForm(this, { name: 'manageUser' }),
         }
@@ -82,11 +127,15 @@ export default {
         ...mapGetters([
             'addManagerModalVisible',
             'managerList',
-            'hotelList'
+            'hotelList',
+            'userList'
         ])
     },
     async mounted() {
         await this.getManagerList()
+        await this.getUserList()
+        console.log(this.userList)
+        console.log(this.managerList)
     },
     methods: {
         ...mapMutations([
@@ -96,7 +145,8 @@ export default {
         ...mapActions([
             'getManagerList',
             'delManager',
-            'getManagerHotelList'
+            'getManagerHotelList',
+            'getUserList'
         ]),
         addManagerModal(){
             this.set_addManagerModalVisible(true)

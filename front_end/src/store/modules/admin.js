@@ -1,13 +1,17 @@
 import {
     getManagerListAPI,
     addManagerAPI,
-    delManagerAPI
+    delManagerAPI,
+    getClientListAPI
 } from '@/api/admin'
 import { message } from 'ant-design-vue'
 
 const admin = {
     state: {
         managerList: [
+
+        ],
+        userList:[
 
         ],
         addManagerModalVisible: false,
@@ -22,6 +26,9 @@ const admin = {
     mutations: {
         set_managerList: function(state, data) {
             state.managerList = data
+        },
+        set_userList: function(state, data) {
+            state.userList = data
         },
         set_addManagerModalVisible: function(state, data) {
             state.addManagerModalVisible = data
@@ -41,6 +48,13 @@ const admin = {
             const res = await getManagerListAPI()
             if (res) {
                 commit('set_managerList', res)
+            }
+        },
+        getUserList: async ({commit}) => {
+            const res = await getClientListAPI()
+            console.log(res)
+            if (res) {
+                commit('set_userList', res)
             }
         },
         addManager: async ({state, commit, dispatch}) => {

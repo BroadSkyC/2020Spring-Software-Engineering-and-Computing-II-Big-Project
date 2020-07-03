@@ -55,6 +55,7 @@
                         sm: { span: 16 },
                     },
                 },
+                loading: false,
             }
         },
         computed: {
@@ -70,6 +71,7 @@
             console.log(this.currentHotelInfo)
             await this.set_currentHotelId(this.currentHotelInfo.id)
             await this.getHotelById()
+            console.log(this.currentHotelInfo)
         },
         methods:{
             ...mapMutations([

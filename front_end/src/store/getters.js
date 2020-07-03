@@ -26,6 +26,7 @@ const getters = {
   hotelComments: state=>state.hotel.hotelComments,
   //admin
   managerList: state => state.admin.managerList,
+  userList: state => state.admin.userList,
   addManagerModalVisible: state => state.admin.addManagerModalVisible,
   addManagerParams: state => state.admin.addManagerParams,
   managerAllHotelsVisible:state => state.admin.managerAllHotelsVisible,

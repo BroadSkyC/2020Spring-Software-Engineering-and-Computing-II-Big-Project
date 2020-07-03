@@ -90,7 +90,7 @@
                             const data = {
                                 // 这里添加接口参数
                                 id:this.userInfo.id,
-                                birthday:this.form.getFieldValue('birthday')
+                                birthday:this.form.getFieldValue('birthday').format('YYYY-MM-DD')
                             }
                             this.addCommonVip(data)
                              this.form.resetFields()

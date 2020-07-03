@@ -66,32 +66,36 @@
 
 <style lang="scss" scoped>
     .thumb-example {
-        height: 480px;
+        height: 550px;
         background-color: transparent;
     }
     .swiper {
         .swiper-slide {
             background-size: cover;
-            background-position: center;
             &.slide-1 {
-                background-image:url('https://patrikpan811.oss-cn-shanghai.aliyuncs.com/the-palm-962785__480.jpg');
+                background-image:url('https://pic-67666.oss-cn-hangzhou.aliyuncs.com/cover/1.png');
+                background-position: bottom;
             }
             &.slide-2 {
-                background-image:url('https://patrikpan811.oss-cn-shanghai.aliyuncs.com/ship-105596__480.jpg');
+                background-image:url('https://pic-67666.oss-cn-hangzhou.aliyuncs.com/cover/2.png');
+                background-position: top;
             }
             &.slide-3 {
-                background-image:url('https://patrikpan811.oss-cn-shanghai.aliyuncs.com/water-3292794__480.jpg');
+                background-image:url('https://pic-67666.oss-cn-hangzhou.aliyuncs.com/cover/3.png');
+                background-position: top;
             }
             &.slide-4 {
-                background-image:url('https://patrikpan811.oss-cn-shanghai.aliyuncs.com/AFsIhK06EAQYACCM2_frBSi8sOD1BTDuBTjoAg%21800x800.png');
+                background-image:url('https://pic-67666.oss-cn-hangzhou.aliyuncs.com/cover/4.png');
+                background-position: top;
             }
             &.slide-5 {
-                background-image:url('https://patrikpan811.oss-cn-shanghai.aliyuncs.com/city-1209105__480.jpg');
+                background-image:url('https://pic-67666.oss-cn-hangzhou.aliyuncs.com/cover/5.png');
+                background-position: top;
             }
         }
         &.gallery-top {
             height: 80%;
-            width: 80%;
+            width: 85%;
         }
         &.gallery-thumbs {
             margin-top:10px;
