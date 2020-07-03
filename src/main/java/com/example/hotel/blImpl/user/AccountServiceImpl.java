@@ -113,4 +113,10 @@ public class AccountServiceImpl implements AccountService {
         accountMapper.addCompanyVip(user);
         return  ResponseVO.buildSuccess(true);
     }
+
+    @Override
+    public ResponseVO changePassword(UserVO userVO) {
+        accountMapper.changePassword(userVO.getId(),userVO.getPassword());
+        return ResponseVO.buildSuccess(true);
+    }
 }

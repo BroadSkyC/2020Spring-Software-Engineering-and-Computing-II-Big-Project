@@ -48,4 +48,7 @@ public interface AccountMapper {
 
     int getUserCredit(@Param("id") Integer id);
     String getCompany(@Param("id") Integer id);
+
+    void changePassword(@Param("id") Integer id,
+                        @Param("password") String password);
 }

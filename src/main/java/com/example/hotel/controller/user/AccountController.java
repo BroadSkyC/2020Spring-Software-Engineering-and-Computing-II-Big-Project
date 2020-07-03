@@ -79,4 +79,8 @@ public class AccountController {
         return accountService.addcompanyVip(userVO);
     }
 
+    @PostMapping("/changePassword")
+    public ResponseVO changePassword(@RequestBody UserVO userVO){
+        return accountService.changePassword(userVO);
+    }
 }
