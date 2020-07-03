@@ -53,4 +53,5 @@ public interface AccountService {
     ResponseVO addcommonVip(UserVO userVO);
     ResponseVO addcompanyVip(UserVO userVO);
     ResponseVO changePassword(UserVO userVO);
+    List<User> getAllClientInfo();
 }

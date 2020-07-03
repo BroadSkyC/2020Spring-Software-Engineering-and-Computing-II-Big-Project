@@ -51,4 +51,6 @@ public interface AccountMapper {
 
     void changePassword(@Param("id") Integer id,
                         @Param("password") String password);
+
+    List<User> getAllUserInfo();
 }

@@ -83,4 +83,9 @@ public class AccountController {
     public ResponseVO changePassword(@RequestBody UserVO userVO){
         return accountService.changePassword(userVO);
     }
+
+    @GetMapping("/getAllClientInfo")
+    public ResponseVO getAllClientInfo(){
+        return ResponseVO.buildSuccess(accountService.getAllClientInfo());
+    }
 }

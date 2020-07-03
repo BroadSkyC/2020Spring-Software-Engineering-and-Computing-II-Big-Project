@@ -119,4 +119,15 @@ public class AccountServiceImpl implements AccountService {
         accountMapper.changePassword(userVO.getId(),userVO.getPassword());
         return ResponseVO.buildSuccess(true);
     }
+
+    @Override
+    public List<User> getAllClientInfo() {
+        List<User> users = accountMapper.getAllUserInfo();
+        List<User> clients = null;
+        for (User user:users){
+            if (user.getUserType().equals("Client"))
+                clients.add(user);
+        }
+        return clients;
+    }
 }
