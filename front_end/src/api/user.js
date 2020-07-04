@@ -57,4 +57,11 @@ export function addCompanyVipAPI(data) {
         data,
     })
 }
+export function modifyPasswordAPI(data) {
+    return axios({
+        url: `${api.userPre}/changePassword`,
+        method: 'POST',
+        data,
+    })
+}
 

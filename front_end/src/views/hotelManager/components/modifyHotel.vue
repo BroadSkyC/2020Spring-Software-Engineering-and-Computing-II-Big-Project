@@ -65,7 +65,7 @@
             ])
         },
         beforeCreate() {
-            this.form = this.$form.createForm(this, { name: 'modifyRoom' });
+            this.form = this.$form.createForm(this, { name: 'modifyHotel' });
         },
         async mounted() {
             console.log(this.currentHotelInfo)

@@ -28,8 +28,10 @@ const getters = {
   managerList: state => state.admin.managerList,
   userList: state => state.admin.userList,
   addManagerModalVisible: state => state.admin.addManagerModalVisible,
+  modifyPasswordVisible: state => state.admin.modifyPasswordVisible,
   addManagerParams: state => state.admin.addManagerParams,
   managerAllHotelsVisible:state => state.admin.managerAllHotelsVisible,
+  activeUserId:state => state.admin.activeUserId,
   //hotelManager
   orderList: state => state.hotelManager.orderList,
   currentOrder:state=> state.hotelManager.currentOrder,

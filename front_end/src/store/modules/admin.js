@@ -4,7 +4,11 @@ import {
     delManagerAPI,
     getClientListAPI
 } from '@/api/admin'
+import {
+    modifyPasswordAPI
+} from '@/api/user'
 import { message } from 'ant-design-vue'
+import modifyPassword from "../../views/admin/components/modifyPassword";
 
 const admin = {
     state: {
@@ -16,12 +20,14 @@ const admin = {
         ],
         addManagerModalVisible: false,
         managerAllHotelsVisible:false,
+        modifyPasswordVisible:false,
         addManagerParams: {
             email:'',
             password:'',
             userName:'',
             phoneNumber:''
-        }
+        },
+        activeUserId:'',
     },
     mutations: {
         set_managerList: function(state, data) {
@@ -29,6 +35,9 @@ const admin = {
         },
         set_userList: function(state, data) {
             state.userList = data
+        },
+        set_activeUserId: function(state, data) {
+            state.activeUserId = data
         },
         set_addManagerModalVisible: function(state, data) {
             state.addManagerModalVisible = data
@@ -41,6 +50,9 @@ const admin = {
         },
         set_managerAllHotelsVisible: function(state, data) {
             state.managerAllHotelsVisible = data
+        },
+        set_modifyPasswordVisible: function(state, data) {
+            state.modifyPasswordVisible = data
         },
     },
     actions: {
@@ -79,10 +91,22 @@ const admin = {
                 //dispatch('getHotelList')
                 message.success('删除成功')
                 dispatch('getManagerList')
+                dispatch('getUserList')
             } else {
                 message.error('删除失败')
             }
-        }
+        },
+        updatePassword: async ({state, dispatch, commit},data) => {
+            const res = await modifyPasswordAPI(data)
+            if (res) {
+                commit('set_modifyPasswordVisible', false)
+                dispatch('getManagerList')
+                dispatch('getUserList')
+                message.success('修改成功')
+            } else {
+                message.error('修改失败')
+            }
+        },
     },
 }
 export default admin
