@@ -71,6 +71,7 @@ public class RoomServiceImpl implements RoomService {
                 continue;
             }
             allRoom.setCurNum(mini);
+            mini=Integer.MAX_VALUE;
             availableRooms.add(allRoom);
         }
 
@@ -97,13 +98,13 @@ public class RoomServiceImpl implements RoomService {
             }
             LocalDate beginDate = LocalDate.parse(hotelRoom.getBeginDate());
             LocalDate endDate = LocalDate.parse(hotelRoom.getEndDate());
-            int days = 0;
-            if (beginDate.getMonth()==endDate.getMonth()){
+            int days = (int)ChronoUnit.DAYS.between(beginDate,endDate)+1;
+            /*if (beginDate.getMonth()==endDate.getMonth()){
                 days = endDate.getDayOfMonth()-beginDate.getDayOfMonth();
             }else {
                 days = endDate.getDayOfMonth() + beginDate.lengthOfMonth() - beginDate.getDayOfMonth();
             }
-            days++;
+            days++;*/
             hotelRoom.setAlldays(days);
             //设置availableRoom字符串 格式为1*roomNum，2*roomNum，3*roomNum，4*roomNum···
             String availableRoom = "";

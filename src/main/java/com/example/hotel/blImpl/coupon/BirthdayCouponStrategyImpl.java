@@ -22,13 +22,13 @@ public class BirthdayCouponStrategyImpl implements CouponMatchStrategy {
         if (coupon.getCouponType()==1) {
             User user = accountService.getUserInfo(orderVO.getUserId());
             String bir = user.getBirthday();
-            //if (bir!=null){
+            if (bir!=null){
                 //int index = bir.indexOf('T');
                 bir = bir.substring(0, 10);
                 LocalDate birthday = LocalDate.parse(bir);
                 LocalDate today = LocalDate.now();
                 return birthday.getMonth() == today.getMonth() && birthday.getDayOfMonth() == today.getDayOfMonth();
-            //}
+            }
         }
         return false;
     }
