@@ -17,7 +17,7 @@
                     'orderState',
                     { rules: [{ required: true, message: '请选择状态' }] }]"
                     >
-                        <a-select-option value="已撤销">撤销</a-select-option>
+                        <a-select-option value="已撤销" v-if="currentOrder.orderState==='已预订'">撤销</a-select-option>
                         <a-select-option value="已入住" v-if="currentOrder.orderState==='已预订'">入住</a-select-option>
                         <a-select-option value="已完成" v-if="currentOrder.orderState==='已入住'">完成</a-select-option>
                     </a-select>
@@ -98,6 +98,7 @@
                             this.modify = false
                         })
                         // location.reload()
+                        this.form.resetFields()
                     }
                 });
             },
