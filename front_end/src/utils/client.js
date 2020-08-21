@@ -1,9 +1,9 @@
 let OSS = require('ali-oss');
 export let client = new OSS({
     region: 'oss-cn-shanghai',
-    accessKeyId: 'LTAI4GDPCV3LpbpnQjCoyXNC',
-    accessKeySecret: 'DXdQfTosIkscieZ1zBn1F2RX3Q0jnT',
-    bucket: 'seec67'
+    accessKeyId: 'xxx',
+    accessKeySecret: 'xxx',
+    bucket: 'xxx'
 });
 
 // 上传
